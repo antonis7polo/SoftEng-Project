@@ -11,7 +11,7 @@ exports.login = async (req, res) => {
         const user = users[0];
 
         if(user && await bcrypt.compare(password, user.password)) {
-            const token = generateToken(user.user_id);
+            const token = generateToken(user);
             return res.status(200).json({ token });
         }
         else {

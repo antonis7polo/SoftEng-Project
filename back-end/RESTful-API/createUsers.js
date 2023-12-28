@@ -10,9 +10,8 @@ const pool = mysql.createPool({
     port : process.env.DB_PORT
 });
 
-async function createUser(username, email, password) {
+async function createUser(username, email, password, isAdmin = false) {
     try {
-        // Check if the username or email already exists
         const query = 'SELECT * FROM Users WHERE username = ? OR email = ?';
         const [existingUsers] = await pool.query(query, [username, email]);
 
@@ -32,23 +31,21 @@ async function createUser(username, email, password) {
             }
         }
 
-        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Insert the new user into the database
-        await pool.query('INSERT INTO Users (username, email, password) VALUES (?, ?, ?)', [username, email, hashedPassword]);
+        await pool.query('INSERT INTO Users (username, email, password, isAdmin) VALUES (?, ?, ?, ?)', [username, email, hashedPassword, isAdmin]);
         console.log(`User ${username} created successfully.`);
     } catch (err) {
         console.error(`Error creating user: ${err.message}`);
     }
 }
 
-// Parse command line arguments
-const [username, email, password] = process.argv.slice(2);
+const [username, email, password, adminFlag] = process.argv.slice(2);
 
 if (!username || !email || !password) {
-    console.error("Usage: node createUser.js <username> <email> <password>");
+    console.error("Usage: node createUser.js <username> <email> <password> [<isAdmin>]");
     process.exit(1);
 }
 
-createUser(username, email, password);
+const isAdmin = adminFlag === 'true'; 
+createUser(username, email, password, isAdmin);
