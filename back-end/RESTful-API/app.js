@@ -16,10 +16,12 @@ app.use(express.urlencoded({ extended: true }));
 const authRoutes = require('./routes/authRoutes'); 
 const adminRoutes = require('./routes/adminRoutes');
 const titleRoutes = require('./routes/titleRoutes');
+const nameRoutes = require('./routes/nameRoutes');
 
 app.use('/ntuaflix_api', authRoutes);
 app.use('/ntuaflix_api/admin', adminRoutes);
 app.use('/ntuaflix_api', titleRoutes);
+app.use('/ntuaflix_api', nameRoutes);
 
 module.exports = app;
 

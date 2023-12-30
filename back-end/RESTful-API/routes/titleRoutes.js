@@ -5,5 +5,6 @@ const validateToken = require('../middlewares/tokenValidator');
 
 router.get('/title/:titleID', validateToken, titleController.getTitleByID);
 router.get('/searchtitle', validateToken, titleController.searchTitleByPart);
+router.get('/bygenre/', validateToken, titleController.getTitlesByGenre);
 
 module.exports = router;
