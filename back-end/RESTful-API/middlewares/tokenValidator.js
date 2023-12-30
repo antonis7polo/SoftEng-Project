@@ -14,6 +14,8 @@ const validateToken = (req, res, next) => {
 
         // Token is valid, attach decoded data to request and proceed
         req.user = decoded;
+        
+        
         next();
     });
 };
