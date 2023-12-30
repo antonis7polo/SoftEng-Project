@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const nodemon = require('nodemon');
 const mysql2 = require('mysql2');
 
+//use nodemon
+
 
 const app = express();
 

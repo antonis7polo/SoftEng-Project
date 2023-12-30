@@ -78,10 +78,10 @@ async function searchName(req, res) {
             FROM 
                 names_ n
             WHERE 
-                n.name_ LIKE ?
+                LOWER(n.name_) LIKE LOWER(?)
         `;
 
-        const likeNamePart = `%${namePart}%`;
+        const likeNamePart = `%${namePart.toLowerCase()}%`;
         const [peopleResults] = await pool.query(searchQuery, [likeNamePart]);
 
         if (peopleResults.length === 0) {
