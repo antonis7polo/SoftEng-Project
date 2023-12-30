@@ -19,8 +19,6 @@ ADD CONSTRAINT Aliases_pri_key PRIMARY KEY (title_id,ordering);
 ALTER TABLE Alias_attributes
 ADD CONSTRAINT Alias_attributes_pri_key PRIMARY KEY (title_id,ordering);
 
-ALTER TABLE Alias_types
-ADD CONSTRAINT Alias_types_pri_key PRIMARY KEY (title_id,ordering);
 
 ALTER TABLE Directors
 ADD CONSTRAINT Directors_pri_key PRIMARY KEY (title_id,name_id);
@@ -65,36 +63,11 @@ ADD CONSTRAINT Title_genres_pri_key PRIMARY KEY (title_id,genre);
 ALTER TABLE Title_genres
 ADD CONSTRAINT Title_genres_title_id_fkey FOREIGN KEY (title_id) REFERENCES Titles(title_id);
 
-ALTER TABLE Title_ratings
-ADD CONSTRAINT Title_ratings_pri_key PRIMARY KEY (title_id);
-
-ALTER TABLE Title_ratings
-ADD CONSTRAINT Title_ratings_title_id_fkey FOREIGN KEY (title_id) REFERENCES Titles(title_id);
-
-
-ALTER TABLE User_Preferences
-ADD CONSTRAINT User_Preferences_pri_key PRIMARY KEY (user_id, genre);
-
-ALTER TABLE User_Preferences
-ADD CONSTRAINT User_Preferences_user_id_fkey FOREIGN KEY (user_id) REFERENCES Users(user_id);
-
-ALTER TABLE User_Title_Ratings
-ADD CONSTRAINT User_Title_Ratings_pri_key PRIMARY KEY (user_id, title_id);
-
 ALTER TABLE User_Title_Ratings
 ADD CONSTRAINT User_Title_Ratings_user_id_fkey FOREIGN KEY (user_id) REFERENCES Users(user_id);
 
 ALTER TABLE User_Title_Ratings
 ADD CONSTRAINT User_Title_Ratings_title_id_fkey FOREIGN KEY (title_id) REFERENCES Titles(title_id);
-
-ALTER TABLE User_Watched
-ADD CONSTRAINT User_Watched_pri_key PRIMARY KEY (user_id, title_id);
-
-ALTER TABLE User_Watched
-ADD CONSTRAINT User_Watched_user_id_fkey FOREIGN KEY (user_id) REFERENCES Users(user_id);
-
-ALTER TABLE User_Watched
-ADD CONSTRAINT User_Watched_title_id_fkey FOREIGN KEY (title_id) REFERENCES Titles(title_id);
 
 
 -- Issues with missing data in title.basics.tsv.gz, name.basics.tsv, ...
@@ -114,9 +87,6 @@ ADD CONSTRAINT Aliases_title_id_fkey FOREIGN KEY (title_id) REFERENCES Titles(ti
 
 ALTER TABLE Alias_attributes
 ADD CONSTRAINT Alias_attributes_title_id_fkey FOREIGN KEY (title_id) REFERENCES Titles(title_id);
-
-ALTER TABLE Alias_types
-ADD CONSTRAINT Alias_types_title_id_fkey FOREIGN KEY (title_id) REFERENCES Titles(title_id);
 
 -- Ditto for Episode_belongs_to table.
 ALTER TABLE Episode_belongs_to

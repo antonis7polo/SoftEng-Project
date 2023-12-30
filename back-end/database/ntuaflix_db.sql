@@ -76,15 +76,12 @@ CREATE TABLE Titles (
   is_adult 			  BOOLEAN,
   start_year			INTEGER, -- add better domain here (>1800)
   end_year 			  INTEGER, -- add better domain here (>0)
-  runtime_minutes	INTEGER -- add better domain here (>0)
-
+  runtime_minutes	INTEGER, -- add better domain here (>0)
+  img_url_assets   VARCHAR(255),
+  average_rating   FLOAT,
+    num_votes        INTEGER
 );
 
-CREATE TABLE Title_ratings (
-  title_id 			  VARCHAR(255) NOT NULL, -- not null bc PK
-  average_rating	FLOAT,
-  num_votes			  INTEGER
-);
 
 CREATE TABLE Aliases (
   title_id          VARCHAR(255) NOT NULL, -- not null bc PK
@@ -95,11 +92,6 @@ CREATE TABLE Aliases (
   is_original_title	BOOLEAN
 );
 
-CREATE TABLE Alias_types (
-  title_id      VARCHAR(255) NOT NULL, -- not null bc PK
-  ordering			INTEGER NOT NULL, -- not null bc PK
-  type				  VARCHAR(255) NOT NULL-- Only stored if not null
-);
 
 CREATE TABLE Alias_attributes (
   title_id			VARCHAR(255) NOT NULL, -- not null bc PK
@@ -170,25 +162,10 @@ CREATE TABLE Principals (
 -- Add Users table
 CREATE TABLE Users (
   user_id       INT AUTO_INCREMENT PRIMARY KEY,
-  username      VARCHAR(255) NOT NULL UNIQUE,
-  email         VARCHAR(255) NOT NULL UNIQUE,
+  username      VARCHAR(255) NOT NULL,
+  email         VARCHAR(255) NOT NULL,
   password      VARCHAR(255) NOT NULL, -- Store hashed passwords, never plain text
   created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Table to track which titles a user has watched
-CREATE TABLE User_Watched (
-  user_id       INT NOT NULL,
-  title_id      VARCHAR(255) NOT NULL,
-  watched_on    TIMESTAMP,
-  rating        FLOAT -- User can rate the title
-);
-
--- Table to store user preferences for genres
-CREATE TABLE User_Preferences (
-  user_id       INT NOT NULL,
-  genre         VARCHAR(255) NOT NULL
-
 );
 
 

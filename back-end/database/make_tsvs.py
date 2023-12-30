@@ -7,33 +7,52 @@ def generate_hashed_password():
     return hashlib.sha256(str(random.randint(1, 1000000)).encode()).hexdigest()
 
 # Generate more users
-users_data = [
-    {
-        "user_id": i,
-        "username": f"user{i}",
-        "email": f"user{i}@example.com",
-        "password": generate_hashed_password()
-    }
-    for i in range(1, 101)  # Generating 100 users
-]
+# Sample lists of first names and last names
+first_names = ["Alice", "Bob", "Charlie", "Diana", "Edward"]
+last_names = ["Smith", "Johnson", "Williams", "Brown", "Jones"]
 
-# Generate more user preferences
-user_preferences_data = [
-    {"user_id": i, "genre": random.choice(["Comedy", "Drama", "Action", "Sci-Fi"])}
-    for i in range(1, 101)  # Generating 100 user preferences
-]
+# Function to generate a random username
+def generate_username(first_names, last_names):
+    return random.choice(first_names) + random.choice(last_names)
 
-# Generate more user title ratings
-user_title_ratings_data = [
-    {"user_id": i, "title_id": f"tt{i}", "user_rating": random.randint(1, 10)}
-    for i in range(1, 101)  # Generating 100 user title ratings
-]
+def generate_email(username, domain="gmail.com"):
+    return f"{username.lower()}@{domain}"
 
-# Generate more user watched data
-user_watched_data = [
-    {"user_id": i, "title_id": f"tt{i}", "watched_on": f"2023-01-{i} 20:30:00", "rating": random.randint(1, 10)}
-    for i in range(1, 101)  # Generating 100 user watched data
-]
+# Generate users
+users_data = []
+for i in range(1, 101):  # Generating 100 users
+    username = generate_username(first_names, last_names)
+    email = generate_email(username)
+    users_data.append({ "username": username, "email": email, "password": generate_hashed_password()})
+# users_data now contains the user details
+
+# Function to read Titles.tsv and get title IDs
+def read_title_ids(file_path):
+    title_ids = []
+    with open(file_path, 'r', encoding='utf-8') as file:
+        reader = csv.DictReader(file, delimiter='\t')
+        for row in reader:
+            title_ids.append(row['title_id'])
+    return title_ids
+
+# Path to Titles.tsv file
+titles_file_path = 'Titles.tsv'
+
+# Read title IDs from Titles.tsv
+title_ids = read_title_ids(titles_file_path)
+
+# Generate user title ratings
+user_title_ratings_data = []
+for user_id in range(1, 101):  # For 100 users
+    # Assign ratings to a random selection of titles
+    for title_id in random.sample(title_ids, 10):  # Assuming each user rates 10 titles
+        user_rating = random.randint(1, 10)
+        user_title_ratings_data.append({"user_id": user_id, "title_id": title_id, "user_rating": user_rating})
+
+# user_title_ratings_data now contains the ratings data
+
+
+
 
 
 # Function to create a TSV file from data
@@ -45,8 +64,5 @@ def create_tsv_file(data, filename):
 
 # Create TSV files for each table
 create_tsv_file(users_data, 'Users.tsv')
-create_tsv_file(user_preferences_data, 'User_Preferences.tsv')
 create_tsv_file(user_title_ratings_data, 'User_Title_Ratings.tsv')
-create_tsv_file(user_watched_data, 'User_Watched.tsv')
-
 print("TSV files created successfully.")

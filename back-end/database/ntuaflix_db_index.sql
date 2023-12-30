@@ -3,9 +3,6 @@
 -- Alias_attributes
 CREATE INDEX Alias_attributes_index ON Alias_attributes(title_id);
 
--- Alias_types
-CREATE INDEX Alias_types_index ON Alias_types(title_id);
-
 -- Aliases
 CREATE INDEX Aliases_index ON Aliases(title_id);
 
@@ -36,9 +33,6 @@ CREATE INDEX Principals_index ON Principals(title_id);
 -- Title_genres
 CREATE INDEX Title_genres_title_id_index ON Title_genres(title_id);
 CREATE INDEX Title_genres_genre_index ON Title_genres(genre);
-
--- Title_ratings
-CREATE INDEX Title_ratings_index ON Title_ratings(title_id);
 
 -- Titles
 CREATE INDEX Titles_index ON Titles(title_id);

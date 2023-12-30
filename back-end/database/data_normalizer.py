@@ -192,19 +192,20 @@ def make_Episode_belongs_to(title_episode):
 def make_Names_(name_basics):
     # name.basics.tsv has columns:
     # FORMAT: ['nconst', 'primaryName', 'birthYear', 'deathYear',
-    # 'primaryProfession', 'knownForTitles']
+    # 'primaryProfession', 'knownForTitles','img_url_asset']
 
     print("\tMaking 'Names_' table")
 
     # Extract columns from name_basics for Names_ table
-    Names_ = name_basics[['nconst','primaryName','birthYear','deathYear']]
+    Names_ = name_basics[['nconst','primaryName','birthYear','deathYear','img_url_asset']]
 
     # Rename columns
     Names_= Names_.rename(columns={
     'nconst':'name_id',
     'primaryName':'name_',
     'birthYear':'birth_year',
-    'deathYear':'death_year'
+    'deathYear':'death_year',
+    'img_url_asset':'img_url_asset'
     })
 
     # Output to file
@@ -346,16 +347,19 @@ def make_Had_role(title_principals):
 #-------------------------------------------------------------------------------
 
 # Create Titles table
-def make_Titles(title_basics):
+def make_Titles(title_basics, title_ratings):
     # title.basics.tsv
     # FORMAT: ['tconst', 'titleType', 'primaryTitle', 'originalTitle',
-    # 'isAdult', 'startYear', 'endYear', 'runtimeMinutes', 'genres']
+    # 'isAdult', 'startYear', 'endYear', 'runtimeMinutes', 'genres','img_url_asset']
 
     print("\tMaking 'Titles' table")
 
     # Extract columns from title_basics for Titles table
     Titles = title_basics[['tconst','titleType','primaryTitle',
-    'originalTitle', 'isAdult', 'startYear', 'endYear', 'runtimeMinutes']]
+    'originalTitle', 'isAdult', 'startYear', 'endYear', 'runtimeMinutes','img_url_asset']]
+
+    #Extract columns from title_ratings for Titles table
+    Titles = pd.merge(Titles,title_ratings[['tconst','averageRating','numVotes']],on='tconst',how='left')
 
     # Rename columns
     Titles = Titles.rename(columns={
@@ -366,7 +370,10 @@ def make_Titles(title_basics):
     'isAdult':'is_adult',
     'startYear':'start_year',
     'endYear':'end_year',
-    'runtimeMinutes':'runtime_minutes'
+    'averageRating':'average_rating',
+    'numVotes':'num_votes',
+    'runtimeMinutes':'runtime_minutes',
+    'img_url_asset':'img_url_asset',
     })
 
     # Output to file
@@ -450,7 +457,7 @@ title_akas = pd.read_csv(os.path.join(data_path,'truncated_title.akas.tsv'),
     sep='\t',na_values='\\N',quoting=3)
 # Make tables
 make_Aliases(title_akas)
-make_Alias_types(title_akas)
+
 make_Alias_attributes(title_akas)
 # Delete title_akas
 del title_akas
@@ -522,19 +529,11 @@ title_basics = pd.read_csv(os.path.join(data_path,'truncated_title.basics.tsv'),
     'originalTitle':'str', 'isAdult':'int', 'startYear':'Int64',
     'endYear':'Int64', 'runtimeMinutes':'Int64', 'genres':'str'},
     sep='\t',na_values='\\N',quoting=3)
+# Read title.ratings
+title_ratings = pd.read_csv(os.path.join(data_path,'truncated_title.ratings.tsv'),sep='\t',na_values='\\N')
 # Make tables
-make_Titles(title_basics)
+make_Titles(title_basics, title_ratings)
 make_Title_genres(title_basics)
 # Delete title_basics
 del title_basics
 
-# title.ratings.tsv
-#-------------------
-# FORMAT: ['tconst', 'averageRating', 'numVotes']
-print('\n','Reading title.ratings.tsv ...','\n')
-# Read title.ratings
-title_ratings = pd.read_csv(os.path.join(data_path,'truncated_title.ratings.tsv'),sep='\t',na_values='\\N')
-# Make table
-make_Title_ratings(title_ratings)
-# Delete title_ratings
-del title_ratings

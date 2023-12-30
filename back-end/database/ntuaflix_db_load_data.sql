@@ -13,11 +13,6 @@ INTO TABLE Alias_attributes
 COLUMNS TERMINATED BY '\t'
 IGNORE 1 LINES;
 
--- Load Alias_types.tsv into Alias_types table
-LOAD DATA LOCAL INFILE  './Alias_types.tsv'
-INTO TABLE Alias_types
-COLUMNS TERMINATED BY '\t'
-IGNORE 1 LINES;
 
 -- Load Directors.tsv into Directors table
 LOAD DATA LOCAL INFILE './Directors.tsv'
@@ -79,33 +74,12 @@ INTO TABLE Title_genres
 COLUMNS TERMINATED BY '\t'
 IGNORE 1 LINES;
 
--- Load Title_ratings.tsv into Title_ratings table
-LOAD DATA LOCAL INFILE  './Title_ratings.tsv'
-INTO TABLE Title_ratings
-COLUMNS TERMINATED BY '\t'
-IGNORE 1 LINES;
-
 LOAD DATA LOCAL INFILE './Users.tsv'
 INTO TABLE Users
-COLUMNS TERMINATED BY '\t'
-IGNORE 1 LINES
-(username, email, password);
-
-LOAD DATA LOCAL INFILE './User_Preferences.tsv'
-INTO TABLE User_Preferences
-COLUMNS TERMINATED BY '\t'
-IGNORE 1 LINES
-(user_id, genre);
+(username,email,password);
 
 LOAD DATA LOCAL INFILE './User_Title_Ratings.tsv'
 INTO TABLE User_Title_Ratings
 COLUMNS TERMINATED BY '\t'
-IGNORE 1 LINES
 (user_id, title_id, user_rating);
-
-LOAD DATA LOCAL INFILE './User_Watched.tsv'
-INTO TABLE User_Watched
-COLUMNS TERMINATED BY '\t'
-IGNORE 1 LINES
-(user_id, title_id, watched_on, rating);
 

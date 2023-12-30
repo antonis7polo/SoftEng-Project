@@ -1,0 +1,501 @@
+title_id	title_type	primary_title	original_title	is_adult	start_year	end_year	runtime_minutes	img_url_asset	average_rating	num_votes
+tt0000929	short	Klebolin klebt alles	Klebolin klebt alles	0	1990	\N	\N	\N	5.3	46.0
+tt0000977	short	Mutterliebe	Mutterliebe	0	1990	\N	\N	\N	\N	\N
+tt0034841	short	Hen Hop	Hen Hop	0	1994	\N	4	https://image.tmdb.org/t/p/{width_variable}/88EH2TVg6fGK7SnGXcfQ05MD2Rk.jpg	6.3	282.0
+tt0040844	short	Crossroads of Laredo	Crossroads of Laredo	0	1995	\N	30	https://image.tmdb.org/t/p/{width_variable}/atrGjxMSp6y4jvs7nojUrlsGFUb.jpg	3.3	189.0
+tt0078006	short	Norman and the Killer	Norman and the Killer	0	1991	\N	30	\N	7.0	33.0
+tt0082473	short	The Great Barrier Reef	Great Barrier Reef	0	1999	\N	39	https://image.tmdb.org/t/p/{width_variable}/woteaQKihwadpEr7XXxyt6aAd0v.jpg	6.7	120.0
+tt0082891	short	Peep Show	Peep Show	0	1992	\N	7	https://image.tmdb.org/t/p/{width_variable}/c4AFJyVdaJ4Rglg5d4qKibY8CEM.jpg	5.5	250.0
+tt0084447	short	Open House	Open House	0	1992	\N	25	\N	6.2	204.0
+tt0084638	short	Scenes from the Life of Andy Warhol: Friendships and Intersections	Scenes from the Life of Andy Warhol: Friendships and Intersections	0	1990	\N	36	https://image.tmdb.org/t/p/{width_variable}/avHpCWc17IYJZqifb7bSQI2OqC9.jpg	6.9	420.0
+tt0087306	short	Les funérailles du Larle Naba	Les funérailles du Larle Naba	0	1992	\N	30	\N	\N	\N
+tt0090144	short	Le temps des bouffons	Le temps des bouffons	0	1993	\N	15	https://image.tmdb.org/t/p/{width_variable}/7PVsQkiQsMf5j4pviQgEKJh4BPo.jpg	8.1	233.0
+tt0091490	short	Martina's Playhouse	Martina's Playhouse	0	1993	\N	20	\N	5.5	41.0
+tt0093099	short	Going Equipped	Going Equipped	0	1990	\N	5	https://image.tmdb.org/t/p/{width_variable}/6X0yrVj6YpATap4ybpEcimywbPG.jpg	6.0	121.0
+tt0093211	short	Horrorshow	Horrorshow	0	1990	\N	5	\N	5.1	10.0
+tt0093646	short	Nonstop	Nonstop	0	1990	\N	20	https://image.tmdb.org/t/p/{width_variable}/iFIazBvTyM9e2U79RTKmoG3qrzp.jpg	7.9	20.0
+tt0094390	short	Zwisch!	Zwisch!	0	1991	\N	1	https://image.tmdb.org/t/p/{width_variable}/mEzDaxLYnPfl7Vp1iRVgAoFBAZu.jpg	6.2	22.0
+tt0095147	short	Feet of Song	Feet of Song	0	1992	\N	6	https://image.tmdb.org/t/p/{width_variable}/uvZkYcmdV68z0yjMGkQ2TLITzs6.jpg	6.7	90.0
+tt0095229	short	God morgon Gerda Gök	God morgon Gerda Gök	0	1993	\N	7	https://image.tmdb.org/t/p/{width_variable}/bKa44cUbDrMGXqTrV6ZVbKIEDNA.jpg	6.7	21.0
+tt0095571	short	The Making of Monsters	The Making of Monsters	0	1991	\N	35	https://image.tmdb.org/t/p/{width_variable}/zgenzvJ09QuRaduURuBuQzmM4jy.jpg	8.4	41.0
+tt0096035	short	Sapphire Man	Sapphire Man	0	1990	\N	25	\N	\N	\N
+tt0096107	short	Seven Days a Week - CITY LIFE - Warsaw	Seven Days a Week - CITY LIFE - Warsaw	0	1990	\N	18	\N	6.8	605.0
+tt0096254	short	That Burning Question	That Burning Question	0	1990	\N	30	\N	7.0	27.0
+tt0096345	short	Unter Freunden	Unter Freunden	0	1990	\N	15	\N	\N	\N
+tt0096975	short	Bravo Papa 2040	Bravo Papa 2040	0	1992	\N	6	\N	\N	\N
+tt0097057	short	The Child Eater	The Child Eater	0	1990	\N	15	https://image.tmdb.org/t/p/{width_variable}/n75gNLjoIWmsW2WIiWqkRZTJMAs.jpg	6.6	44.0
+tt0097310	short	Ex libris	Ex libris	0	1990	\N	12	\N	6.7	7.0
+tt0097362	short	The First Emperor of China	The First Emperor of China	0	1990	\N	42	https://image.tmdb.org/t/p/{width_variable}/5yQfgwPYCazfLhLoXpxsx0YYlFt.jpg	6.2	102.0
+tt0097436	short	Gisèle Kérozène	Gisèle Kérozène	0	1990	\N	5	https://image.tmdb.org/t/p/{width_variable}/9XrFxCaBwyOxlP9sbFU2nZbiPyZ.jpg	6.0	731.0
+tt0097509	short	The Hill Farm	The Hill Farm	0	1992	\N	18	https://image.tmdb.org/t/p/{width_variable}/2DeO5VwMoHCZ5lUIQwAlJp3e7Fx.jpg	6.7	307.0
+tt0097558	short	Ident	Ident	0	1990	\N	5	https://image.tmdb.org/t/p/{width_variable}/9RzNNJxAuHGrAf4kw35lZ1Ry5mM.jpg	6.5	227.0
+tt0097966	short	Next	Next	0	1990	\N	5	https://image.tmdb.org/t/p/{width_variable}/hlei6WySTYX1KuUHQ7RDCtWurx7.jpg	7.4	277.0
+tt0097970	short	Night Cries: A Rural Tragedy	Night Cries: A Rural Tragedy	0	1990	\N	19	https://image.tmdb.org/t/p/{width_variable}/xtduPHL6hRlR9VEsj6EY2Ua16vr.jpg	6.0	292.0
+tt0098182	short	Rejsen mod en fødsel	Rejsen mod en fødsel	0	1990	\N	8	\N	\N	\N
+tt0098267	short	Schwarzbunt Märchen	Schwarzbunt Märchen	0	1990	\N	11	\N	6.2	46.0
+tt0098392	short	Der Strandpirat	Der Strandpirat	0	1990	\N	14	\N	6.0	10.0
+tt0098634	short	Western	Western	0	1990	\N	2	\N	6.8	56.0
+tt0098962	short	12:01 PM	12:01 PM	0	1991	\N	25	https://image.tmdb.org/t/p/{width_variable}/sBWKO6xnzAxnXCup7JENu15ZIoV.jpg	7.6	1467.0
+tt0098985	short	The Addict	The Addict	0	1990	\N	\N	\N	\N	\N
+tt0098997	short	L'âge de plastic	L'âge de plastic	0	1990	\N	31	\N	6.1	20.0
+tt0099006	short	The Air Globes	The Air Globes	0	1990	\N	\N	\N	8.4	14.0
+tt0099023	short	Les amateurs	Les amateurs	0	1990	\N	26	\N	7.4	5.0
+tt0099035	short	An der Grenze	An der Grenze	0	1991	\N	19	\N	\N	\N
+tt0099058	short	Armenia	Armenia	0	1990	\N	11	\N	6.4	33.0
+tt0099060	short	Arrivederci Roma	Arrivederci Roma	0	1990	\N	26	\N	\N	\N
+tt0099096	short	Baito	Baito	0	1990	\N	\N	\N	\N	\N
+tt0099102	short	Band söker basist	Band söker basist	0	1990	\N	14	\N	\N	\N
+tt0099105	short	Barbie Digs Joe	Barbie Digs Joe	0	1990	\N	\N	\N	6.1	8.0
+tt0099115	short	Die Beichte	Die Beichte	0	1990	\N	11	https://image.tmdb.org/t/p/{width_variable}/ui9yFovcSvj67D2WC9dxrJHfXBR.jpg	5.2	11.0
+tt0099147	short	Blaubart	Blaubart	0	1990	\N	15	\N	\N	\N
+tt0099158	short	Blue Planet	Blue Planet	0	1990	\N	42	https://image.tmdb.org/t/p/{width_variable}/1G33v3homFEZoPzjSxPalnhCE0g.jpg	7.1	795.0
+tt0015414	movie	La tierra de los toros	La tierra de los toros	0	2000	\N	60	https://image.tmdb.org/t/p/{width_variable}/hIPPcKfGfmr435bLWICRxPSfiDR.jpg	5.2	16.0
+tt0015724	movie	Dama de noche	Dama de noche	0	1993	\N	102	https://image.tmdb.org/t/p/{width_variable}/zCmyAl7VG6aZJqWZ7PFfj9e6ToU.jpg	6.1	26.0
+tt0038086	movie	Shiva und die Galgenblume	Shiva und die Galgenblume	0	1993	\N	\N	\N	7.0	27.0
+tt0059325	movie	Born in '45	Jahrgang 45	0	1990	\N	100	https://image.tmdb.org/t/p/{width_variable}/dzi12DaoPcCrE6mCMLggtbqTZYV.jpg	6.4	254.0
+tt0059900	movie	Wenn du groß bist, lieber Adam	Wenn du groß bist, lieber Adam	0	1990	\N	78	https://image.tmdb.org/t/p/{width_variable}/nrVv0B2idMRwzQFlERPZspBFwZA.jpg	6.4	38.0
+tt0065188	movie	Vojtech, receny sirotek	Vojtech, receny sirotek	0	1990	\N	80	https://image.tmdb.org/t/p/{width_variable}/r1FGlDacCdmDauQIbRne5aPV3Zn.jpg	6.4	37.0
+tt0067460	movie	My Kingdom for...	My Kingdom For...	0	1995	\N	85	\N	6.8	26.0
+tt0068494	movie	Domo Arigato	Domo Arigato	0	1990	\N	91	https://image.tmdb.org/t/p/{width_variable}/84SX6npSGvfJPnmNVur7WV9dkam.jpg	4.9	20.0
+tt0070501	movie	Little White Dove	Palomita blanca	0	1992	\N	125	https://image.tmdb.org/t/p/{width_variable}/dWwwtXoKFRq9Bky6fnbo2MIfNRH.jpg	7.0	230.0
+tt0077432	movie	Bloody Hero	Dip huet kei bing	0	1991	\N	85	https://image.tmdb.org/t/p/{width_variable}/vpECh5vvQeL53Ucs1UcwXybkmSN.jpg	5.4	13.0
+tt0080039	movie	A Touch of the Sun	A Touch of the Sun	0	1996	\N	85	https://image.tmdb.org/t/p/{width_variable}/etZnhwLevDOGjOzCiZG2lxZFNUj.jpg	2.7	367.0
+tt0081008	movie	Kommen und gehen	Kommen und gehen	0	1994	\N	50	\N	\N	\N
+tt0081145	movie	Me and the Kid	Me and the Kid	0	1993	\N	94	\N	5.4	286.0
+tt0081436	movie	Rosa Heimat - eine Landillusion	Rosa Heimat - eine Landillusion	0	1990	\N	\N	\N	\N	\N
+tt0081721	movie	Vincent and Me	Vincent et moi	0	1990	\N	100	https://image.tmdb.org/t/p/{width_variable}/4aZPLjmBXQMUwfr5a93k2z3aVvW.jpg	6.2	326.0
+tt0083837	movie	The Dirty Area	The Dirty Area	0	1992	\N	\N	\N	\N	\N
+tt0084015	movie	Goodbye Paradise	Goodbye Paradise	0	1991	\N	101	https://image.tmdb.org/t/p/{width_variable}/hUjT0Hz4fzPIUqBkvR2Zhi3I5mC.jpg	7.3	44.0
+tt0084551	movie	The Buddhist Spell	Pu ti you hun	0	1993	\N	91	https://image.tmdb.org/t/p/{width_variable}/kvCCkvGdodXoxFCiNKasC6BLk9d.jpg	5.5	25.0
+tt0084870	movie	Memories and Confessions	Visita ou Memórias e Confissões	0	1993	\N	73	https://image.tmdb.org/t/p/{width_variable}/1tMlCorBC5SRtQm5Nz6kakABH4.jpg	7.1	397.0
+tt0088267	movie	An Eternal Combat	Tian di xuan men	0	1991	\N	90	https://image.tmdb.org/t/p/{width_variable}/5f5fEbNsh0vlUpx5w8A0b5rBLcT.jpg	5.5	117.0
+tt0089043	movie	The Double Burden: Three Generations of Working Mothers	The Double Burden: Three Generations of Working Mothers	0	1992	\N	56	\N	\N	\N
+tt0090000	movie	Wet Sexes in the Sun	Sexos húmedos al sol	1	1995	\N	\N	\N	\N	\N
+tt0090665	movie	Halfaouine: Boy of the Terraces	Asfour Stah	0	1990	\N	98	https://image.tmdb.org/t/p/{width_variable}/14lvkOnU9dfDKp6PE2TFeCCzVU5.jpg	6.7	1895.0
+tt0090785	movie	Call Me Mr. Brown	Call Me Mr. Brown	0	1990	\N	94	https://image.tmdb.org/t/p/{width_variable}/qseL9xDNNJq0DAdBhoq4OZWgQr.jpg	5.7	51.0
+tt0090869	movie	Comando terrorista	Comando terrorista	0	1990	\N	83	\N	\N	\N
+tt0091899	movie	The Scarlet Scorpion	O Escorpião Escarlate	0	1990	\N	90	https://image.tmdb.org/t/p/{width_variable}/qvqyXbcqYoLMUtu4pPeT5i0WP7s.jpg	6.2	160.0
+tt0092024	movie	El sueño de Tánger	El sueño de Tánger	0	1991	\N	88	https://image.tmdb.org/t/p/{width_variable}/AoQHwDZeXFLWnNAKQfv0HsJjHHG.jpg	7.0	53.0
+tt0092507	movie	Abhimanyu	Abhimanyu	0	1991	\N	140	https://image.tmdb.org/t/p/{width_variable}/maDMkUFxjxdGKVKqJkzmrvWVij2.jpg	7.3	411.0
+tt0092589	movie	Astonished	Astonished	0	1990	\N	93	https://image.tmdb.org/t/p/{width_variable}/Au9uv6dTpzv4OseQi5hR1fMkTxz.jpg	4.4	33.0
+tt0092926	movie	Dragon Hunt	Dragon Hunt	0	1990	\N	90	https://image.tmdb.org/t/p/{width_variable}/pmjwWH6i5BPFFlk36C5dzAaac3I.jpg	3.0	230.0
+tt0092984	movie	Esto es un atraco	Esto es un atraco	0	1991	\N	90	https://image.tmdb.org/t/p/{width_variable}/gvAJfhqbZqAoaN4hzA9htk8QWq3.jpg	4.9	76.0
+tt0093061	movie	Funkytown	Funkytown	0	1998	\N	82	\N	7.7	15.0
+tt0093081	movie	Geld	Geld	0	1990	\N	\N	\N	\N	\N
+tt0093210	movie	La hora 24	La hora 24	0	1990	\N	98	https://image.tmdb.org/t/p/{width_variable}/bbZ0KQvWK0dbwSVH69O8d1eRFXC.jpg	5.5	18.0
+tt0093309	movie	The Ultimate Vampire	Jiang shi zhi zun	0	1991	\N	88	https://image.tmdb.org/t/p/{width_variable}/30dEWag4exYaAygUtvpPwkKs8L4.jpg	6.2	179.0
+tt0093508	movie	Material urbà	Material urbà	0	1990	\N	90	https://image.tmdb.org/t/p/{width_variable}/8avvHHMQypyxFjl5C1sTSdjuCJK.jpg	6.4	9.0
+tt0093572	movie	Moskovskaya elegiya	Moskovskaya elegiya	0	1990	\N	88	https://image.tmdb.org/t/p/{width_variable}/bUraKkwSVleQ2nev9PDuPTDHhbs.jpg	7.3	379.0
+tt0093989	movie	Slaughter in Xian	Xian sha lu	0	1990	\N	115	https://image.tmdb.org/t/p/{width_variable}/7Jj8ByloRYVHnvvGeF3jdfmhLuU.jpg	6.0	17.0
+tt0094004	movie	Soldier of Fortune	Soldier of Fortune	0	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/9IRxPfhOWnctIyC7ByqYZFC0aDu.jpg	5.2	88.0
+tt0094376	movie	Middle Man	Huang jia shi jie zhi: Zhong jian ren	0	1990	\N	94	https://image.tmdb.org/t/p/{width_variable}/dLZG4fLZHe38zP1gv1kVwEtwK4j.jpg	5.6	264.0
+tt0094609	movie	Das achte Gebot	Das achte Gebot	0	1991	\N	95	https://image.tmdb.org/t/p/{width_variable}/wNhgB3HJgJctvaWchbivVrvhFYc.jpg	\N	\N
+tt0094666	movie	Any Man's Death	Any Man's Death	0	1990	\N	108	https://image.tmdb.org/t/p/{width_variable}/rqXdQvWwi47Ddg6yckdTBqTrE4A.jpg	4.3	122.0
+tt0094688	movie	Augen... Blicke	Augen... Blicke	0	1992	\N	77	\N	\N	\N
+tt0094841	movie	The House of Smiles	La casa del sorriso	0	1991	\N	110	https://image.tmdb.org/t/p/{width_variable}/cBhYGT6qFEDZAtB8hEjPb1hzJAC.jpg	6.5	296.0
+tt0094857	movie	Fatal Termination	Chi se da feng bao	0	1990	\N	89	https://image.tmdb.org/t/p/{width_variable}/c6stRKsVwA6SJLaYCAdNncbatQ8.jpg	5.9	133.0
+tt0094874	movie	The Figures from Earth	Chu tu qi bing	0	1990	\N	89	https://image.tmdb.org/t/p/{width_variable}/dFRUZcP9CUEBJCAw9PaQIvqx6Fz.jpg	4.8	14.0
+tt0094900	movie	Committed	Committed	0	1991	\N	90	https://image.tmdb.org/t/p/{width_variable}/zxQPHwFKLkERhSqHVRW4IFRgrTQ.jpg	5.0	238.0
+tt0094926	movie	Curse of the Crystal Eye	Curse of the Crystal Eye	0	1991	\N	73	https://image.tmdb.org/t/p/{width_variable}/iifZWNqYc1SSqYYULi5oOOrgTgr.jpg	4.8	98.0
+tt0094997	movie	Demonia	Demonia	0	1990	\N	88	https://image.tmdb.org/t/p/{width_variable}/oD86JcKm8PgfWzlAjDqTqJSf2S4.jpg	4.6	1886.0
+tt0095006	movie	Destroying Angel	Destroying Angel	0	1990	\N	98	https://image.tmdb.org/t/p/{width_variable}/ffjwFsQulONVAbeHqc9U7Q22H7f.jpg	4.4	40.0
+tt0095095	movie	Emperor of the Bronx	Emperor of the Bronx	0	1990	\N	104	https://image.tmdb.org/t/p/{width_variable}/sVn079Hb0xs89frr13hfxKKytky.jpg	5.0	83.0
+tt0095102	movie	Fallen Couple	Les ennemis de la mafia	0	1995	\N	87	\N	\N	\N
+tt0095111	movie	The Escape	El heroob	0	1991	\N	122	https://image.tmdb.org/t/p/{width_variable}/ffRje8mcFeapkyg8glUqEzG3Kqf.jpg	7.8	1017.0
+tt0095201	movie	Gaspard et fil$	Gaspard et fil$	0	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/oALbWuFdknUxHbccSrire1mfoDA.jpg	5.5	25.0
+tt0095290	movie	Lethal Angels	Hei hai ba wang hua	0	1990	\N	91	https://image.tmdb.org/t/p/{width_variable}/jJJnTmNlBmSXLDRNliWp2kwYbIv.jpg	5.7	46.0
+tt0095335	movie	The Vengeance	Gun gun hong chun	0	1992	\N	87	https://image.tmdb.org/t/p/{width_variable}/wimCi8k3ZyAaSXXFe0EcDXiVqpa.jpg	4.3	12.0
+tt0095394	movie	Jericho	Jericó	0	1991	\N	90	https://image.tmdb.org/t/p/{width_variable}/iWcz2qDDChLNTO9zpHFIPSVeTNv.jpg	7.1	177.0
+tt0095450	movie	King of Chess	Qi wang	0	1991	\N	109	https://image.tmdb.org/t/p/{width_variable}/uwN8gymQqNDGe1QG6FNNiyfhq2Q.jpg	6.9	361.0
+tt0095469	movie	King of Stanley Market	Ku jia tian xia	0	1998	\N	102	https://image.tmdb.org/t/p/{width_variable}/o5G5Ij28ANfKt4ZQuuuDzrGX8Te.jpg	6.5	40.0
+tt0095745	movie	Ninja Vengeance	Ninja Vengeance	0	1993	\N	87	https://image.tmdb.org/t/p/{width_variable}/oQWVhPn9Pb7COlsInXyjqh1YKOL.jpg	2.5	335.0
+tt0095761	movie	La nuit de l'océan	La nuit de l'océan	0	1992	\N	85	https://image.tmdb.org/t/p/{width_variable}/2rI2XvkgWF4FE08QtRSdibsmeiH.jpg	5.1	24.0
+tt0095831	movie	Los pasos de Ana	Los pasos de Ana	0	1991	\N	90	\N	4.2	7.0
+tt0095840	movie	Payback	Payback	0	1990	\N	90	https://image.tmdb.org/t/p/{width_variable}/tx7etxtV5CIXIunWLUS6907rjog.jpg	4.3	83.0
+tt0095902	movie	Primo Baby	Primo Baby	0	1990	\N	107	https://image.tmdb.org/t/p/{width_variable}/5dbDZUgT0WichCldsMYEdSG0dKS.jpg	6.7	52.0
+tt0096025	movie	Sailors Don't Cry	Sailors Don't Cry	0	1990	\N	90	https://image.tmdb.org/t/p/{width_variable}/ulFQhIbj8cH2MI8IrdjmWn8DbbO.jpg	5.6	76.0
+tt0096038	movie	Saturday Night Special	Saturday Night Special	1	1992	\N	84	\N	6.4	21.0
+tt0096075	movie	Sexpot	Sexpot	0	1990	\N	95	https://image.tmdb.org/t/p/{width_variable}/c91rGGHbDDvpoWO5ypvBmn14N5Y.jpg	5.1	57.0
+tt0096090	movie	Leung seung ching yuen	Leung seung ching yuen	0	1993	\N	87	https://image.tmdb.org/t/p/{width_variable}/xtKNjFQYDWzXEoAuQwbvHNCVzEL.jpg	5.2	20.0
+tt0096154	movie	Spies Inc.	Spies Inc.	0	1992	\N	93	https://image.tmdb.org/t/p/{width_variable}/rnNQAm082uMTdhq1aB8uxJjNS8s.jpg	4.0	122.0
+tt0096174	movie	Stela	Stela	0	1990	\N	86	https://image.tmdb.org/t/p/{width_variable}/zfAP9kPA78PpNiC8vq09fRPmHAz.jpg	6.4	94.0
+tt0096177	movie	Still Life: The Fine Art of Murder	Still Life	0	1990	\N	83	https://image.tmdb.org/t/p/{width_variable}/z0rEB95nsynSWpxMyzLMNcFLTBR.jpg	4.5	107.0
+tt0096222	movie	To Miss with Love	Tao xue wai zhuan	0	1992	\N	90	https://image.tmdb.org/t/p/{width_variable}/AnNpiNIOOTfShfJIUIMErkC0hgT.jpg	5.4	91.0
+tt0096346	movie	Der Untergang des goldenen Webstuhls	Der Untergang des goldenen Webstuhls	0	1993	\N	92	\N	\N	\N
+tt0096397	movie	Vita da cane	Vita da cane	0	1992	\N	111	\N	6.0	10.0
+tt0096405	movie	Vroom	Vroom	0	1990	\N	89	https://image.tmdb.org/t/p/{width_variable}/65g8nATrSAjinT3hWCbdDv8VxxB.jpg	5.1	180.0
+tt0096469	movie	Midnight Angel	Wu ye tian shi	0	1990	\N	90	https://image.tmdb.org/t/p/{width_variable}/riitXDgst2c8EZRorOO81CxDCIV.jpg	5.2	29.0
+tt0096500	movie	Zbabelec	Zbabelec	0	1990	\N	52	\N	6.3	13.0
+tt0096513	movie	Outlaw Brothers	Jui gaai chak paak dong	0	1990	\N	97	https://image.tmdb.org/t/p/{width_variable}/4PJRTdfnw29tfMXDq2Ro25eRqrr.jpg	6.7	242.0
+tt0096749	movie	Abatjour 2	Abatjour 2	1	1990	\N	100	https://image.tmdb.org/t/p/{width_variable}/oA5faYjAPTu6lRx3kSRaicduOIg.jpg	5.2	30.0
+tt0096752	movie	Abrahams Gold	Abrahams Gold	0	1990	\N	95	\N	7.9	86.0
+tt0096763	movie	Adultery	Adultery	1	1990	\N	81	https://image.tmdb.org/t/p/{width_variable}/fs8Mb1MS4fgHTRMBxy20Ihq0bct.jpg	5.9	29.0
+tt0096767	movie	African Express	African Express	0	1990	\N	94	https://image.tmdb.org/t/p/{width_variable}/mncUXu7Vy3sdNddToizfCjMx5wN.jpg	3.4	64.0
+tt0096775	movie	Agneekaal	Agneekaal	0	1990	\N	161	https://image.tmdb.org/t/p/{width_variable}/rfGwUdHv1swc5q0QMNS7qeSbbS2.jpg	5.1	35.0
+tt0096780	movie	Das Alaska Syndrom	Das Alaska Syndrom	0	1992	\N	\N	https://image.tmdb.org/t/p/{width_variable}/bDcdfN7ftVDHfD26ZxQMlrocoZX.jpg	\N	\N
+tt0096786	movie	Alienator	Alienator	0	1990	\N	93	https://image.tmdb.org/t/p/{width_variable}/3kem76xYVBDp1P8j8et545lwoAH.jpg	3.2	1784.0
+tt0096797	movie	Malù e l'amante	Malù e l'amante	0	1991	\N	104	https://image.tmdb.org/t/p/{width_variable}/w1V46IdsOonF19TTqRl6KgVGZTx.jpg	5.5	92.0
+tt0096811	movie	Fatal Vacation	On lok jin cheung	0	1990	\N	96	https://image.tmdb.org/t/p/{width_variable}/5Qiiq88ynNvufkGUmTQ2Lc5Yejs.jpg	6.3	230.0
+tt0096817	movie	Angels	Los ángeles	0	1990	\N	95	https://image.tmdb.org/t/p/{width_variable}/xPlAUJMwwGccFxcDM0AltiiOpAp.jpg	5.8	29.0
+tt0096825	movie	Any Time, Any Play	Any Time, Any Play	0	1990	\N	96	https://image.tmdb.org/t/p/{width_variable}/T9YemQ1rEt6JIe4P0HTymC0gGq.jpg	3.4	53.0
+tt0096830	movie	Aquí huele a muerto... (¡pues yo no he sido!)	Aquí huele a muerto... (¡pues yo no he sido!)	0	1990	\N	88	https://image.tmdb.org/t/p/{width_variable}/fuB7IKCoJr0w3LG4BRiET5YoLbZ.jpg	3.9	387.0
+tt0096837	movie	The Assassin	The Assassin	0	1990	\N	91	https://image.tmdb.org/t/p/{width_variable}/dnZJ82cp148EZyOvlGevIembqnp.jpg	4.6	85.0
+tt0096838	movie	L'assassina	L'assassina	0	1990	\N	90	\N	\N	\N
+tt0096845	movie	Atlantic Rhapsody - 52 myndir úr Tórshavn	Atlantic Rhapsody - 52 myndir úr Tórshavn	0	1990	\N	80	https://image.tmdb.org/t/p/{width_variable}/6Kd15R5fRF5rTB9DhDbOszMisCC.jpg	6.2	61.0
+tt0096857	movie	L'Autrichienne	L'Autrichienne	0	1990	\N	98	https://image.tmdb.org/t/p/{width_variable}/ha1i7utOUooxiXPNYyv8hk7BH0d.jpg	6.0	121.0
+tt0096858	movie	Avariya - doch menta	Avariya - doch menta	0	1990	\N	99	https://image.tmdb.org/t/p/{width_variable}/mdUqY03XbVgbCRiOozJbpfp8hei.jpg	6.6	512.0
+tt0096859	movie	L'avaro	L'avaro	0	1990	\N	117	https://image.tmdb.org/t/p/{width_variable}/oyZyiwgheW5IdbwZhaf0AvCSoI6.jpg	6.0	351.0
+tt0096860	movie	Extraordinary Adventure of an Ordinary Papa	L'aventure extraordinaire d'un papa peu ordinaire	0	1990	\N	98	\N	3.2	36.0
+tt0096871	movie	Baby Blood	Baby Blood	0	1990	\N	88	https://image.tmdb.org/t/p/{width_variable}/hSPq7k7rbxAH7KTVxRmy98OIsq7.jpg	6.0	2206.0
+tt0096875	movie	Catchfire	Catchfire	0	1990	\N	116	https://image.tmdb.org/t/p/{width_variable}/jHec0NYYhzlUE3CUyYnI70YNih.jpg	5.3	4335.0
+tt0096877	movie	Countdown to Esmeralda Bay	La bahía esmeralda	0	1990	\N	90	https://image.tmdb.org/t/p/{width_variable}/gjnb09vzG4WV8BCer3viifKyO5g.jpg	3.6	148.0
+tt0096879	movie	Bal na dworcu w Koluszkach	Bal na dworcu w Koluszkach	0	1990	\N	91	https://image.tmdb.org/t/p/{width_variable}/o8Fsf4JZOOLCR3eMVG2rCUjYX7y.jpg	5.8	43.0
+tt0096883	movie	Ballbuster	Ballbuster	0	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/biiucXyfUEdWqE8jqKkRlZ97TSR.jpg	4.8	37.0
+tt0096899	movie	Bazar Viena	Bazar Viena	0	1990	\N	\N	\N	\N	\N
+tt0096910	movie	Ben Webster: The Brute and the Beautiful	Ben Webster: The Brute and the Beautiful	0	1990	\N	60	\N	4.9	20.0
+tt0096937	movie	Blagorodnyy razboynik Vladimir Dubrovskiy	Blagorodnyy razboynik Vladimir Dubrovskiy	0	1990	\N	104	https://image.tmdb.org/t/p/{width_variable}/5WNptw5CdQhcgDOi1Siv1EnBfZi.jpg	6.7	109.0
+tt0096954	movie	Bloodmoon	Bloodmoon	0	1990	\N	100	https://image.tmdb.org/t/p/{width_variable}/53kSkSWDgtw2X6bAdOD8nvvSZ2w.jpg	4.5	586.0
+tt0096984	movie	Brodyachiy avtobus	Brodyachiy avtobus	0	1990	\N	98	https://image.tmdb.org/t/p/{width_variable}/yhbVS05SLyDXtiuBabLbzfWtP3S.jpg	6.7	32.0
+tt0096992	movie	Bumazhnye glaza Prishvina	Bumazhnye glaza Prishvina	0	1990	\N	146	https://image.tmdb.org/t/p/{width_variable}/ox9e3YFFonuSmlTVc24hqghw1k8.jpg	6.8	30.0
+tt0096995	movie	Burndown	Burndown	0	1990	\N	86	https://image.tmdb.org/t/p/{width_variable}/lmLvUJQVO7z5x3y3qGyb59uKrXW.jpg	3.5	142.0
+tt0097004	movie	Caged Fury	Caged Fury	0	1990	\N	95	https://image.tmdb.org/t/p/{width_variable}/bkDD3t7z5mIOOb7WLDMieF9nVnL.jpg	4.0	1095.0
+tt0097049	movie	Chastnyy detektiv, ili operatsiya 'Kooperatsiya'	Chastnyy detektiv, ili operatsiya 'Kooperatsiya'	0	1990	\N	94	https://image.tmdb.org/t/p/{width_variable}/k2h2remN3OmtwtRvm20MbV6RlY1.jpg	5.3	530.0
+tt0097062	movie	Chyornaya roza - emblema pechali, krasnaya roza - emblema lyubvi	Chyornaya roza - emblema pechali, krasnaya roza - emblema lyubvi	0	1990	\N	131	https://image.tmdb.org/t/p/{width_variable}/a3gpUtylwVqe7H0TaoxkF5dQxr2.jpg	7.2	735.0
+tt0097066	movie	Citizen Tania	Citizen Tania	0	1997	\N	87	https://image.tmdb.org/t/p/{width_variable}/zwAi2WHeYK9KEFes2ra7jGqvQM9.jpg	7.6	32.0
+tt0097079	movie	Cold Justice	Cold Justice	0	1991	\N	105	https://image.tmdb.org/t/p/{width_variable}/9QENFCzXJkFVYUJxZXrya3tW69O.jpg	5.8	83.0
+tt0097106	movie	A Tale of Springtime	Conte de printemps	0	1990	\N	108	https://image.tmdb.org/t/p/{width_variable}/bP2qpuzQPBBBJa4kOhvLvOOiASq.jpg	7.1	5464.0
+tt0097111	movie	Go to Work, Vagabond II	Vai Trabalhar, Vagabundo II	0	1991	\N	97	https://image.tmdb.org/t/p/{width_variable}/tEwuW06aaDkWKqwRUFMI7TT61bS.jpg	6.3	46.0
+tt0097115	movie	Courage Mountain	Courage Mountain	0	1990	\N	94	https://image.tmdb.org/t/p/{width_variable}/lzwvJ2zIH5QUG21NH7qyRtb1UVa.jpg	5.7	901.0
+tt0097122	movie	Um Crime de Luxo	Um Crime de Luxo	0	1991	\N	87	\N	6.6	10.0
+tt0097129	movie	Crossing the Line	Crossing the Line	0	1990	\N	94	\N	5.0	128.0
+tt0097140	movie	Cézanne - Conversation with Joachim Gasquet	Cézanne - Dialogue avec Joachim Gasquet (Les éditions Bernheim-Jeune)	0	1990	\N	52	https://image.tmdb.org/t/p/{width_variable}/o3Ak7yJFHqV4XoqZNGC5Fk0HnY4.jpg	6.6	115.0
+tt0097176	movie	Deceit	Deceit	0	1990	\N	90	https://image.tmdb.org/t/p/{width_variable}/tegEsG903PYSrGFgPl8BlEV8cW2.jpg	5.1	757.0
+tt0097184	movie	Demonstone	Demonstone	0	1990	\N	88	https://image.tmdb.org/t/p/{width_variable}/ss3j3LUtDyEtsZmBBpM8p301Gi4.jpg	4.7	210.0
+tt0097204	movie	Dilemma	Dilemma	0	1990	\N	97	https://image.tmdb.org/t/p/{width_variable}/nklscVAfveixUCFCC0uBuxV3uIU.jpg	4.3	31.0
+tt0097253	movie	Deja vu	Deja vu	0	1990	\N	108	https://image.tmdb.org/t/p/{width_variable}/93lIIZ1zUBES3nseNUcETUUof4m.jpg	7.5	1489.0
+tt0097259	movie	Easy Kill	Easy Kill	0	1990	\N	89	https://image.tmdb.org/t/p/{width_variable}/giMI7jryuTGyQGsLUrCoZYkmYKm.jpg	3.9	109.0
+tt0097280	movie	Engrazia	Engrazia	0	1991	\N	73	\N	\N	\N
+tt0097298	movie	Eternity	Eternity	0	1990	\N	110	https://image.tmdb.org/t/p/{width_variable}/3WjsHN0O77NkqW7TAPu881cb4Gr.jpg	2.7	187.0
+tt0097318	movie	Eye of the Widow	Eye of the Widow	0	1991	\N	95	https://image.tmdb.org/t/p/{width_variable}/2hCLBZ4NFlaYtEkXiwcitRCrfmv.jpg	3.8	99.0
+tt0097339	movie	Father	Father	0	1990	\N	100	https://image.tmdb.org/t/p/{width_variable}/cp4aTFLb2QiOgicW4St2mAwCBKp.jpg	7.0	176.0
+tt0097348	movie	The Unmatchable Match	Fung yue tung lo	0	1990	\N	98	https://image.tmdb.org/t/p/{width_variable}/hMQI24C9pOssRrPve60YkGoQmxi.jpg	6.2	372.0
+tt0097365	movie	Flesh Gordon Meets the Cosmic Cheerleaders	Flesh Gordon Meets the Cosmic Cheerleaders	0	1990	\N	102	https://image.tmdb.org/t/p/{width_variable}/mHdkAxWjPNjwHwMgNkC68ZBazh1.jpg	3.7	1668.0
+tt0097394	movie	The Fortune Code	Fu gui bing tuan	0	1990	\N	89	https://image.tmdb.org/t/p/{width_variable}/fZH9zzIiEyRJYIAGqAL0WafBoy3.jpg	6.0	204.0
+tt0097399	movie	Fuflo	Fuflo	0	1990	\N	94	https://image.tmdb.org/t/p/{width_variable}/mYtdcKFSNBUQfI0DQ88xILefAYy.jpg	5.2	8.0
+tt0097405	movie	Fathers' Day	La fête des pères	0	1990	\N	83	https://image.tmdb.org/t/p/{width_variable}/5ED3z3rJVNEE1AbVM6qo3VUsQKc.jpg	4.6	119.0
+tt0097416	movie	Kadhalan	Kadhalan	0	1994	\N	168	https://image.tmdb.org/t/p/{width_variable}/d2yRRfDFH92hoRdyH8F9ZqIwO03.jpg	7.1	2087.0
+tt0097475	movie	A halálraítélt	A halálraítélt	0	1990	\N	91	https://image.tmdb.org/t/p/{width_variable}/wK6Mo53GCl2I1AbvTIW0PD42Qqc.jpg	7.1	28.0
+tt0097479	movie	Hard Days, Hard Nights	Hard Days, Hard Nights	0	1990	\N	103	https://image.tmdb.org/t/p/{width_variable}/teHlw06R4E044UMVn74GTLAauTD.jpg	5.8	21.0
+tt0097505	movie	High Finance Woman	High Finance Woman	0	1990	\N	100	https://image.tmdb.org/t/p/{width_variable}/virm4TE2EjfygRnbwkTKE5esnIL.jpg	4.1	145.0
+tt0097506	movie	High Score	High Score	0	1990	\N	93	\N	5.8	71.0
+tt0097516	movie	Hollywood Boulevard II	Hollywood Boulevard II	0	1990	\N	82	https://image.tmdb.org/t/p/{width_variable}/nV5e99uoJP2UMi9h0EFvpot5ZBf.jpg	5.3	114.0
+tt0097519	movie	The Neon Man	L'home de neó	0	1991	\N	100	\N	5.7	11.0
+tt0097525	movie	Hopnick	Hopnick	0	1990	\N	60	https://image.tmdb.org/t/p/{width_variable}/1wbQMD4O56d0zw143YxjBsd3gD9.jpg	5.6	37.0
+tt0097535	movie	Hu dan nu er hong	Hu dan nu er hong	0	1990	\N	92	https://image.tmdb.org/t/p/{width_variable}/2n2SRrG2HdPViuY7qdSD7188GA2.jpg	6.5	27.0
+tt0097542	movie	The Trace of Lynx	Las huellas del lince	0	1990	\N	83	\N	5.4	13.0
+tt0097550	movie	I Bought a Vampire Motorcycle	I Bought a Vampire Motorcycle	0	1990	\N	101	https://image.tmdb.org/t/p/{width_variable}/dCbFIzq64uUo5ZR4W3vLFhaJenk.jpg	5.5	1426.0
+tt0097559	movie	Idomeneo	Idomeneo	0	1991	\N	\N	\N	\N	\N
+tt0097566	movie	Im Süden meiner Seele	Im Süden meiner Seele	0	1996	\N	\N	\N	\N	\N
+tt0097571	movie	In Fading Light	In Fading Light	0	1990	\N	103	https://image.tmdb.org/t/p/{width_variable}/f83lyKDOLb5S5lP46LUNTeoeLq9.jpg	7.6	25.0
+tt0097573	movie	In the Cold of the Night	In the Cold of the Night	0	1990	\N	112	https://image.tmdb.org/t/p/{width_variable}/jnV8JNq6h3X3IEhXYxdou8P82ma.jpg	4.6	1744.0
+tt0097578	movie	Inimene, keda polnud	Inimene, keda polnud	0	1990	\N	84	https://image.tmdb.org/t/p/{width_variable}/muOB5BHpGafdB2E2862gzqd534W.jpg	6.7	66.0
+tt0097585	movie	Bathroom Intimacy	Intimidades de un cuarto de baño	0	1991	\N	78	https://image.tmdb.org/t/p/{width_variable}/3WtGkg7BL45kZfhrzHdxc6AaFZS.jpg	6.7	101.0
+tt0097615	movie	Je t'ai dans la peau	Je t'ai dans la peau	0	1990	\N	120	\N	6.9	14.0
+tt0097619	movie	The Fun, the Luck & the Tycoon	Gat seng gung ziu	0	1990	\N	90	https://image.tmdb.org/t/p/{width_variable}/xHbfplhwbvggsDZzyknxcI6vHfI.jpg	6.2	298.0
+tt0097631	movie	Hitz	Judgement	0	1992	\N	85	https://image.tmdb.org/t/p/{width_variable}/4fYykFD2lyc1Xp2aIoHIw6TLwTR.jpg	4.2	159.0
+tt0097638	movie	Happy Ghost 4	Hoi sum gwai gau hoi sum gwai	0	1990	\N	88	https://image.tmdb.org/t/p/{width_variable}/stDAXKGuNrVygILnwgO0dOBhafx.jpg	6.1	209.0
+tt0097644	movie	Kapital, czyli jak zrobic pieniadze w Polsce	Kapital, czyli jak zrobic pieniadze w Polsce	0	1990	\N	105	https://image.tmdb.org/t/p/{width_variable}/zcQ4kRmG8th1raDxGAO4O3eEukk.jpg	5.8	75.0
+tt0097655	movie	Keaton's Cop	Keaton's Cop	0	1990	\N	100	https://image.tmdb.org/t/p/{width_variable}/vwu5o1mmte1PRywOCog85egI1D7.jpg	4.2	250.0
+tt0097666	movie	Killer!	Killer!	0	1990	\N	80	https://image.tmdb.org/t/p/{width_variable}/lVQN5QEhMW1CoR96mrKyy7wiAp9.jpg	6.1	85.0
+tt0097668	movie	King of the Wind	King of the Wind	0	1990	\N	103	https://image.tmdb.org/t/p/{width_variable}/5cx8zf3MTHJPGnPENOWavNlrr07.jpg	6.4	210.0
+tt0097683	movie	Kramarz	Kramarz	0	1990	\N	90	https://image.tmdb.org/t/p/{width_variable}/eP6OGb2n9OG1kks8uA8tXVdr6G7.jpg	6.3	66.0
+tt0097697	movie	Könnyü vér	Könnyü vér	0	1990	\N	86	\N	6.0	37.0
+tt0097720	movie	Border Shootout	Border Shootout	0	1990	\N	110	\N	3.7	163.0
+tt0097726	movie	Legion of Iron	Legion of Iron	0	1990	\N	90	https://image.tmdb.org/t/p/{width_variable}/6rrsiLrUGcQo6WZkjaHciPIEhGm.jpg	4.0	187.0
+tt0097738	movie	The Legend of the Mask	La leyenda de una máscara	0	1990	\N	95	https://image.tmdb.org/t/p/{width_variable}/1369HfgJ8LjeEQljaoxEbKrVyB7.jpg	5.9	70.0
+tt0097743	movie	The Anna Akhmatova File	Lichnoe delo Anny Akhmatovoy	0	1990	\N	65	https://image.tmdb.org/t/p/{width_variable}/wzRxUskS8pgqpsqPb0YXjsrJajd.jpg	6.1	32.0
+tt0097748	movie	Liebe das Leben - Lebe den Tod	Liebe das Leben - Lebe den Tod	0	1990	\N	81	\N	\N	\N
+tt0097765	movie	A Summer to Remember	Ljeto za sjecanje	0	1990	\N	105	https://image.tmdb.org/t/p/{width_variable}/rYmzmaePePOUanG8NLN7tXSBi3O.jpg	6.4	52.0
+tt0097769	movie	The Local Stigmatic	The Local Stigmatic	0	1990	\N	56	https://image.tmdb.org/t/p/{width_variable}/iP1q3x2EIcmq6jRem9AwpVEjGZw.jpg	5.6	1642.0
+tt0097775	movie	The Master	Long hang tian xia	0	1992	\N	92	https://image.tmdb.org/t/p/{width_variable}/j9Eji1A8AyelmdHCJTlVBCZziGK.jpg	5.7	2930.0
+tt0097802	movie	Mado, poste restante	Mado, poste restante	0	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/1VtlP8bdUaU38nZTNNQImIHNg8.jpg	6.8	86.0
+tt0097803	movie	Il maestro	Il maestro	0	1990	\N	90	https://image.tmdb.org/t/p/{width_variable}/t7hklCQOrFyiky52kkIYb39zWBy.jpg	5.7	89.0
+tt0097820	movie	Maman	Maman	0	1990	\N	85	https://image.tmdb.org/t/p/{width_variable}/iuudIrvDm0CRYcEEhKzO2lYtQDu.jpg	4.4	26.0
+tt0097833	movie	March Caresses	Marcowe migdaly	0	1990	\N	89	https://image.tmdb.org/t/p/{width_variable}/oHEIRVxb3WP2MZSMmvJxbgzeOO2.jpg	6.6	114.0
+tt0097848	movie	Mother	Mat	0	1990	\N	200	https://image.tmdb.org/t/p/{width_variable}/rZJS8XHcbDjWMeAQlXPNElgnVoD.jpg	7.5	184.0
+tt0097849	movie	Mat Iisusa	Mat Iisusa	0	1991	\N	91	\N	5.1	12.0
+tt0097850	movie	¡Maten a Chinto!	¡Maten a Chinto!	0	1990	\N	85	https://image.tmdb.org/t/p/{width_variable}/fYfmXbpTToXhOatkuqKEUF1DQyW.jpg	6.9	32.0
+tt0097851	movie	Mathilukal	Mathilukal	0	1990	\N	120	https://image.tmdb.org/t/p/{width_variable}/wd66oMitPeU7sTJbT6iEYSI28FT.jpg	8.3	1577.0
+tt0097853	movie	Les matins chagrins	Les matins chagrins	0	1990	\N	95	\N	\N	\N
+tt0097855	movie	Maxantimo	Maxantimo	0	1990	\N	93	\N	\N	\N
+tt0097863	movie	Men in Love	Men in Love	0	1990	\N	85	https://image.tmdb.org/t/p/{width_variable}/ekCSBIsrEzd9DDap8Ld1Is2wlTi.jpg	3.7	50.0
+tt0097864	movie	Meng gui hu li jing	Meng gui hu li jing	0	1991	\N	91	https://image.tmdb.org/t/p/{width_variable}/4LZAlrRCCZwPvCWFTiNhMq5vwWY.jpg	5.0	46.0
+tt0097874	movie	Metamorphosis	Metamorphosis	0	1990	\N	96	https://image.tmdb.org/t/p/{width_variable}/5JD2gl3IKH2B8mueEjD7KGvVeVu.jpg	3.9	1038.0
+tt0097875	movie	Meteo	Meteo	0	1990	\N	98	https://image.tmdb.org/t/p/{width_variable}/oubOjDkUJrVCfwk1dOahOp1UNTG.jpg	6.7	344.0
+tt0097884	movie	May Fools	Milou en mai	0	1990	\N	107	https://image.tmdb.org/t/p/{width_variable}/bnlsDTtlgvTnpLXg8iNav9b0xXE.jpg	7.2	3339.0
+tt0097893	movie	Miss Missouri	Miss Missouri	0	1990	\N	103	https://image.tmdb.org/t/p/{width_variable}/nerAnfsS8I19ePknJhKARLl8KAQ.jpg	5.2	67.0
+tt0097894	movie	The Missing Reel	The Missing Reel	0	1990	\N	75	\N	6.5	13.0
+tt0097910	movie	Moon 44	Moon 44	0	1990	\N	98	https://image.tmdb.org/t/p/{width_variable}/ia7Ew8QXiN1Urh63xYFYZ7ZfF2t.jpg	5.0	5558.0
+tt0097912	movie	Morir en el golfo	Morir en el golfo	0	1990	\N	93	https://image.tmdb.org/t/p/{width_variable}/dY542pyeiZmqQvehu3QapDKKxRn.jpg	6.9	62.0
+tt0097919	movie	Motivsuche	Motivsuche	0	1990	\N	106	https://image.tmdb.org/t/p/{width_variable}/oY8lp2wCvJeIC5pXwpFMitvliVu.jpg	5.7	15.0
+tt0097928	movie	Murder Blues	Murder Blues	0	1991	\N	90	\N	5.0	65.0
+tt0097949	movie	Märkische Heide, märkischer Sand	Märkische Heide, märkischer Sand	0	1990	\N	58	https://image.tmdb.org/t/p/{width_variable}/hxl9TwLZBmCfXhrYI0ZAcf0Agil.jpg	8.5	12.0
+tt0097968	movie	Nezný barbar	Nezný barbar	0	1990	\N	88	https://image.tmdb.org/t/p/{width_variable}/cHeTortlUBlsQNL5qISOauIdmON.jpg	7.3	98.0
+tt0097979	movie	Nightdreams II	Nightdreams II	1	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/4iwBzeRJwLzO6CTfnDabUGibsgE.jpg	6.0	139.0
+tt0097984	movie	Ninja in Ancient China	Shen tong	0	1993	\N	92	https://image.tmdb.org/t/p/{width_variable}/cidqGNInwlqt6p14zQf2guS3B0h.jpg	5.0	40.0
+tt0098004	movie	Nochevala tuchka zolotaya...	Nochevala tuchka zolotaya...	0	1990	\N	97	https://image.tmdb.org/t/p/{width_variable}/iGt9LbB8qq63gLi34C206ZPqZKW.jpg	7.1	39.0
+tt0098018	movie	O, xiangxue	O, xiangxue	0	1991	\N	89	https://image.tmdb.org/t/p/{width_variable}/iNEjtEsJwqVuAcQ55OwUEN3Rfsg.jpg	8.1	15.0
+tt0098030	movie	Ono	Ono	0	1990	\N	124	https://image.tmdb.org/t/p/{width_variable}/7EVGJJX3XZfS9oOFF8SxBGv1BBQ.jpg	6.7	222.0
+tt0098043	movie	Out of Sight, Out of Mind	Out of Sight, Out of Mind	0	1990	\N	94	https://image.tmdb.org/t/p/{width_variable}/3k9sUU05YHRcg473ylDg8bww96r.jpg	3.4	298.0
+tt0098050	movie	Ovejas negras	Ovejas negras	0	1990	\N	84	https://image.tmdb.org/t/p/{width_variable}/yC2Xt9vqWzOkOoqNL8smFcpQXCW.jpg	5.8	113.0
+tt0098063	movie	Paprika	Paprika	0	1991	\N	99	https://image.tmdb.org/t/p/{width_variable}/7d8VB7xZcsjClsE6JaUr8BCbkCh.jpg	5.5	4450.0
+tt0098064	movie	Pareja enloquecida busca madre de alquiler	Pareja enloquecida busca madre de alquiler	0	1990	\N	97	https://image.tmdb.org/t/p/{width_variable}/wqEnYz4ZG43xMm6DXXoJcnL51de.jpg	4.3	33.0
+tt0098070	movie	Passi d'amore	Passi d'amore	0	1990	\N	100	\N	6.4	13.0
+tt0098077	movie	Peraustrínia 2004	Peraustrínia 2004	0	1990	\N	75	https://image.tmdb.org/t/p/{width_variable}/362GMncHwaW8PPDOxbk1BcZv0Aa.jpg	7.3	49.0
+tt0098100	movie	The Platinum Triangle	The Platinum Triangle	0	1990	\N	91	https://image.tmdb.org/t/p/{width_variable}/x5gUe52R0VpTHgTSYsHhI2wZh4T.jpg	5.1	40.0
+tt0098136	movie	Prom Night III: The Last Kiss	Prom Night III: The Last Kiss	0	1990	\N	97	https://image.tmdb.org/t/p/{width_variable}/bJOpzoUXeYhruTAc3PBbvKAeLpd.jpg	4.6	2445.0
+tt0098139	movie	Warsaw Bridge	Pont de Varsòvia	0	1990	\N	85	https://image.tmdb.org/t/p/{width_variable}/41tZnYwZRUKsv4U5Sw5Caz4uRVE.jpg	6.6	334.0
+tt0098144	movie	La punyalada	La punyalada	0	1990	\N	117	\N	6.7	16.0
+tt0098150	movie	Magic Cop	Qu mo jing cha	0	1990	\N	87	https://image.tmdb.org/t/p/{width_variable}/zvRCQkDUmNzaTxUiVqeBiyWLGgZ.jpg	6.8	649.0
+tt0098172	movie	Reason to Die	Reason to Die	0	1990	\N	87	https://image.tmdb.org/t/p/{width_variable}/onJa3Jccf3mvKzJb8d0XfXgYQ8y.jpg	4.8	69.0
+tt0098181	movie	Reise ohne Wiederkehr	Reise ohne Wiederkehr	0	1991	\N	109	\N	5.2	12.0
+tt0098199	movie	The Revenger	The Revenger	0	1990	\N	87	https://image.tmdb.org/t/p/{width_variable}/uQG8TvVm3hzYA1uhmEoQMV4GKwk.jpg	5.0	378.0
+tt0098211	movie	Cyber-C.H.I.C.	Cyber-C.H.I.C.	0	1990	\N	102	https://image.tmdb.org/t/p/{width_variable}/tOwBrd7lzhuEQoK2OaiGNcuWTRB.jpg	2.4	334.0
+tt0098244	movie	Saturday, Sunday and Monday	Sabato, domenica e lunedì	0	1990	\N	119	https://image.tmdb.org/t/p/{width_variable}/yj9J3pSPtsYQ7SVJ4XEgYz46vEk.jpg	6.4	265.0
+tt0098256	movie	Sauna	Sauna	0	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/3X1ZLhQc5kZ5F1iimS2QWbcm0SM.jpg	3.5	19.0
+tt0098278	movie	Secret Scandal	Scandalo segreto	0	1990	\N	85	https://image.tmdb.org/t/p/{width_variable}/oYHchrYZtqgi66Y8a6IJnOPEvqn.jpg	5.5	41.0
+tt0098294	movie	La settimana della sfinge	La settimana della sfinge	0	1990	\N	102	https://image.tmdb.org/t/p/{width_variable}/8LHAsBQK44Vknr5Y3HdMaC4jVwp.jpg	6.3	87.0
+tt0098318	movie	Shigatse: Eine Spritze kommt selten allein	Shigatse: Eine Spritze kommt selten allein	0	1990	\N	94	\N	\N	\N
+tt0098344	movie	Skinned Alive	Skinned Alive	0	1990	\N	77	https://image.tmdb.org/t/p/{width_variable}/f11qtJWyajyuKRt0r3UBdbbuqpH.jpg	3.7	667.0
+tt0098372	movie	Spirit of the Eagle	Spirit of the Eagle	0	1991	\N	93	https://image.tmdb.org/t/p/{width_variable}/rFgSwinhebgrvQdXMIJRFShAudc.jpg	5.4	179.0
+tt0098377	movie	The Spring	The Spring	0	1990	\N	102	\N	4.7	107.0
+tt0098405	movie	Stuk v dver	Stuk v dver	0	1990	\N	80	\N	6.1	13.0
+tt0098422	movie	The Sword of Bushido	The Sword of Bushido	0	1990	\N	104	https://image.tmdb.org/t/p/{width_variable}/8soTOvBxpmJqnCLjt5PAGcelseg.jpg	4.5	154.0
+tt0098426	movie	Sárkány és papucs	Sárkány és papucs	0	1990	\N	72	https://image.tmdb.org/t/p/{width_variable}/tJj0DkpVONabN92Q9S0hWtXJbRk.jpg	6.9	221.0
+tt0098429	movie	Tahiti's Girl	Tahiti's Girl	0	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/lbrVR1BmiJKH1FW8aN9aG0Bahr9.jpg	4.5	29.0
+tt0098431	movie	Taina jocului de cuburi	Taina jocului de cuburi	0	1990	\N	73	\N	6.2	13.0
+tt0098461	movie	Thanedaar	Thanedaar	0	1990	\N	151	https://image.tmdb.org/t/p/{width_variable}/8UXYkAeVNSpqtNFJ2OW74JtVT0p.jpg	5.4	414.0
+tt0098462	movie	That Englishwoman: An Account of the Life of Emily Hobhouse	That Englishwoman: An Account of the Life of Emily Hobhouse	0	1990	\N	99	https://image.tmdb.org/t/p/{width_variable}/ng3cpfUS31CZZBanudPSIiewK6e.jpg	5.0	27.0
+tt0098486	movie	The Death King	Der Todesking	0	1990	\N	80	https://image.tmdb.org/t/p/{width_variable}/d1dsVW5sWIwQCBZCHZwFa2tk7kA.jpg	6.4	2728.0
+tt0098488	movie	Tom et Lola	Tom et Lola	0	1990	\N	97	https://image.tmdb.org/t/p/{width_variable}/oOxZdFf0gzOCySFSq7urqXcff52.jpg	6.4	305.0
+tt0098495	movie	Tormozheniye v nebesakh	Tormozheniye v nebesakh	0	1990	\N	81	https://image.tmdb.org/t/p/{width_variable}/xjpuHD4RWAOLdwN2NdCp0XcqEva.jpg	5.3	13.0
+tt0098514	movie	Trois années	Trois années	0	1990	\N	93	https://image.tmdb.org/t/p/{width_variable}/3SvYYnmRZ9MPEI2IsD5EBewws2q.jpg	5.6	82.0
+tt0098531	movie	Treasure of the Bitch Islands	Le trésor des îles chiennes	0	1990	\N	108	https://image.tmdb.org/t/p/{width_variable}/wqhcF9Uc3Zs4W2LfT60yBmAHjz0.jpg	5.6	177.0
+tt0098532	movie	The Match Factory Girl	Tulitikkutehtaan tyttö	0	1990	\N	69	https://image.tmdb.org/t/p/{width_variable}/zHfabvr3RKEbNfksFBs2Cder91i.jpg	7.5	10418.0
+tt0098534	movie	Tumultes	Tumultes	0	1990	\N	91	https://image.tmdb.org/t/p/{width_variable}/hILcL1B6mLp4AlndkkTUUqTfQhz.jpg	6.4	42.0
+tt0098542	movie	Ti, koyto si na nebeto	Ti, koyto si na nebeto	0	1990	\N	102	https://image.tmdb.org/t/p/{width_variable}/pLGv4Jpb4IhOSNj4rOpkLLvhRfa.jpg	8.2	79.0
+tt0098548	movie	Universal Laws	Uchuu no hosoku	0	1990	\N	119	https://image.tmdb.org/t/p/{width_variable}/sWd9HaBYZ5DIGfRciwpJmuamQC.jpg	6.3	13.0
+tt0098584	movie	A Woman's Revenge	La vengeance d'une femme	0	1990	\N	133	https://image.tmdb.org/t/p/{width_variable}/gfuFIlQMXktxfEmZYuBNHRWz1ea.jpg	5.9	257.0
+tt0098588	movie	Forbidden Love	Verbotene Liebe	0	1990	\N	91	https://image.tmdb.org/t/p/{width_variable}/ac3WtYtNDliElEEn5ibSFYfoYcN.jpg	6.8	248.0
+tt0098606	movie	The Voice of the Moon	La voce della luna	0	1990	\N	126	https://image.tmdb.org/t/p/{width_variable}/1E9bSjMK72pqYvpPioFuQd3IUBx.jpg	6.3	3189.0
+tt0098629	movie	Weininger's Last Night	Weiningers Nacht	0	1990	\N	105	https://image.tmdb.org/t/p/{width_variable}/4LWzr5KsLNcttJalMYDmHq4QS47.jpg	7.1	64.0
+tt0098656	movie	William S. Burroughs: Commissioner of Sewers	William S. Burroughs: Commissioner of Sewers	0	1991	\N	60	\N	6.9	128.0
+tt0098657	movie	Winckelmanns Reisen	Winckelmanns Reisen	0	1990	\N	80	https://image.tmdb.org/t/p/{width_variable}/tBLUvX9j9GgxZkXcGSKZmkbDqgm.jpg	7.2	16.0
+tt0098658	movie	Wings of Fame	Wings of Fame	0	1990	\N	109	https://image.tmdb.org/t/p/{width_variable}/26GIE27dPpK18Hmr1DSA4ehzgy6.jpg	6.9	975.0
+tt0098707	movie	The Final Judgement	Ji hap chong see: Gung sam	0	1993	\N	93	https://image.tmdb.org/t/p/{width_variable}/rWn2QIQ4dSLdXuWJHQvcqLEYFTA.jpg	7.3	73.0
+tt0098920	movie	Piggate	Swinka	0	1990	\N	97	https://image.tmdb.org/t/p/{width_variable}/pvJAJqn2klJRHGjsYreXuzwRc11.jpg	2.8	36.0
+tt0098958	movie	His Nickname Is Beast	...Po prozvishchu 'Zver'	0	1990	\N	88	https://image.tmdb.org/t/p/{width_variable}/5JYxN5bMYc5wg1LPCEPy3wJfSS2.jpg	5.6	221.0
+tt0098959	movie	...Almost	Wendy Cracked a Walnut	0	1990	\N	84	https://image.tmdb.org/t/p/{width_variable}/5RVhWzvQDrApH6MqwlNFS9CJQg.jpg	5.1	165.0
+tt0098961	movie	Les 1001 nuits	Les 1001 nuits	0	1990	\N	98	https://image.tmdb.org/t/p/{width_variable}/wFubQZcMS5ZEPX3kf1XatDQPAmy.jpg	5.4	1010.0
+tt0098963	movie	1871	1871	0	1990	\N	100	https://image.tmdb.org/t/p/{width_variable}/9bL4iTdSLRw4RzNVMtyIFr2pvgd.jpg	6.4	70.0
+tt0098965	movie	Little Ninjas	Little Ninjas	0	1993	\N	100	https://image.tmdb.org/t/p/{width_variable}/kmZbIiYaTrhR3mEm5E9CgdsDFqK.jpg	2.3	848.0
+tt0098966	movie	Three Men and a Little Lady	3 Men and a Little Lady	0	1990	\N	104	https://image.tmdb.org/t/p/{width_variable}/4VWWEnhX0zddRKwZWGtIdDcV5U7.jpg	5.5	25933.0
+tt0098967	movie	Boiling Point	3-4 x jûgatsu	0	1990	\N	96	https://image.tmdb.org/t/p/{width_variable}/e8fIvIJDydB0MW3wuWos0hsh08i.jpg	6.7	7275.0
+tt0098970	movie	Alone Together	A solas contigo	0	1990	\N	98	https://image.tmdb.org/t/p/{width_variable}/nW2XWULVuNMuQjACXhC8dLnBN3q.jpg	5.8	91.0
+tt0098972	movie	Tales of a Golden Geisha	Ageman	0	1990	\N	114	https://image.tmdb.org/t/p/{width_variable}/u2Qp3IN9D82T1K7ZSGfV5AmOF9E.jpg	6.4	316.0
+tt0098974	movie	Die Aids-Trilogie: Feuer unterm Arsch - Vom Leben und Sterben schwuler Männer in Berlin	Die Aids-Trilogie: Feuer unterm Arsch - Vom Leben und Sterben schwuler Männer in Berlin	0	1990	\N	50	https://image.tmdb.org/t/p/{width_variable}/aVkTCjwagbyGyekWKXRPViVZLXF.jpg	6.2	31.0
+tt0098975	movie	Aadhi Haqeeqat, Aadha Fasana	Aadhi Haqeeqat, Aadha Fasana	0	1990	\N	88	\N	\N	\N
+tt0098976	movie	Aaj Ka Arjun	Aaj Ka Arjun	0	1990	\N	164	https://image.tmdb.org/t/p/{width_variable}/4V4QbSabLUiT3LhyXFq1oqsjJ5K.jpg	4.6	656.0
+tt0098977	movie	Abhimanyu	Abhimanyu	0	1990	\N	\N	\N	\N	\N
+tt0098978	movie	Abschiedsdisco	Abschiedsdisco	0	1990	\N	91	https://image.tmdb.org/t/p/{width_variable}/5mFkXDhBpxA1fOMa3wAYq25hDmh.jpg	6.2	36.0
+tt0098979	movie	Accompong - Schwarze Rebellen in Jamaica	Accompong - Schwarze Rebellen in Jamaica	0	1990	\N	\N	\N	\N	\N
+tt0098980	movie	Ach, Boris...	Ach, Boris...	0	1990	\N	85	https://image.tmdb.org/t/p/{width_variable}/4RI1Kb3QRKQThASK3apJY7SMyEA.jpg	5.6	11.0
+tt0098981	movie	Der achte Tag	Der achte Tag	0	1990	\N	99	https://image.tmdb.org/t/p/{width_variable}/aTYeSqbHRh6rptRPRQLzXXZkA8z.jpg	5.7	53.0
+tt0098986	movie	Adrénaline	Adrénaline	0	1990	\N	77	https://image.tmdb.org/t/p/{width_variable}/1uZ1dVfutxL25snyOAhHGpWka3o.jpg	6.3	239.0
+tt0098987	movie	The Adventures of Ford Fairlane	The Adventures of Ford Fairlane	0	1990	\N	104	https://image.tmdb.org/t/p/{width_variable}/u6accimG7LmroR8WgNklEJS7oFq.jpg	6.4	18855.0
+tt0098988	movie	Aferisty	Aferisty	0	1990	\N	84	https://image.tmdb.org/t/p/{width_variable}/qbJKnW2MrDNvsakOmtCjDKhUt7r.jpg	5.3	46.0
+tt0098989	movie	Life Is Like a Cucumber	Affengeil	0	1990	\N	87	https://image.tmdb.org/t/p/{width_variable}/2uhRyHXmIlkvyAYzYF5oWSgPJvH.jpg	6.0	41.0
+tt0098990	movie	Afghan Breakdown	Afganskiy izlom	0	1991	\N	140	https://image.tmdb.org/t/p/{width_variable}/bmY5KXlLhkM7ewXQ6xr6AMHbO28.jpg	7.1	534.0
+tt0098991	movie	L'africana	L'africana	0	1990	\N	105	https://image.tmdb.org/t/p/{width_variable}/kyk2eUGgx2TS1da6styKzwPqVqr.jpg	7.1	42.0
+tt0098992	movie	Afrika um die Ecke	Afrika um die Ecke	0	1990	\N	65	\N	2.8	7.0
+tt0098993	movie	Time Off	After	0	1990	\N	45	https://image.tmdb.org/t/p/{width_variable}/kwSDjbbh9kDmQDvJZrNQcgMEa9s.jpg	6.9	298.0
+tt0098994	movie	After Dark, My Sweet	After Dark, My Sweet	0	1990	\N	114	https://image.tmdb.org/t/p/{width_variable}/6fWrEcIEoFuwYt4MUY4RtZwuMo9.jpg	6.5	3994.0
+tt0098996	movie	Aftershock	Aftershock	0	1990	\N	91	https://image.tmdb.org/t/p/{width_variable}/wCs3H2QtHNSCTTZKwV5lXzlAl8g.jpg	4.2	395.0
+tt0098998	movie	The Age of Insects	The Age of Insects	0	1990	\N	75	https://image.tmdb.org/t/p/{width_variable}/90iYCNKREwXaLF2HzOphYmnOXa6.jpg	5.2	54.0
+tt0098999	movie	Agneepath	Agneepath	0	1990	\N	174	https://image.tmdb.org/t/p/{width_variable}/d9OfOqRTrW5FX1dhDPwaMNqm6GB.jpg	7.6	9274.0
+tt0099000	movie	Farewell China	Ai zai bie xiang de ji jie	0	1990	\N	114	https://image.tmdb.org/t/p/{width_variable}/d3yRCjZ6HAFrtFnGeQaxTvTRXvd.jpg	7.1	235.0
+tt0099001	movie	The Story of My Son	Ngoi di sai gaai	0	1990	\N	75	https://image.tmdb.org/t/p/{width_variable}/87QWSis2F2JAwx3pJjpZdItrEWU.jpg	6.4	78.0
+tt0099004	movie	Ain't No Way Back	Ain't No Way Back	0	1990	\N	90	https://image.tmdb.org/t/p/{width_variable}/sKKClUUoNIYlXUErQ9uvjdB8ph8.jpg	5.3	85.0
+tt0099005	movie	Air America	Air America	0	1990	\N	113	https://image.tmdb.org/t/p/{width_variable}/3p4ldj2ZjaoTNBVfb1pSMoMnRn8.jpg	5.8	29873.0
+tt0099007	movie	Al Gatun	Al Gatun	0	1990	\N	70	\N	\N	\N
+tt0099008	movie	L'alba	L'alba	0	1991	\N	80	https://image.tmdb.org/t/p/{width_variable}/tWKRVtsJM7R1H2jStzXKoziWPCp.jpg	5.2	51.0
+tt0099009	movie	Alberto Express	Alberto Express	0	1990	\N	92	https://image.tmdb.org/t/p/{width_variable}/pETlj76yCVCkN7oCbMJu9in2JaY.jpg	6.4	201.0
+tt0099011	movie	Alcune signore per bene	Alcune signore per bene	0	1990	\N	91	https://image.tmdb.org/t/p/{width_variable}/kt0Xx1ZD3BdgOrTKEg7DYRek7V0.jpg	5.7	39.0
+tt0099012	movie	Alice	Alice	0	1990	\N	106	https://image.tmdb.org/t/p/{width_variable}/q2m2Nwh5ROkS4zMpWdOUvNFpjc3.jpg	6.6	14899.0
+tt0099013	movie	All of Me	All of Me	0	1990	\N	76	https://image.tmdb.org/t/p/{width_variable}/3LsWpmRm9asAPJs41AnPMLahJD9.jpg	5.9	24.0
+tt0099014	movie	All the Vermeers in New York	All the Vermeers in New York	0	1990	\N	87	https://image.tmdb.org/t/p/{width_variable}/sQmBGBIjDvX2nMwUHI3yQv4YAJ9.jpg	6.4	1047.0
+tt0099015	movie	Alle Juden raus!	Alle Juden raus!	0	1991	\N	82	https://image.tmdb.org/t/p/{width_variable}/3LyoEI5Cw6yJlHmoG856mSvJMf3.jpg	7.0	27.0
+tt0099017	movie	Alligator Eyes	Alligator Eyes	0	1990	\N	101	https://image.tmdb.org/t/p/{width_variable}/9dobwqqryqaBL27wtvm2oCAWJ6h.jpg	4.4	152.0
+tt0099018	movie	Almost an Angel	Almost an Angel	0	1990	\N	95	https://image.tmdb.org/t/p/{width_variable}/7QDWGSVBzGUWhN1PTnQlZcPjS2A.jpg	5.5	4818.0
+tt0099019	movie	Old Comrades	Alte Kameraden	0	1990	\N	80	\N	\N	\N
+tt0099024	movie	Amaurose	Amaurose	0	1990	\N	93	\N	\N	\N
+tt0099025	movie	Amba	Amba	0	1990	\N	153	https://image.tmdb.org/t/p/{width_variable}/vTBqn51ndNdCWjeYPl4v1PlDbT1.jpg	4.2	57.0
+tt0099026	movie	The Ambulance	The Ambulance	0	1990	\N	96	https://image.tmdb.org/t/p/{width_variable}/nq9zbzTY93Hg8nhi2axGqobw1sc.jpg	5.9	4025.0
+tt0099027	movie	Amelia Lópes O'Neill	Amelia Lópes O'Neill	0	1991	\N	95	https://image.tmdb.org/t/p/{width_variable}/lS25W9h8TKk0tw6N9jes1VmROeY.jpg	6.3	65.0
+tt0099028	movie	American Dream	American Dream	0	1990	\N	98	https://image.tmdb.org/t/p/{width_variable}/da6DPUrYsi3K2HzwalUpphtOHec.jpg	7.8	972.0
+tt0099029	movie	Paradise America	Ameriikan raitti	0	1990	\N	120	https://image.tmdb.org/t/p/{width_variable}/onWtRRYCMVJkChmYazH7lQJBof8.jpg	5.2	306.0
+tt0099031	movie	Amnesia	Amnesia	0	1990	\N	\N	\N	\N	\N
+tt0099033	movie	Amor und Psyche	Amor und Psyche	0	1990	\N	\N	\N	\N	\N
+tt0099034	movie	L'amour	L'amour	0	1990	\N	80	\N	5.9	42.0
+tt0099038	movie	Anekdoty	Anekdoty	0	1990	\N	78	https://image.tmdb.org/t/p/{width_variable}/bHiRBbmdlas0GoNLH59GGm6deJR.jpg	5.6	49.0
+tt0099039	movie	Angel Town	Angel Town	0	1990	\N	106	https://image.tmdb.org/t/p/{width_variable}/xiCoIDJG1afaBnCrSUNrM1vI2uP.jpg	5.0	807.0
+tt0073481	tvEpisode	Old Times	Old Times	0	1991	\N	78	https://image.tmdb.org/t/p/{width_variable}/1sAumy1MAzAoi4wWP9b9boHPFcC.jpg	8.0	43.0
+tt0088283	tvEpisode	Tod durch elektrischen Strom	Tod durch elektrischen Strom	0	1990	\N	70	\N	6.0	38.0
+tt0088656	tvEpisode	A.D. Police File 2: The Ripper	Za Rippaa (The Ripper)	0	1990	\N	40	\N	6.9	164.0
+tt0088657	tvEpisode	AD Police Files 3: The Man Who Bites His Tongue	Shita wo kamu otoko (The Man Who Bites His Tongue)	0	1990	\N	40	\N	7.0	180.0
+tt0090780	tvEpisode	Bulls of a Feather	Bulls of a Feather	0	1992	\N	\N	\N	7.7	8.0
+tt0094808	tvEpisode	Zwei Brüder	Zwei Brüder	0	1994	\N	90	\N	6.0	15.0
+tt0095661	tvEpisode	Le mouchoir de Joseph	Le mouchoir de Joseph	0	1991	\N	93	\N	\N	\N
+tt0095671	tvEpisode	La mujer fría	La mujer fría	0	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/o0GFTzMjcwdWRcK1Vxd3pDFht8s.jpg	4.8	14.0
+tt0095672	tvEpisode	La mujer infiel	La mujer infiel	0	1990	\N	57	https://image.tmdb.org/t/p/{width_variable}/o0GFTzMjcwdWRcK1Vxd3pDFht8s.jpg	5.4	9.0
+tt0095673	tvEpisode	La mujer oriental	La mujer oriental	0	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/o0GFTzMjcwdWRcK1Vxd3pDFht8s.jpg	6.5	13.0
+tt0095674	tvEpisode	La mujer perdida	La mujer perdida	0	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/o0GFTzMjcwdWRcK1Vxd3pDFht8s.jpg	6.1	8.0
+tt0095783	tvEpisode	One Last Chance	One Last Chance	0	1990	\N	\N	\N	7.8	12.0
+tt0096135	tvEpisode	Sometime in August	Sometime in August	0	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/w9Dut78EL8gfFYwHYLTW2QphELA.jpg	8.0	12.0
+tt0096361	tvEpisode	Reiha Has Come	Reiha Has Come	0	1997	\N	\N	\N	7.0	9.0
+tt0096362	tvEpisode	The Fang Knows	The Fang Knows	0	1997	\N	\N	\N	6.9	14.0
+tt0096363	tvEpisode	At the Next Station	At the Next Station	0	1997	\N	\N	\N	6.7	8.0
+tt0096781	tvEpisode	'Itch	'Itch	0	1991	\N	54	\N	7.5	20.0
+tt0096864	tvEpisode	Grand Theft Hotel	Grand Theft Hotel	0	1990	\N	\N	\N	6.0	43.0
+tt0097218	tvEpisode	The Dogs	The Dogs	0	1991	\N	13	\N	\N	\N
+tt0097246	tvEpisode	Das Duell	Das Duell	0	1990	\N	76	\N	6.8	55.0
+tt0097324	tvEpisode	Ein Fall für Onkel	Ein Fall für Onkel	0	1990	\N	90	\N	7.2	14.0
+tt0097346	tvEpisode	Fellow Traveller	Fellow Traveller	0	1990	\N	97	https://image.tmdb.org/t/p/{width_variable}/mahwEiefmBPbHx0gRe0dkA8YMae.jpg	5.5	183.0
+tt0097451	tvEpisode	Le Gorille sans cravate	Le Gorille sans cravate	0	1990	\N	87	\N	\N	\N
+tt0097783	tvEpisode	The Lounge Bar	The Lounge Bar	0	1991	\N	12	\N	7.4	126.0
+tt0097822	tvEpisode	The Man from the Pru	The Man from the Pru	0	1990	\N	\N	\N	7.4	71.0
+tt0097924	tvEpisode	La mujer inesperada	La mujer inesperada	0	1990	\N	56	https://image.tmdb.org/t/p/{width_variable}/o0GFTzMjcwdWRcK1Vxd3pDFht8s.jpg	6.1	14.0
+tt0097925	tvEpisode	La mujer lunática	La mujer lunática	0	1990	\N	60	https://image.tmdb.org/t/p/{width_variable}/o0GFTzMjcwdWRcK1Vxd3pDFht8s.jpg	6.0	22.0
+tt0098021	tvEpisode	Old Flames	Old Flames	0	1990	\N	\N	\N	7.5	36.0
+tt0098553	tvEpisode	Ein unbekannter Zeuge	Ein unbekannter Zeuge	0	1992	\N	90	\N	\N	\N
+tt0098561	tvEpisode	Une table pour six	Une table pour six	0	1990	\N	\N	\N	\N	\N
+tt0098576	tvEpisode	The Forest Calls	The Forest Calls	0	1997	\N	\N	\N	6.8	8.0
+tt0098755	tvEpisode	Born in Africa	Born in Africa	0	1990	\N	88	\N	\N	\N
+tt0099003	tvEpisode	Aimée	Aimée	0	1991	\N	90	https://image.tmdb.org/t/p/{width_variable}/1LbMzAxTGocmXzMJqah3BtTM7gv.jpg	7.7	34.0
+tt0099032	tvEpisode	Amongst Barbarians	Amongst Barbarians	0	1990	\N	75	\N	8.0	35.0
+tt0099037	tvEpisode	Andre's Mother	Andre's Mother	0	1990	\N	60	https://image.tmdb.org/t/p/{width_variable}/mRAs5GFok04sS3mj5SfoAD6bmTB.jpg	7.7	155.0
+tt0099139	tvEpisode	Le billard écarlate	Le billard écarlate	0	1991	\N	94	\N	\N	\N
+tt0099217	tvEpisode	Pilot	Pilot	0	1990	\N	95	\N	7.2	24.0
+tt0099279	tvEpisode	Close Relations	Close Relations	0	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/dePPYfZkzOGC5U96hd7KetWYnpe.jpg	7.4	9.0
+tt0099370	tvEpisode	The Day of Reckoning	The Day of Reckoning	0	1990	\N	53	\N	5.3	49.0
+tt0099383	tvEpisode	Death Has a Bad Reputation	Death Has a Bad Reputation	0	1990	\N	98	https://image.tmdb.org/t/p/{width_variable}/fAwoCXF7iKziy2LnCxGTMz1NRqM.jpg	5.7	60.0
+tt0099427	tvEpisode	Dienstvergehen	Dienstvergehen	0	1991	\N	90	\N	5.4	12.0
+tt0099457	tvEpisode	Frontière du crime	Frontière du crime	0	1990	\N	92	\N	6.0	24.0
+tt0099526	tvEpisode	Exile	Exile	0	1990	\N	92	https://image.tmdb.org/t/p/{width_variable}/ijsbdFBTupkYWM21eBbZ4tGky8T.jpg	6.3	265.0
+tt0099530	tvEpisode	Bersaglio mobile	Bersaglio mobile	0	1991	\N	88	\N	5.5	231.0
+tt0099542	tvEpisode	A Family for Joe	A Family for Joe	0	1990	\N	100	https://image.tmdb.org/t/p/{width_variable}/uYIwlF5sxpStEY8MylYtARlS4Nb.jpg	6.2	133.0
+tt0099580	tvEpisode	Pilot	Pilot	0	1990	\N	94	https://image.tmdb.org/t/p/{width_variable}/yzIBlpyufPoL9ujOOizLktHRFev.jpg	6.6	1487.0
+tt0099661	tvEpisode	The Girl with the Crazy Brother	The Girl with the Crazy Brother	0	1990	\N	44	\N	5.6	31.0
+tt0099727	tvEpisode	Hamlet	Hamlet	0	1990	\N	165	https://image.tmdb.org/t/p/{width_variable}/ssq0280GJyx5fUgfbbBGJ0b7Bug.jpg	7.4	234.0
+tt0099744	tvEpisode	La mort en dédicace	La mort en dédicace	0	1990	\N	\N	\N	\N	\N
+tt0099745	tvEpisode	Pour cent millions	Pour cent millions	0	1990	\N	87	\N	\N	\N
+tt0099746	tvEpisode	La porte secrète	La porte secrète	0	1990	\N	120	\N	8.3	9.0
+tt0099781	tvEpisode	The Hollow Boy	The Hollow Boy	0	1991	\N	55	\N	7.9	17.0
+tt0099811	tvEpisode	Deadly Encounters: Part 1	Deadly Encounters: Part 1	0	1990	\N	60	\N	7.7	68.0
+tt0099835	tvEpisode	Champ clos	Champ clos	0	1990	\N	91	\N	\N	\N
+tt0099851	tvEpisode	Into the Woods	Into the Woods	0	1991	\N	151	https://image.tmdb.org/t/p/{width_variable}/uwMNWZg9gxCNCeruYvEdBN3Zhyb.jpg	8.7	3181.0
+tt0099952	tvEpisode	The Kremlin Farewell	The Kremlin Farewell	0	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/xrxX1Jf17DeQrRCgMHf5N8eMr8r.jpg	6.8	12.0
+tt0099971	tvEpisode	The Land of Dreams	The Land of Dreams	0	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/k5u5rheU4m7zDRPFPTEsS4sqAdD.jpg	6.6	7.0
+tt0099992	tvEpisode	The Laughter of God	The Laughter of God	0	1991	\N	88	\N	5.3	504.0
+tt0100155	tvEpisode	Adolphe et les menteuses	Adolphe et les menteuses	0	1990	\N	26	\N	\N	\N
+tt0100216	tvEpisode	The Mysterious Affair at Styles	The Mysterious Affair at Styles	0	1990	\N	103	\N	7.8	2171.0
+tt0100255	tvEpisode	Night Voice	Night Voice	0	1990	\N	\N	\N	6.6	8.0
+tt0100316	tvEpisode	Pilot	Pilot	0	1990	\N	60	\N	6.1	17.0
+tt0100370	tvEpisode	April 1945 - Das Plakat	April 1945 - Das Plakat	0	1990	\N	85	\N	7.0	6.0
+tt0100406	tvEpisode	The Price of the Bride	The Price of the Bride	0	1990	\N	98	https://image.tmdb.org/t/p/{width_variable}/rKFJpNV8s9YarAkOOSMuvtdRcQb.jpg	6.3	45.0
+tt0100439	tvEpisode	Put on by Cunning	Put on by Cunning	0	1990	\N	120	\N	7.6	56.0
+tt0100474	tvEpisode	Rendez-vous à Lisbonne	Rendez-vous à Lisbonne	0	1992	\N	26	\N	\N	\N
+tt0100482	tvEpisode	Retour	Retour	0	1991	\N	26	\N	\N	\N
+tt0100492	tvEpisode	Rikki	Rikki	0	1991	\N	83	\N	5.8	27.0
+tt0100578	tvEpisode	Sensibility and Sense	Sensibility and Sense	0	1990	\N	\N	\N	8.1	66.0
+tt0100580	tvEpisode	Don't Hang Up	Separation	0	1990	\N	80	\N	7.7	54.0
+tt0100642	tvEpisode	Small Zones	Small Zones	0	1990	\N	\N	\N	8.0	23.0
+tt0100658	tvEpisode	Some Lie and Some Die: Part One	Some Lie and Some Die: Part One	0	1990	\N	60	\N	7.5	53.0
+tt0100664	tvEpisode	Souleymane Cissé	Souleymane Cissé	0	1991	\N	53	\N	6.8	8.0
+tt0100710	tvEpisode	The Stuff of Madness	The Stuff of Madness	0	1990	\N	51	\N	6.7	25.0
+tt0100718	tvEpisode	One Down, Four Up	One Down, Four Up	0	1990	\N	94	https://image.tmdb.org/t/p/{width_variable}/kvI9ufC3vrCCQJukHlYCXzzojXA.jpg	4.2	138.0
+tt0100724	tvEpisode	Sweet Nothing	Sweet Nothing	0	1990	\N	\N	\N	7.2	26.0
+tt0100748	tvEpisode	Blue Lady	Blue Lady	0	1990	\N	86	\N	6.8	29.0
+tt0100749	tvEpisode	Howalds Fall	Howalds Fall	0	1990	\N	96	\N	7.9	40.0
+tt0100750	tvEpisode	Lauf eines Todes	Lauf eines Todes	0	1990	\N	90	\N	6.1	50.0
+tt0100751	tvEpisode	Rendezvous	Rendezvous	0	1990	\N	97	\N	7.3	84.0
+tt0100752	tvEpisode	Seven Eleven	Seven Eleven	0	1990	\N	88	\N	6.1	27.0
+tt0100753	tvEpisode	Tod einer Ärztin	Tod einer Ärztin	0	1990	\N	77	\N	6.0	34.0
+tt0100754	tvEpisode	Unter Brüdern	Unter Brüdern	0	1990	\N	95	\N	6.8	90.0
+tt0100755	tvEpisode	Zeitzünder	Zeitzünder	0	1990	\N	90	\N	6.2	60.0
+tt0100770	tvEpisode	They Never Slept	They Never Slept	0	1991	\N	74	\N	7.0	22.0
+tt0100818	tvEpisode	Martingale	Martingale	0	1991	\N	26	\N	\N	\N
+tt0100900	tvEpisode	Waldo Salt: A Screenwriter's Journey	Waldo Salt: A Screenwriter's Journey	0	1990	\N	\N	https://image.tmdb.org/t/p/{width_variable}/lFRjRi44uznei5oSCql43rMS2mN.jpg	7.1	138.0
+tt0100948	tvEpisode	Women & Wallace	Women & Wallace	0	1990	\N	80	\N	7.5	18.0
+tt0100953	tvEpisode	Work!	Work!	0	1991	\N	\N	\N	7.3	7.0
+tt0101095	tvEpisode	The Cave of the Golden Rose	Fantaghirò	0	1991	\N	200	https://image.tmdb.org/t/p/{width_variable}/ezAwZWWcnJFnk3eYFonuwDzaMCO.jpg	7.4	2604.0
+tt0101179	tvEpisode	Bambini nell'ombra	Bambini nell'ombra	0	1991	\N	120	\N	7.1	19.0
+tt0101246	tvEpisode	102 Boulevard Haussmann	102 Boulevard Haussmann	0	1990	\N	84	https://image.tmdb.org/t/p/{width_variable}/u3MfpohihTORFw0P2eYAbuLbVEC.jpg	7.2	79.0
+tt0101271	tvEpisode	Adam Bede	Adam Bede	0	1992	\N	102	https://image.tmdb.org/t/p/{width_variable}/9GzxKwqg2kXJRqp4SuqzIjTzCEB.jpg	6.5	224.0
+tt0101274	tvEpisode	Una notte di mezza estate a Daisy Town	Una notte di mezza estate a Daisy Town	0	1992	\N	60	\N	6.8	72.0
+tt0101300	tvEpisode	Alive and Kicking	Alive and Kicking	0	1991	\N	95	https://image.tmdb.org/t/p/{width_variable}/gelkUol49M8nISTbZvCAZPpeFvv.jpg	7.5	71.0
+tt0101358	tvEpisode	Antonia and Jane	Antonia and Jane	0	1990	\N	71	https://image.tmdb.org/t/p/{width_variable}/5d1AgAgtXxvkTkyY2n2eI943wZy.jpg	7.1	336.0
+tt0101443	tvEpisode	Big Band Time	Big Band Time	0	1991	\N	75	\N	6.5	43.0
+tt0101480	tvEpisode	Blood Brothers: The Joey DiPaolo Story	Blood Brothers: The Joey DiPaolo Story	0	1992	\N	\N	\N	8.0	62.0
+tt0101655	tvEpisode	Dancing Outlaw	Dancing Outlaw	0	1991	\N	29	https://image.tmdb.org/t/p/{width_variable}/dzE9hWUNnDkrFGKJakS4hHbTDbi.jpg	7.9	543.0
+tt0101729	tvEpisode	Dieci giorni tutto compreso	Dieci giorni tutto compreso	0	1993	\N	\N	\N	\N	\N
+tt0101750	tvEpisode	A Doll's House	A Doll's House	0	1992	\N	140	\N	7.6	121.0
+tt0101835	tvEpisode	Magia nera	Magia nera	0	1991	\N	99	\N	5.9	228.0
+tt0101836	tvEpisode	Black & White	Black & White	0	1991	\N	88	\N	5.8	257.0
+tt0101837	tvEpisode	Cannonball	Cannonball	0	1991	\N	92	\N	5.7	219.0
+tt0101838	tvEpisode	Yo-yo	Yo-yo	0	1991	\N	91	\N	5.7	233.0
+tt0101840	tvEpisode	Miami Killer	Miami Killer	0	1991	\N	93	\N	5.6	242.0
+tt0101894	tvEpisode	Flea Bites	Flea Bites	0	1991	\N	100	\N	8.2	13.0
+tt0101915	tvEpisode	The Fred Astaire Songbook	The Fred Astaire Songbook	0	1991	\N	60	https://image.tmdb.org/t/p/{width_variable}/c5K57bhxqP9VBhxFFsgQkyovXCg.jpg	8.3	61.0
+tt0101971	tvEpisode	The Grapes of Wrath	The Grapes of Wrath	0	1991	\N	142	https://image.tmdb.org/t/p/{width_variable}/fL5V6o7NdPIVTODNEnxbUiiXNnH.jpg	7.5	90.0
+tt0101972	tvEpisode	The Grass Arena	The Grass Arena	0	1991	\N	90	https://image.tmdb.org/t/p/{width_variable}/JtOhvOBuWsMn3vxzeQ0Za94AkC.jpg	7.9	121.0
+tt0102012	tvEpisode	Heading Home	Heading Home	0	1991	\N	88	https://image.tmdb.org/t/p/{width_variable}/9R8NTw0fDwlYVP0DAlZAAS5zAsR.jpg	7.4	99.0
+tt0102111	tvEpisode	In the Border Country	In the Border Country	0	1991	\N	\N	\N	7.0	27.0
+tt0102199	tvEpisode	Hollywood Babylon	Hollywood Babylon	0	1991	\N	58	\N	5.4	33.0
+tt0102255	tvEpisode	Winter 1991 - Das Lachen der Maca Daracs	Winter 1991 - Das Lachen der Maca Daracs	0	1991	\N	88	\N	4.0	7.0
+tt0102276	tvEpisode	The Last Romantics	The Last Romantics	0	1992	\N	90	https://image.tmdb.org/t/p/{width_variable}/gEJ5hKbXxh5Iu9wCCmtn0XhAwil.jpg	7.6	37.0
+tt0102281	tvEpisode	The Law Lord	The Law Lord	0	1992	\N	\N	https://image.tmdb.org/t/p/{width_variable}/lntzH3XHBFb95dtablPirpLBYyo.jpg	8.3	32.0
+tt0102337	tvEpisode	The Lost Language of Cranes	The Lost Language of Cranes	0	1991	\N	87	\N	7.7	534.0
+tt0102378	tvEpisode	Maigret et la grande perche	Maigret et la grande perche	0	1991	\N	95	\N	7.4	145.0
+tt0102379	tvEpisode	Maigret et les plaisirs de la nuit	Maigret et les plaisirs de la nuit	0	1992	\N	82	\N	7.0	127.0
+tt0102416	tvEpisode	The Master Blackmailer	The Master Blackmailer	0	1992	\N	102	https://image.tmdb.org/t/p/{width_variable}/mNrEjZyGi6vOuogEVjimq6hGFKP.jpg	7.4	1236.0
+tt0102424	tvEpisode	Means of Evil: Part One	Means of Evil: Part One	0	1991	\N	50	\N	7.6	55.0
+tt0102474	tvEpisode	Mrs. Harris und der Heiratsschwindler	Mrs. Harris und der Heiratsschwindler	0	1991	\N	88	https://image.tmdb.org/t/p/{width_variable}/ugqoJ1ayZa1sV5Hfj3qJy0i4lUW.jpg	4.2	13.0
+tt0102501	tvEpisode	Der Vollmondmörder	Der Vollmondmörder	0	1991	\N	84	\N	5.9	12.0
+tt0102502	tvEpisode	Narkose für's Jenseits	Narkose für's Jenseits	0	1991	\N	85	\N	6.1	10.0
+tt0102547	tvEpisode	Noch Zweifel, Herr Verteidiger	Noch Zweifel, Herr Verteidiger	0	1991	\N	94	\N	\N	\N
+tt0102621	tvEpisode	Pilot	Pilot	0	1991	\N	93	\N	7.5	51.0
+tt0102643	tvEpisode	Pas de bavards à la Muette	Pas de bavards à la Muette	0	1991	\N	\N	\N	7.0	25.0
+tt0102644	tvEpisode	La pastorela	La pastorela	0	1991	\N	79	\N	6.5	107.0
+tt0102711	tvEpisode	Prince	Prince	0	1991	\N	75	https://image.tmdb.org/t/p/{width_variable}/oEjANiLQPAwAiDTVByFAkQfMruw.jpg	8.1	54.0
+tt0102769	tvEpisode	Reiche Kunden killt man nicht	Reiche Kunden killt man nicht	0	1991	\N	90	\N	\N	\N
+tt0102786	tvEpisode	How Dinosaurs Became Extinct	How Dinosaurs Became Extinct	0	1991	\N	73	https://image.tmdb.org/t/p/{width_variable}/q7ytGK5trp0utPcjfXLgnIVILKp.jpg	6.3	42.0
+tt0102787	tvEpisode	Dreams	Dreams	0	1991	\N	2	https://image.tmdb.org/t/p/{width_variable}/hQQc58syrUvX9ThQ1Dg4XeKaKzb.jpg	5.6	45.0
+tt0102856	tvEpisode	Aller Anfang ist schwer	Aller Anfang ist schwer	0	1991	\N	94	\N	6.2	25.0
+tt0102857	tvEpisode	Schmutziges Gold	Schmutziges Gold	0	1991	\N	104	\N	7.8	23.0
+tt0102863	tvEpisode	Filipina Dreamgirls	Filipina Dreamgirls	0	1991	\N	90	https://image.tmdb.org/t/p/{width_variable}/fQQJlidZ3iQlsBd8Vx1oaRhM21k.jpg	6.9	73.0
+tt0102925	tvEpisode	Siláci	Siláci	0	1991	\N	12	\N	8.0	8.0
+tt0103020	tvEpisode	Dans les cordes	Dans les cordes	0	1991	\N	\N	\N	8.0	7.0
+tt0103046	tvEpisode	Der Fall Schimanski	Der Fall Schimanski	0	1991	\N	90	\N	7.0	230.0
+tt0103047	tvEpisode	Die chinesische Methode	Die chinesische Methode	0	1991	\N	95	\N	5.9	63.0
+tt0103048	tvEpisode	Finale am Rothenbaum	Finale am Rothenbaum	0	1991	\N	80	\N	5.3	60.0
+tt0103049	tvEpisode	Kinderlieb	Kinderlieb	0	1991	\N	87	\N	6.9	138.0
+tt0103050	tvEpisode	Schimanskis Waffe	Schimanskis Waffe	0	1990	\N	86	\N	6.2	128.0
+tt0103051	tvEpisode	Telefongeld	Telefongeld	0	1991	\N	\N	\N	5.7	26.0
+tt0103052	tvEpisode	Tod eines Mädchens	Tod eines Mädchens	0	1991	\N	90	\N	6.6	70.0
+tt0103053	tvEpisode	Tod im Häcksler	Tod im Häcksler	0	1991	\N	80	\N	6.8	88.0
+tt0103054	tvEpisode	Wer zweimal stirbt	Wer zweimal stirbt	0	1991	\N	88	\N	5.2	50.0
+tt0103062	tvEpisode	Tell Me That You Love Me	Tell Me That You Love Me	0	1991	\N	98	https://image.tmdb.org/t/p/{width_variable}/hEBf4QPMswqPnOe6GlwhqDozhVi.jpg	8.2	41.0
+tt0103071	tvEpisode	Thanners neuer Job	Thanners neuer Job	0	1991	\N	83	\N	6.6	56.0
+tt0103145	tvEpisode	Two Teens and a Baby	Two Teens and a Baby	0	1992	\N	\N	\N	7.6	12.0
+tt0103149	tvEpisode	Tödliche Vergangenheit	Tödliche Vergangenheit	0	1991	\N	92	\N	6.4	51.0
