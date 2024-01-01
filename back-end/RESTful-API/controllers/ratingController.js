@@ -1,4 +1,5 @@
 const { pool } = require('../utils/database'); 
+const { Parser } = require('json2csv');
 
 
 async function uploadRating(req, res) {
@@ -64,10 +65,13 @@ exports.uploadRating = uploadRating;
 
 async function getUserRatings(req, res) {
     const { userID } = req.params;
-    const authenticatedUserID = req.user.userId; 
+    const format = req.query.format; 
+    const authenticatedUserID = req.user.userId;
+
     if (parseInt(authenticatedUserID, 10) !== parseInt(userID, 10)) {
         return res.status(401).json({ message: 'Unauthorized access' });
     }
+
     try {
         const ratingsQuery = `
             SELECT title_id, user_rating
@@ -77,9 +81,17 @@ async function getUserRatings(req, res) {
 
         const [userRatings] = await pool.query(ratingsQuery, [userID]);
 
+        if (format === 'csv') {
+            // Convert to CSV
+            const json2csvParser = new Parser();
+            const csvData = json2csvParser.parse(userRatings);
 
-        res.json({ userID, ratings: userRatings });
-
+            res.header('Content-Type', 'text/csv');
+            res.attachment('userRatings.csv');
+            return res.send(csvData);
+        } else {
+            res.json({ userID, ratings: userRatings });
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error', error: error.message });
@@ -87,6 +99,7 @@ async function getUserRatings(req, res) {
 }
 
 exports.getUserRatings = getUserRatings;
+
 
 
 async function deleteRating(req, res) {
@@ -149,3 +162,65 @@ async function deleteRating(req, res) {
 
 
 exports.deleteRating = deleteRating;
+
+exports.getMovieRecommendations = async (req, res) => {
+    const { genres, actors, director } = req.body;
+    const format = req.query.format; 
+
+    try {
+        const recommendations = {};
+
+        // For each genre, fetch top 10 movies
+        for (const genre of genres) {
+            const genreQuery = `
+                SELECT t.title_id, t.average_rating, t.num_votes 
+                FROM titles t
+                JOIN title_genres tg ON t.title_id = tg.title_id
+                WHERE tg.genre = ?
+                ORDER BY t.average_rating DESC
+                LIMIT 10`;
+            const [genreMovies] = await pool.query(genreQuery, [genre]);
+            recommendations[`topMoviesByGenre_${genre}`] = genreMovies;
+        }
+
+        // For each actor, fetch top 10 movies
+        for (const actor of actors) {
+            const actorQuery = `
+                SELECT t.title_id, t.average_rating, t.num_votes 
+                FROM titles t
+                JOIN principals p ON t.title_id = p.title_id
+                WHERE p.name_id = ?
+                ORDER BY t.average_rating DESC
+                LIMIT 10`;
+            const [actorMovies] = await pool.query(actorQuery, [actor]);
+            recommendations[`topMoviesByActor_${actor}`] = actorMovies;
+        }
+
+        // Fetch top 10 movies by director
+        const directorQuery = `
+            SELECT t.title_id, t.average_rating, t.num_votes 
+            FROM titles t
+            JOIN directors d ON t.title_id = d.title_id
+            WHERE d.name_id = ?
+            ORDER BY t.average_rating DESC
+            LIMIT 10`;
+        const [directorMovies] = await pool.query(directorQuery, [director]);
+        recommendations[`topMoviesByDirector_${director}`] = directorMovies;
+
+        if (format === 'csv') {
+            const json2csvParser = new Parser();
+            for (const key in recommendations) {
+                recommendations[key] = json2csvParser.parse(recommendations[key]);
+            }
+
+            res.header('Content-Type', 'text/csv');
+            res.attachment('movieRecommendations.csv');
+            return res.send(Object.values(recommendations).join('\n\n'));
+        } else {
+            res.json(recommendations);
+        }
+    } catch (error) {
+        console.error('Database query failed:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};

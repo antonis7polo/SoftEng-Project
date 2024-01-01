@@ -1,6 +1,6 @@
 const fs = require('fs');
-const csv = require('csv-parser');
 const mysql = require('mysql2/promise');
+const { Parser } = require('json2csv');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 const pool = require('../utils/database').pool; 
@@ -25,34 +25,6 @@ async function healthCheck(req, res) {
     }
 }
 
-async function uploadTitleBasics(req, res) {
-    if (!req.file) {
-        return res.status(400).send('No file uploaded.');
-    }
-
-    try {
-        const results = [];
-        fs.createReadStream(req.file.path)
-            .pipe(csv({
-                separator: '\t', // Use tab separator for TSV
-                mapHeaders: ({ header }) => header.trim() // Trim headers
-            }))
-            .on('data', (data) => results.push(data))
-            .on('end', async () => {
-                // Validate and process your data here
-                for (const entry of results) {
-                    if (!entry.img_url_asset) {
-                        return res.status(400).json({ message: 'Missing img_url_asset in some entries' });
-                    }
-                    // Further processing, e.g., storing data in the database
-                }
-
-                res.status(200).json({ message: 'File processed successfully', data: results });
-            });
-    } catch (error) {
-        res.status(500).json({ message: 'Error processing file', error: error.message });
-    }
-}
 
 async function userMod(req, res) {
     const { username, password } = req.params;
@@ -77,8 +49,10 @@ async function userMod(req, res) {
     }
 }
 
+
 async function getUser(req, res) {
     const { username } = req.params;
+    const format = req.query.format; 
 
     try {
         const [users] = await pool.query('SELECT username, password, email, isAdmin FROM Users WHERE username = ?', [username]);
@@ -88,11 +62,21 @@ async function getUser(req, res) {
         }
 
         const user = users[0];
-        res.json({ user });
+
+        if (format === 'csv') {
+            const json2csvParser = new Parser();
+            const csvData = json2csvParser.parse([user]); 
+
+            res.header('Content-Type', 'text/csv');
+            res.attachment('user.csv');
+            return res.send(csvData);
+        } else {
+            res.json({ user });
+        }
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving user', error: error.message });
     }
 }
 
 
-module.exports = { healthCheck, uploadTitleBasics, userMod, getUser };
+module.exports = { healthCheck, userMod, getUser };

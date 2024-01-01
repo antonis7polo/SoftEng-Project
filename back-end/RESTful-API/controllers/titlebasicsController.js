@@ -1,6 +1,6 @@
 const fs = require('fs');
-const csv = require('csv-parser');
-const { pool } = require('../utils/database'); // assuming this is your database pool
+const readline = require('readline');
+const { pool } = require('../utils/database');
 
 exports.uploadTitleBasics = async (req, res) => {
     if (!req.file) {
@@ -9,50 +9,56 @@ exports.uploadTitleBasics = async (req, res) => {
 
     try {
         const filePath = req.file.path;
+        const fileStream = fs.createReadStream(filePath);
+        const rl = readline.createInterface({
+            input: fileStream,
+            crlfDelay: Infinity
+        });
+
         const titles = [];
-        const tilte_genres = [];
+        const titleGenres = [];
+        let isFirstLine = true;
 
-        fs.createReadStream(filePath)
-            .pipe(csv({ separator: '\t' }))
-            .on('data', (row) => {
-                // Process each row to match the Titles table structure
-                const title = {
-                    title_id: row.tconst,
-                    title_type: row.titleType,
-                    primary_title: row.primaryTitle,
-                    original_title: row.originalTitle,
-                    is_adult: row.isAdult,
-                    start_year: row.startYear,
-                    end_year: row.endYear,
-                    runtime_minutes: row.runtimeMinutes,
-                    img_url_asset: row.img_url_asset,
-                };
-                titles.push(title);
+        for await (const line of rl) {
 
-                //proccess genres 
-                if(row.genres) {
-                    const genres = row.genres.split(',');
-                    for (const genre of genres) {
-                     const title_genre = {
-                            title_id: row.tconst,
-                            genre: genre
-                        };
-                        tilte_genres.push(title_genre);
-                    }
-                }
-            })
-            .on('end', async () => {
-                // Insert the data into the database
-                await insertTitlesIntoDatabase(titles);
-                await insertGenresIntoDatabase(tilte_genres);
+            // Skip the header line
+            if (isFirstLine) {
+                isFirstLine = false;
+                continue;
+            }
 
-            
+            const columns = line.split('\t');
+            const title = {
+                title_id: columns[0],
+                title_type: columns[1],
+                primary_title: columns[2],
+                original_title: columns[3],
+                is_adult: columns[4],
+                start_year: columns[5],
+                end_year: columns[6],
+                runtime_minutes: columns[7],
+                image_url_poster: columns[8]
+            };
+            titles.push(title);
 
-                // Cleanup: delete the uploaded file
-                fs.unlinkSync(filePath);
+            if (columns[9]) {
+                const genres = columns[9].split(',');
+                genres.forEach(genre => {
+                    titleGenres.push({
+                        title_id: columns[0],
+                        genre: genre.trim()
+                    });
+                });
+            }
+        }
 
-                res.status(200).json({ message: 'File processed and data inserted successfully' });
-            });
+        // Insert the data into the database in a single transaction
+        await insertData(titles, titleGenres);
+
+        // Cleanup: delete the uploaded file
+        fs.unlinkSync(filePath);
+
+        res.status(200).json({ message: 'File processed and data inserted successfully' });
     } catch (error) {
         console.error(error);
         if (req.file && req.file.path) {
@@ -62,20 +68,30 @@ exports.uploadTitleBasics = async (req, res) => {
     }
 };
 
-async function insertTitlesIntoDatabase(titles) {
+
+
+async function insertData(titles, titleGenres) {
     const connection = await pool.getConnection();
     try {
         await connection.beginTransaction();
 
-        const insertQuery = `INSERT INTO Titles (title_id, title_type, primary_title, original_title, is_adult, 
-                             start_year, end_year,average_rating,num_votes, runtime_minutes, img_url_asset) 
-                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const insertTitleQuery = `INSERT INTO Titles (title_id, title_type, primary_title, original_title, is_adult, 
+                                 start_year, end_year, runtime_minutes, image_url_poster) 
+                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
         for (const title of titles) {
-            await connection.query(insertQuery, [
+            await connection.query(insertTitleQuery, [
                 title.title_id, title.title_type, title.primary_title, 
                 title.original_title, title.is_adult, title.start_year, 
-                title.end_year, null, null, title.runtime_minutes, title.img_url_asset
+                title.end_year, title.runtime_minutes, title.image_url_poster
+            ]);
+        }
+
+        const insertGenreQuery = `INSERT INTO Title_Genres (title_id, genre) VALUES (?, ?)`;
+
+        for (const titleGenre of titleGenres) {
+            await connection.query(insertGenreQuery, [
+                titleGenre.title_id, titleGenre.genre
             ]);
         }
 
@@ -87,27 +103,3 @@ async function insertTitlesIntoDatabase(titles) {
         connection.release();
     }
 }
-
-async function insertGenresIntoDatabase(tilte_genres) {
-    const connection = await pool.getConnection();
-    try {
-        await connection.beginTransaction();
-
-        const insertQuery = `INSERT INTO Title_Genres (title_id, genre) VALUES (?, ?)`;
-
-        for (const title_genre of tilte_genres) {
-            await connection.query(insertQuery, [
-                title_genre.title_id, title_genre.genre
-            ]);
-        }
-
-        await connection.commit();
-    } catch (error) {
-        await connection.rollback();
-        throw error;
-    } finally {
-        connection.release();
-    }
-}
-
-

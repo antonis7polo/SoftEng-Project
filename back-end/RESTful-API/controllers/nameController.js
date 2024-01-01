@@ -1,7 +1,9 @@
 const pool = require('../utils/database').pool;
+const { Parser } = require('json2csv');
 
 async function getNameByID(req, res) {
     const { nameID } = req.params;
+    const format = req.query.format; 
 
     try {
         const personQuery = `
@@ -54,8 +56,30 @@ async function getNameByID(req, res) {
                 category: title.category
             }))
         };
+        if (format === 'csv') {
+            // Create a CSV-friendly version of the nameObject
+            const csvFriendlyObject = {
+                nameID: nameObject.nameID,
+                name: nameObject.name,
+                namePoster: nameObject.namePoster,
+                birthYr: nameObject.birthYr,
+                deathYr: nameObject.deathYr,
+                profession: nameObject.profession,
+                // Convert the nameTitles array into a string
+                nameTitles: nameObject.nameTitles.map(title => `titleID: ${title.titleID}, category: ${title.category}`).join('; ')
+            };
 
-        res.json({ nameObject });
+            // Fields to include in the CSV
+            const fields = ['nameID', 'name', 'namePoster', 'birthYr', 'deathYr', 'profession', 'nameTitles'];
+            const json2csvParser = new Parser({ fields });
+            const csvData = json2csvParser.parse([csvFriendlyObject]);
+
+            res.header('Content-Type', 'text/csv');
+            res.attachment('nameObject.csv');
+            return res.send(csvData);
+        } else {
+            res.json({ nameObject });
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error', error: error.message });
@@ -66,7 +90,8 @@ exports.getNameByID = getNameByID;
 
 async function searchName(req, res) {
     const { namePart } = req.body;
-
+    const format = req.query.format;
+    
     try {
         const searchQuery = `
             SELECT 
@@ -131,7 +156,23 @@ async function searchName(req, res) {
 
         const nameObjects = await Promise.all(nameObjectsPromises);
 
-        res.json({ nameObjects });
+        if (format === 'csv') {
+            const csvFriendlyObjects = nameObjects.map(obj => {
+                return {
+                    ...obj,
+                    nameTitles: obj.nameTitles.map(title => `titleID: ${title.titleID}, category: ${title.category}`).join('; ')
+                };
+            });
+
+            const json2csvParser = new Parser();
+            const csvData = json2csvParser.parse(csvFriendlyObjects);
+
+            res.header('Content-Type', 'text/csv');
+            res.attachment('nameObjects.csv');
+            return res.send(csvData);
+        } else {
+            res.json({ nameObjects });
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error', error: error.message });
