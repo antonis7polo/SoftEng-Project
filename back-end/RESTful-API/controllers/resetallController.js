@@ -27,3 +27,10 @@ const resetallController = async (req, res) => {
     } catch (error) {
         console.error("Error in resetallController:", error);
         if (connection) await connection.rollback();
+        res.status(500).json({ status: "failed", reason: error.message });
+    } finally {
+        if (connection) connection.release();
+    }
+};
+
+exports.resetallController = resetallController;

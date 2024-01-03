@@ -60,4 +60,16 @@ async function insertData(titleRatings) {
         // Insert the title ratings
         const sql = 'UPDATE titles SET average_rating = ?, num_votes = ? WHERE title_id = ?';
 
-        for (const titleRating of ti
+        for (const titleRating of titleRatings) {
+            await connection.query(sql, [titleRating.average_rating, titleRating.num_votes, titleRating.title_id]);
+        }
+
+        await connection.commit();
+
+    } catch (error) {
+        await connection.rollback();
+        throw error;
+    } finally {
+        connection.release();
+    }
+}

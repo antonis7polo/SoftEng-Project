@@ -85,4 +85,25 @@ async function insertData(principals, hadRoles) {
 
         const insertPrincipalQuery = `INSERT INTO Principals (title_id, ordering, name_id, job_category, job, image_url) 
                                       VALUES (?, ?, ?, ?, ?, ?)`;
-        for (const principal of principa
+        for (const principal of principals) {
+            await connection.query(insertPrincipalQuery, [
+                principal.title_id, principal.ordering, principal.name_id, 
+                principal.job_category, principal.job, principal.image_url
+            ]);
+        }
+
+        const insertHadRoleQuery = `INSERT INTO had_role (title_id, name_id, role_) VALUES (?, ?, ?)`;
+        for (const role of hadRoles) {
+            await connection.query(insertHadRoleQuery, [
+                role.title_id, role.name_id, role.role_
+            ]);
+        }
+
+        await connection.commit();
+    } catch (error) {
+        await connection.rollback();
+        throw error;
+    } finally {
+        connection.release();
+    }
+}

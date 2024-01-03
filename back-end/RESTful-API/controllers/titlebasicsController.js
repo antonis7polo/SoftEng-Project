@@ -107,4 +107,7 @@ async function insertData(titles, titleGenres) {
     } catch (error) {
         await connection.rollback();
         throw error;
+    } finally {
+        connection.release();
     }
+}
