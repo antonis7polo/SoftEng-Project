@@ -27,22 +27,24 @@ exports.uploadTitleBasics = async (req, res) => {
                 continue;
             }
 
-            const columns = line.split('\t');
+            const columns = line.split('\t').map(column => column === '\\N' ? null : column);
+
             const title = {
-                title_id: columns[0],
-                title_type: columns[1],
-                primary_title: columns[2],
-                original_title: columns[3],
-                is_adult: columns[4],
-                start_year: columns[5],
-                end_year: columns[6],
-                runtime_minutes: columns[7],
-                image_url_poster: columns[8]
+                title_id: columns[0] || null,
+                title_type: columns[1] || null,
+                primary_title: columns[2] || null,
+                original_title: columns[3] || null, 
+                is_adult: columns[4] || null,
+                start_year: columns[5] || null,
+                end_year: columns[6] || null,
+                runtime_minutes: columns[7] || null,
+                image_url_poster: columns[9] || null
             };
+            
             titles.push(title);
 
-            if (columns[9]) {
-                const genres = columns[9].split(',');
+            if (columns[8]) {
+                const genres = columns[8].split(',');
                 genres.forEach(genre => {
                     titleGenres.push({
                         title_id: columns[0],
@@ -71,6 +73,9 @@ exports.uploadTitleBasics = async (req, res) => {
 
 
 async function insertData(titles, titleGenres) {
+
+
+
     const connection = await pool.getConnection();
     try {
         await connection.beginTransaction();
@@ -78,6 +83,7 @@ async function insertData(titles, titleGenres) {
         const insertTitleQuery = `INSERT INTO Titles (title_id, title_type, primary_title, original_title, is_adult, 
                                  start_year, end_year, runtime_minutes, image_url_poster) 
                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
 
         for (const title of titles) {
             await connection.query(insertTitleQuery, [
@@ -89,6 +95,8 @@ async function insertData(titles, titleGenres) {
 
         const insertGenreQuery = `INSERT INTO Title_Genres (title_id, genre) VALUES (?, ?)`;
 
+
+
         for (const titleGenre of titleGenres) {
             await connection.query(insertGenreQuery, [
                 titleGenre.title_id, titleGenre.genre
@@ -99,7 +107,4 @@ async function insertData(titles, titleGenres) {
     } catch (error) {
         await connection.rollback();
         throw error;
-    } finally {
-        connection.release();
     }
-}

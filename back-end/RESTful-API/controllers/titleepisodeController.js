@@ -2,8 +2,8 @@ const fs = require('fs');
 const readline = require('readline');
 const { pool } = require('../utils/database');
 
-exports.uploadTitleAkas = async (req, res) => {
-    if(!req.file) {
+exports.uploadTitleEpisode = async (req, res) => {
+    if (!req.file) {
         return res.status(400).send('No file uploaded.');
     }
 
@@ -15,8 +15,7 @@ exports.uploadTitleAkas = async (req, res) => {
             crlfDelay: Infinity
         });
 
-        const titleAkas = [];
-        const aliasTypes = [];
+        const titleEpisodes = [];
         let isFirstLine = true;
 
         for await (const line of rl) {
@@ -28,23 +27,18 @@ exports.uploadTitleAkas = async (req, res) => {
             }
 
             const columns = line.split('\t').map(column => column === '\\N' ? null : column);
-            
-            const titleAka = {
+            const titleEpisode = {
                 title_id: columns[0] || null,
-                ordering: columns[1] || null,
-                title: columns[2] || null,
-                region: columns[3] || null, 
-                language: columns[4] || null,
-                types: columns[5] || null,
-                attributes: columns[6] || null,
-                is_original_title: columns[7] || null
+                parent_title_id: columns[1] || null,
+                season_number: columns[2] || null,
+                episode_number: columns[3] || null
             };
             
-            titleAkas.push(titleAka);
+            titleEpisodes.push(titleEpisode);
         }
 
         // Insert the data into the database in a single transaction
-        await insertData(titleAkas);
+        await insertData(titleEpisodes);
 
         // Cleanup: delete the uploaded file
         fs.unlinkSync(filePath);
@@ -59,25 +53,24 @@ exports.uploadTitleAkas = async (req, res) => {
     }
 };
 
-async function insertData(titleAkas) {
+async function insertData(titleEpisodes) {
     const connection = await pool.getConnection();
     try {
         await connection.beginTransaction();
 
-        const insertAliasesQuery = 'INSERT INTO aliases (title_id, ordering, title, region, language, type, attribute, is_original_title) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+        const sql = `INSERT INTO episode_belongs_to
+        (episode_title_id, parent_tv_show_title_id, season_number, episode_number)
+        VALUES (?, ?, ?, ?)`;
 
-        for (const titleAka of titleAkas) {
-            await connection.query(insertAliasesQuery, [titleAka.title_id, titleAka.ordering, titleAka.title, titleAka.region, titleAka.language, titleAka.types, titleAka.attributes, titleAka.is_original_title]);
+        for (const titleEpisode of titleEpisodes) {
+            await connection.query(sql, [titleEpisode.title_id, titleEpisode.parent_title_id, titleEpisode.season_number, titleEpisode.episode_number]);
         }
 
         await connection.commit();
-
-    }
-    catch (error) {
+    } catch (error) {
         await connection.rollback();
         throw error;
-    }
-    finally {
+    } finally {
         connection.release();
     }
 }

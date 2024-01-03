@@ -1,5 +1,6 @@
 const fs = require('fs');
-const csv = require('csv-parser');
+const readline = require('readline');
+const { pool } = require('../utils/database');
 
 exports.uploadTitleRatings = async (req, res) => {
     if (!req.file) {
@@ -8,24 +9,40 @@ exports.uploadTitleRatings = async (req, res) => {
 
     try {
         const filePath = req.file.path;
-        const titleRatings = [];
+        const fileStream = fs.createReadStream(filePath);
+        const rl = readline.createInterface({
+            input: fileStream,
+            crlfDelay: Infinity
+        });
 
-        fs.createReadStream(filePath)
-            .pipe(csv({ separator: '\t' }))
-            .on('data', (row) => {
-                if (row.tconst && row.averageRating && row.numVotes) {
-                    titleRatings.push({
-                        title_id: row.tconst,
-                        average_rating: parseFloat(row.averageRating),
-                        num_votes: parseInt(row.numVotes, 10)
-                    });
-                }
-            })
-            .on('end', async () => {
-                await updateTitleRatingsInDatabase(titleRatings);
-                fs.unlinkSync(filePath);
-                res.status(200).json({ message: 'Ratings updated successfully' });
-            });
+        const titleRatings = [];
+        let isFirstLine = true;
+
+        for await (const line of rl) {
+
+            // Skip the header line
+            if (isFirstLine) {
+                isFirstLine = false;
+                continue;
+            }
+
+            const columns = line.split('\t').map(column => column === '\\N' ? null : column);
+            const titleRating = {
+                title_id: columns[0] || null,
+                average_rating: columns[1] || null,
+                num_votes: columns[2] || null
+            };
+            
+            titleRatings.push(titleRating);
+        }
+
+        // Insert the data into the database in a single transaction
+        await insertData(titleRatings);
+
+        // Cleanup: delete the uploaded file
+        fs.unlinkSync(filePath);
+
+        res.status(200).json({ message: 'File processed and data inserted successfully' });
     } catch (error) {
         console.error(error);
         if (req.file && req.file.path) {
@@ -35,25 +52,12 @@ exports.uploadTitleRatings = async (req, res) => {
     }
 };
 
-async function updateTitleRatingsInDatabase(titleRatings) {
+async function insertData(titleRatings) {
     const connection = await pool.getConnection();
     try {
         await connection.beginTransaction();
 
-        const updateQuery = `UPDATE Titles 
-                             SET average_rating = ?, num_votes = ? 
-                             WHERE title_id = ? AND average_rating IS NULL`;
+        // Insert the title ratings
+        const sql = 'UPDATE titles SET average_rating = ?, num_votes = ? WHERE title_id = ?';
 
-        for (const rating of titleRatings) {
-            await connection.query(updateQuery, [rating.average_rating, rating.num_votes, rating.title_id]);
-        }
-
-        await connection.commit();
-    } catch (error) {
-        await connection.rollback();
-        throw error;
-    } finally {
-        connection.release();
-    }
-}
-
+        for (const titleRating of ti
