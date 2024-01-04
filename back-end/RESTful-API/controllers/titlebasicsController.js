@@ -74,8 +74,6 @@ exports.uploadTitleBasics = async (req, res) => {
 
 async function insertData(titles, titleGenres) {
 
-
-
     const connection = await pool.getConnection();
     try {
         await connection.beginTransaction();

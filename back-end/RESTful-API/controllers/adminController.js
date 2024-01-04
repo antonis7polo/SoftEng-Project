@@ -5,25 +5,53 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 const pool = require('../utils/database').pool; 
 
-
 async function healthCheck(req, res) {
+    const format = req.query.format;
+    const connectionString = [
+        `Server=${process.env.DB_HOST}`,
+        `Database=${process.env.DB}`,
+        `Username=${process.env.DB_USER}`
+    ];
+
+    const healthData = {
+        status: "OK",
+        dataconnection: connectionString
+    };
+
     try {
-        await pool.query('SELECT 1'); // Simple query to test the connection
-        const connectionString = [
-            `Server=${process.env.DB_HOST}`,
-            `Database=${process.env.DB}`,
-            `Username=${process.env.DB_USER}`
-        ];
-        res.json({ status: "OK", dataconnection: connectionString });
+        await pool.query('SELECT 1');
+        if (format === 'csv') {
+            const json2csvParser = new Parser({
+                transforms: [(data) => {
+                    // Convert dataconnection array to a string for CSV
+                    data.dataconnection = data.dataconnection.join('; ');
+                    return data;
+                }]
+            });
+            const csvData = json2csvParser.parse([healthData]);
+            res.header('Content-Type', 'text/csv');
+            res.send(csvData);
+        } else {
+            res.json(healthData);
+        }
     } catch (error) {
-        const connectionString = [
-            `Server=${process.env.DB_HOST}`,
-            `Database=${process.env.DB}`,
-            `Username=${process.env.DB_USER}`
-        ];        
-        res.status(500).json({ status: "failed", dataconnection: connectionString });
+        healthData.status = "failed";
+        if (format === 'csv') {
+            const json2csvParser = new Parser({
+                transforms: [(data) => {
+                    data.dataconnection = data.dataconnection.join('; ');
+                    return data;
+                }]
+            });
+            const csvData = json2csvParser.parse([healthData]);
+            res.header('Content-Type', 'text/csv');
+            res.status(500).send(csvData);
+        } else {
+            res.status(500).json(healthData);
+        }
     }
 }
+
 
 
 async function userMod(req, res) {
@@ -55,7 +83,7 @@ async function getUser(req, res) {
     const format = req.query.format; 
 
     try {
-        const [users] = await pool.query('SELECT username, password, email, isAdmin FROM Users WHERE username = ?', [username]);
+        const [users] = await pool.query('SELECT username, password, email, isAdmin, created_at FROM Users WHERE username = ?', [username]);
         
         if (users.length === 0) {
             return res.status(404).json({ message: 'User not found' });
