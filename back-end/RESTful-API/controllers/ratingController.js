@@ -74,7 +74,7 @@ async function getUserRatings(req, res) {
 
     try {
         const ratingsQuery = `
-            SELECT title_id, user_rating
+            SELECT title_id, CAST(user_rating AS CHAR) AS user_rating
             FROM user_title_ratings
             WHERE user_id = ?;
         `;
@@ -173,7 +173,7 @@ exports.getMovieRecommendations = async (req, res) => {
         // For each genre, fetch top 10 movies
         for (const genre of genres) {
             const genreQuery = `
-                SELECT t.title_id, t.average_rating, t.num_votes 
+                SELECT t.title_id, t.average_rating, CAST(t.num_votes AS CHAR) AS num_votes
                 FROM titles t
                 JOIN title_genres tg ON t.title_id = tg.title_id
                 WHERE tg.genre = ?
@@ -186,7 +186,7 @@ exports.getMovieRecommendations = async (req, res) => {
         // For each actor, fetch top 10 movies
         for (const actor of actors) {
             const actorQuery = `
-                SELECT t.title_id, t.average_rating, t.num_votes 
+                SELECT t.title_id, t.average_rating, CAST(t.num_votes AS CHAR) AS num_votes
                 FROM titles t
                 JOIN principals p ON t.title_id = p.title_id
                 WHERE p.name_id = ?
@@ -198,7 +198,7 @@ exports.getMovieRecommendations = async (req, res) => {
 
         // Fetch top 10 movies by director
         const directorQuery = `
-            SELECT t.title_id, t.average_rating, t.num_votes 
+            SELECT t.title_id, t.average_rating, CAST(t.num_votes AS CHAR) AS num_votes
             FROM titles t
             JOIN directors d ON t.title_id = d.title_id
             WHERE d.name_id = ?

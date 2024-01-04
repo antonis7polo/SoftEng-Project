@@ -36,14 +36,14 @@ async function getTitleByID(req, res) {
             type: titleResult[0].title_type,
             originalTitle: titleResult[0].original_title,
             titlePoster: titleResult[0].image_url_poster, 
-            startYear : titleResult[0].start_year,
-            endYear: titleResult[0].end_year,
+            startYear: titleResult[0].start_year ? titleResult[0].start_year.toString() : null,
+            endYear: titleResult[0].end_year ? titleResult[0].end_year.toString() : null,
             genres: genresResult.map(g => ({ genreTitle: g.genre })), 
             titleAkas: aliasesResult, 
             principals: principalsResult, 
             rating: {
                 avRating: titleResult[0].average_rating, 
-                nVotes: titleResult[0].num_votes 
+                nVotes: titleResult[0].num_votes ? titleResult[0].num_votes.toString() : null 
             }
         };
 
@@ -115,14 +115,14 @@ async function searchTitleByPart(req, res) {
                 type: title.title_type,
                 originalTitle: title.original_title,
                 titlePoster: title.image_url_poster, 
-                startYear : title.start_year,
-                endYear: title.end_year,
+                startYear : title.start_year ? title.start_year.toString() : null,
+                endYear: title.end_year ? title.end_year.toString() : null,
                 genres: genresResult.map(g => ({ genreTitle: g.genre })),
                 titleAkas: aliasesResult,
                 principals: principalsResult, 
                 rating: {
                     avRating: title.average_rating, 
-                    nVotes: title.num_votes
+                    nVotes: title.num_votes ? title.num_votes.toString() : null
                 }
             };
         }));
@@ -164,6 +164,7 @@ async function getTitlesByGenre(req, res) {
     const { qgenre, minrating, yrFrom, yrTo } = req.body;
     const format = req.query.format;
     try {
+        const minRatingFloat = parseFloat(minrating);
         let mainQuery = `
             SELECT 
                 t.title_id,
@@ -179,12 +180,12 @@ async function getTitlesByGenre(req, res) {
             JOIN 
                 title_genres g ON t.title_id = g.title_id
             WHERE 
-                g.genre = ?
+                LOWER(g.genre) = LOWER(?)
             AND 
                 t.average_rating >= ?
         `;
 
-        let mainParams = [qgenre, minrating];
+        let mainParams = [qgenre, minRatingFloat];
 
         // Add conditions for year range if provided
         if (yrFrom && yrTo) {
@@ -227,14 +228,14 @@ async function getTitlesByGenre(req, res) {
                 type: title.title_type,
                 originalTitle: title.original_title,
                 titlePoster: title.image_url_poster,
-                startYear: title.start_year,
-                endYear: title.end_year,
+                startYear: title.start_year ? title.start_year.toString() : null,
+                endYear: title.end_year ? title.end_year.toString() : null,
                 genres: genresResult.map(g => ({ genreTitle: g.genre })),
                 titleAkas: aliasesResult,
                 principals: principalsResult,
                 rating: {
                     avRating: title.average_rating,
-                    nVotes: title.num_votes
+                    nVotes: title.num_votes ? title.num_votes.toString() : null
                 }
             };
         }));
@@ -505,7 +506,7 @@ exports.getAllTvShowsEpisodes = async (req, res) => {
     try {
         // Query to get all episodes along with their TV show and season information
         const episodesQuery = `
-            SELECT t.title_id AS episode_title_id, t.original_title AS episode_title, e.parent_tv_show_title_id, e.season_number, e.episode_number
+            SELECT t.title_id AS episode_title_id, t.original_title AS episode_title, e.parent_tv_show_title_id, CAST(e.season_number AS CHAR) AS season_number, CAST(e.episode_number AS CHAR) AS episode_number
             FROM episode_belongs_to e
             JOIN titles t ON e.episode_title_id = t.title_id
             ORDER BY e.parent_tv_show_title_id, e.season_number, e.episode_number;

@@ -91,6 +91,9 @@ async function getUser(req, res) {
 
         const user = users[0];
 
+        user.isAdmin = user.isAdmin.toString();
+
+
         if (format === 'csv') {
             const json2csvParser = new Parser();
             const csvData = json2csvParser.parse([user]); 

@@ -48,8 +48,8 @@ async function getNameByID(req, res) {
             nameID: personResult[0].name_id,
             name: personResult[0].name_,
             namePoster: personResult[0].namePoster,
-            birthYr: personResult[0].birthYr,
-            deathYr: personResult[0].deathYr,
+            birthYr: personResult[0].birthYr ? personResult[0].birthYr.toString() : null,
+            deathYr: personResult[0].deathYr ? personResult[0].deathYr.toString() : null,
             profession: personResult[0].profession ? personResult[0].profession : '', // Default to empty string if no professions
             nameTitles: titlesResult.map(title => ({
                 titleID: title.title_id,
@@ -144,8 +144,8 @@ async function searchName(req, res) {
                 nameID: person.name_id,
                 name: person.name_,
                 namePoster: person.namePoster,
-                birthYr: person.birthYr,
-                deathYr: person.deathYr,
+                birthYr: person.birthYr ? person.birthYr.toString() : null,
+                deathYr: person.deathYr ? person.deathYr.toString() : null,
                 profession: professionResults[0] ? professionResults[0].profession : '', 
                 nameTitles: titlesResults.map(title => ({
                     titleID: title.title_id,
