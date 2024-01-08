@@ -2,24 +2,24 @@ import React from 'react';
 import { Card, CardContent, Typography, CardMedia } from '@mui/material';
 import Link from 'next/link';
 
-const MovieCard = ({ movie }) => {
+const NameCard = ({ name }) => {
   const defaultImage = '/foo.jpg'; // Default image path
-  const posterUrl = movie.titlePoster ? movie.titlePoster.replace('{width_variable}', 'w200') : defaultImage;
+  const posterUrl = name.namePoster ? name.namePoster.replace('{width_variable}', 'w200') : defaultImage;
 
   
 
   return (
-    <Link href={`/title/${movie.titleID}`} passHref>
+    <Link href={`/name/${name.nameID}`} passHref>
       <Card className="card" style={{ cursor: 'pointer' }}> 
         <CardMedia
           component="img"
           className="movie-card-media"
           image={posterUrl}
-          alt={`Poster of ${movie.originalTitle}`}
+          alt={`Image of ${name.name}`} 
         />
         <CardContent className="movie-card-content">
           <Typography gutterBottom variant="h6" component="div" className="movie-title">
-            {movie.originalTitle}
+            {name.name}
           </Typography>
         </CardContent>
       </Card>
@@ -27,4 +27,4 @@ const MovieCard = ({ movie }) => {
   );
 };
 
-export default MovieCard;
+export default NameCard;

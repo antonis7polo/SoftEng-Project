@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
 const LoginPage = () => {
-    const { setIsLoggedIn } = useAuth();
+    const { setIsLoggedIn, saveToken } = useAuth(); // Retrieve saveToken from the context
 
     const [error, setError] = useState('');
     const router = useRouter();
@@ -23,9 +23,9 @@ const LoginPage = () => {
                 }
             });
 
-            if (response.data.token) {
-                localStorage.setItem('token', response.data.token);
-                setIsLoggedIn(true); // Set login state
+            if (response.data) {
+                saveToken(response.data.token, response.data.userID); 
+                setIsLoggedIn(true); 
                 router.push('/home');
             } else {
                 setError('Login failed, please try again.');

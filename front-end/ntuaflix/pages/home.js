@@ -8,7 +8,13 @@ const HomePage = () => {
   
     useEffect(() => {
         const fetchCategories = async () => {
-            const token = localStorage.getItem('token');
+            // Retrieve token data from localStorage
+            const tokenData = localStorage.getItem('tokenData');
+            let token = null;
+            if (tokenData) {
+                token = JSON.parse(tokenData).token;
+            }
+
             try {
                 const config = { headers: { 'X-OBSERVATORY-AUTH': token } };
                 const { data } = await axios.get('https://localhost:9876/ntuaflix_api/home', config);
@@ -19,7 +25,7 @@ const HomePage = () => {
                     categoriesData[category] = await Promise.all(
                         categoriesData[category].map(async (item) => {
                             const detailResponse = await axios.get(`https://localhost:9876/ntuaflix_api/title/${item.titleID}`, config);
-                            return detailResponse.data.titleObject; // assuming this is the structure of your response
+                            return detailResponse.data.titleObject; 
                         })
                     );
                 }
@@ -32,17 +38,36 @@ const HomePage = () => {
   
         fetchCategories();
     }, []);
-  
-    return (
-        <Box sx={{ flexGrow: 1, padding: 2 }}>
-            {Object.entries(categories).map(([categoryName, movies]) => (
-                <Box key={categoryName} sx={{ marginBottom: 4 }}>
-                    <h2>{categoryName}</h2>
-                    <MovieCarousel movies={movies} />
-                </Box>
-            ))}
-        </Box>
-    );
+
+    const categoryRenameMapping = {
+        topRatedMovies: 'Top Movies',
+        topRatedTvShows: 'Top TV Series',
+        newReleases: 'New Releases',
+        popularInAction: 'Action Movies',
+        popularInComedy: 'Comedy Movies',
+        popularInDrama: 'Drama Movies',
+        popularInRomance: 'Romantic Movies',
+        popularInThriller: 'Thriller Movies',
+        popularInHorror: 'Horror Movies',
+        popularInDocumentary: 'Documentaries',
+        popularInAdventure: 'Adventure Movies',
+        // Add more mappings as necessary
+    };
+    
+    function renameCategory(originalCategoryName) {
+        return categoryRenameMapping[originalCategoryName] || originalCategoryName;
+    }
+    
+  return (
+    <Box sx={{ flexGrow: 1, padding: 2 }}>
+        {Object.entries(categories).map(([categoryName, movies]) => (
+            <Box key={categoryName} sx={{ marginBottom: 4 }}>
+                <h2 className="category-heading">{renameCategory(categoryName)}</h2>
+                <MovieCarousel movies={movies} />
+            </Box>
+        ))}
+    </Box>
+);
 };
   
 export default HomePage;
