@@ -165,60 +165,57 @@ exports.deleteRating = deleteRating;
 
 exports.getMovieRecommendations = async (req, res) => {
     const { genres, actors, director } = req.body;
-    const format = req.query.format; 
 
     try {
-        const recommendations = {};
+        const allMovies = new Map();
 
-        // For each genre, fetch top 10 movies
+        // Helper function to add movies to the Set
+        const addMoviesToMap = (movies) => {
+            movies.forEach(movie => {
+                if (!allMovies.has(movie.title_id)) {
+                    allMovies.set(movie.title_id, movie); // Add movie object with title_id as key
+                }
+            });
+        };
+
+        // For each genre, fetch top 10 movies and add to allMovies
         for (const genre of genres) {
             const genreQuery = `
-                SELECT t.title_id, t.average_rating, CAST(t.num_votes AS CHAR) AS num_votes
+                SELECT t.title_id, t.original_title, image_url_poster, t.average_rating, CAST(t.num_votes AS CHAR) AS num_votes
                 FROM titles t
                 JOIN title_genres tg ON t.title_id = tg.title_id
                 WHERE tg.genre = ?
                 ORDER BY t.average_rating DESC
                 LIMIT 10`;
             const [genreMovies] = await pool.query(genreQuery, [genre]);
-            recommendations[`topMoviesByGenre_${genre}`] = genreMovies;
+            addMoviesToMap(genreMovies);
         }
 
-        // For each actor, fetch top 10 movies
+        // For each actor, fetch top 10 movies and add to allMovies
         for (const actor of actors) {
             const actorQuery = `
-                SELECT t.title_id, t.average_rating, CAST(t.num_votes AS CHAR) AS num_votes
+                SELECT t.title_id, t.original_title, image_url_poster, t.average_rating, CAST(t.num_votes AS CHAR) AS num_votes
                 FROM titles t
                 JOIN principals p ON t.title_id = p.title_id
                 WHERE p.name_id = ?
                 ORDER BY t.average_rating DESC
                 LIMIT 10`;
             const [actorMovies] = await pool.query(actorQuery, [actor]);
-            recommendations[`topMoviesByActor_${actor}`] = actorMovies;
+            addMoviesToMap(actorMovies);
         }
 
-        // Fetch top 10 movies by director
+        // Fetch top 10 movies by director and add to allMovies
         const directorQuery = `
-            SELECT t.title_id, t.average_rating, CAST(t.num_votes AS CHAR) AS num_votes
+            SELECT t.title_id, t.original_title, image_url_poster, t.average_rating, CAST(t.num_votes AS CHAR) AS num_votes
             FROM titles t
             JOIN directors d ON t.title_id = d.title_id
             WHERE d.name_id = ?
             ORDER BY t.average_rating DESC
             LIMIT 10`;
         const [directorMovies] = await pool.query(directorQuery, [director]);
-        recommendations[`topMoviesByDirector_${director}`] = directorMovies;
+        addMoviesToMap(directorMovies);
 
-        if (format === 'csv') {
-            const json2csvParser = new Parser();
-            for (const key in recommendations) {
-                recommendations[key] = json2csvParser.parse(recommendations[key]);
-            }
-
-            res.header('Content-Type', 'text/csv');
-            res.attachment('movieRecommendations.csv');
-            return res.send(Object.values(recommendations).join('\n\n'));
-        } else {
-            res.json(recommendations);
-        }
+      res.json({ movies: Array.from(allMovies.values()) });
     } catch (error) {
         console.error('Database query failed:', error);
         res.status(500).json({ message: 'Server error', error: error.message });

@@ -1,8 +1,11 @@
 require('dotenv').config();
 const fs = require('fs');
 const https = require('https');
+const cors = require('cors');
 
 const app = require('./app');
+app.use(cors());
+
 const port = process.env.PORT || 9876;
 
 const options = {

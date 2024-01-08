@@ -274,6 +274,7 @@ exports.getTitlesByGenre = getTitlesByGenre;
 
 exports.getTitleDetails = async (req, res) => {
     const { titleID } = req.params;
+    console.log(titleID);
     const format = req.query.format;
 
     try {
@@ -338,7 +339,6 @@ exports.getHomepageData = async (req, res) => {
     try {
         const data = {
             topRatedMovies: [],
-            topRatedTvShows: [],
             newReleases: [],
             popularInAction: [] ,
             popularInComedy: [],
@@ -360,17 +360,6 @@ exports.getHomepageData = async (req, res) => {
         `;
         const [topRatedMovies] = await pool.query(topRatedMoviesQuery);
         data.topRatedMovies = topRatedMovies;
-
-        // Query for top rated TV shows
-        const topRatedTvShowsQuery = `
-            SELECT DISTINCT t.title_id, t.original_title, t.average_rating
-            FROM episode_belongs_to e
-            JOIN titles t ON e.parent_tv_show_title_id = t.title_id
-            ORDER BY t.average_rating DESC
-            LIMIT 20;
-        `;
-        const [topRatedTvShows] = await pool.query(topRatedTvShowsQuery);
-        data.topRatedTvShows = topRatedTvShows;
 
 
         // Query for new releases
@@ -471,7 +460,6 @@ exports.getHomepageData = async (req, res) => {
         if (format === 'csv') {
             const flattenedData = {
                 topRatedMovies: data.topRatedMovies.map(movie => movie.titleID).join('; '),
-                topRatedTvShows: data.topRatedTvShows.map(tvShow => tvShow.titleID).join('; '),
                 newReleases: data.newReleases.map(release => release.titleID).join('; '),
                 popularInAction: data.popularInAction.map(movie => movie.titleID).join('; '),
                 popularInComedy: data.popularInComedy.map(movie => movie.titleID).join('; '),

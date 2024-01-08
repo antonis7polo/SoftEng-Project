@@ -1,0 +1,30 @@
+{
+  "name": "ntuaflix",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.3",
+    "@mui/lab": "^5.0.0-alpha.159",
+    "@mui/material": "^5.15.3",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
+    "next": "^14.0.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-material-ui-carousel": "^3.4.2",
+    "react-router-dom": "^6.21.1",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1",
+    "url": "^0.11.3"
+  }
+}

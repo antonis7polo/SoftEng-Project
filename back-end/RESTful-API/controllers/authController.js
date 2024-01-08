@@ -12,7 +12,10 @@ exports.login = async (req, res) => {
 
         if (user && await bcrypt.compare(password, user.password)) {
             const token = generateToken(user);
-            return res.status(200).json({ token });
+            return res.status(200).json({ 
+                token,
+                userID: user.user_id.toString()
+            });
         } else {
             return res.status(401).json({ message: 'Invalid username or password' });
         }
