@@ -162,6 +162,10 @@ exports.searchTitleByPart = searchTitleByPart;
 
 async function getTitlesByGenre(req, res) {
     const { qgenre, minrating, yrFrom, yrTo } = req.body;
+
+    if( !qgenre || !minrating ){
+        return res.status(400).json({ message: 'Missing parameters' });
+    }
     const format = req.query.format;
     try {
         const minRatingFloat = parseFloat(minrating);
@@ -274,7 +278,6 @@ exports.getTitlesByGenre = getTitlesByGenre;
 
 exports.getTitleDetails = async (req, res) => {
     const { titleID } = req.params;
-    console.log(titleID);
     const format = req.query.format;
 
     try {
@@ -300,6 +303,10 @@ exports.getTitleDetails = async (req, res) => {
             FROM directors 
             WHERE title_id = ?`;
         const [directorsResult] = await pool.query(directorsQuery, [titleID]);
+
+        if (genresResult.length === 0 && actorsResult.length === 0 && directorsResult.length === 0) {
+            return res.status(404).json({ message: 'No details found for the specified title or no such title' });
+        }
 
         // Construct the response object
         const titleDetails = {

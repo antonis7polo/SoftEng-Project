@@ -4,7 +4,7 @@ const { pool } = require('../utils/database');
 
 exports.uploadTitleEpisode = async (req, res) => {
     if (!req.file) {
-        return res.status(400).send('No file uploaded.');
+        return res.status(400).json({ message: 'No file uploaded' });
     }
 
     try {

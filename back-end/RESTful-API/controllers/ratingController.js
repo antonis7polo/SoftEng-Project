@@ -4,13 +4,23 @@ const { Parser } = require('json2csv');
 
 async function uploadRating(req, res) {
     const {userID,titleID, userRating } = req.body;
+
+    if(!userID || !titleID || !userRating) {
+        return res.status(400).json({ message: 'Missing required information' });
+    }
+
     const authenticatedUserID = req.user.userId; 
     if (parseInt(authenticatedUserID, 10) !== parseInt(userID, 10)) {
         return res.status(401).json({ message: 'Unauthorized access' });
     }
 
+    const userRatingInt = parseFloat(userRating);
+
+    const connection = await pool.getConnection();
+
+
     try {
-        const connection = await pool.getConnection();
+
         await connection.beginTransaction();
 
         // Check if the rating already exists
@@ -27,19 +37,20 @@ async function uploadRating(req, res) {
         if (existingRating.length > 0) {
             // Rating exists, update it
             const oldUserRating = existingRating[0].user_rating;
+
             const updateRatingQuery = `UPDATE user_title_ratings SET user_rating = ? WHERE user_id = ? AND title_id = ?`;
-            await connection.query(updateRatingQuery, [userRating, authenticatedUserID, titleID]);
+            await connection.query(updateRatingQuery, [userRatingInt, authenticatedUserID, titleID]);
 
             // Update the average rating (considering the old rating)
-            currentAverage = ((currentAverage * currentNumVotes) - oldUserRating + userRating) / currentNumVotes;
+            currentAverage = ((currentAverage * currentNumVotes) - oldUserRating + userRatingInt) / currentNumVotes;
         } else {
             // Rating does not exist, insert new rating
             const insertRatingQuery = `INSERT INTO user_title_ratings (user_id, title_id, user_rating) VALUES (?, ?, ?)`;
-            await connection.query(insertRatingQuery, [authenticatedUserID, titleID, userRating]);
+            await connection.query(insertRatingQuery, [authenticatedUserID, titleID, userRatingInt]);
 
             // Update the average rating (considering this as a new rating)
             currentNumVotes += 1;
-            currentAverage = ((currentAverage * (currentNumVotes - 1)) + userRating) / currentNumVotes;
+            currentAverage = ((currentAverage * (currentNumVotes - 1)) + userRatingInt) / currentNumVotes;
         }
 
         // Update the titles table with the new average and new number of votes
@@ -165,6 +176,12 @@ exports.deleteRating = deleteRating;
 
 exports.getMovieRecommendations = async (req, res) => {
     const { genres, actors, director } = req.body;
+    const format = req.query.format; 
+
+
+    if (!genres || !actors || !director) {
+        return res.status(400).json({ message: 'Missing required information' });
+    }
 
     try {
         const allMovies = new Map();
@@ -184,7 +201,7 @@ exports.getMovieRecommendations = async (req, res) => {
                 SELECT t.title_id, t.original_title, image_url_poster, t.average_rating, CAST(t.num_votes AS CHAR) AS num_votes
                 FROM titles t
                 JOIN title_genres tg ON t.title_id = tg.title_id
-                WHERE tg.genre = ?
+                WHERE LOWER(tg.genre) = LOWER(?)
                 ORDER BY t.average_rating DESC
                 LIMIT 10`;
             const [genreMovies] = await pool.query(genreQuery, [genre]);
@@ -215,8 +232,23 @@ exports.getMovieRecommendations = async (req, res) => {
         const [directorMovies] = await pool.query(directorQuery, [director]);
         addMoviesToMap(directorMovies);
 
-      res.json({ movies: Array.from(allMovies.values()) });
-    } catch (error) {
+      //if no movies found
+        if (allMovies.size === 0) {
+            return res.status(404).json({ message: 'No movies found' });
+        }
+
+        if (format === 'csv') {
+            const movies = Array.from(allMovies.values());
+            const fields = ['title_id', 'original_title', 'image_url_poster', 'average_rating', 'num_votes'];
+            const json2csvParser = new Parser({ fields });
+            const csvData = json2csvParser.parse(movies);
+
+            res.setHeader('Content-Type', 'text/csv');
+            res.setHeader('Content-Disposition', 'attachment; filename=movies.csv');
+            return res.send(csvData);
+        } else {
+            res.json({ movies: Array.from(allMovies.values()) });
+        }    } catch (error) {
         console.error('Database query failed:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
     }

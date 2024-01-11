@@ -58,6 +58,10 @@ async function userMod(req, res) {
     const { username, password } = req.params;
     const { email, isAdmin } = req.body; // Receive email and isAdmin from request body
 
+    if (email === undefined || isAdmin === undefined) {
+        return res.status(400).json({ message: 'Bad Request: Missing required fields.' });
+    }
+    
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
 
