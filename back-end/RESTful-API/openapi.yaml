@@ -1,0 +1,2050 @@
+openapi: 3.0.0
+info:
+  title: NTUAflix API
+  description: The NTUAflix API provides programmatic access to a comprehensive database of films, television shows, actors, and film industry professionals. It is designed to offer extensive information about titles, including cast, crew, production details and user ratings. The API enables developers to integrate this rich dataset into their applications, providing users with detailed insights and information about the film and television industry.
+  version: 1.0.0
+servers:
+  - url: https://localhost:9876/ntuaflix_api
+    description: Development server
+paths:
+  /login:
+    post:
+      tags:
+        - Authentication
+      summary: User authentication
+      description: This endpoint authenticates a user by their username and password, and returns a token and user ID upon successful authentication. The token is invalidated automatically 1 hour after it is issued.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                  description: The username of the user
+                password:
+                  type: string
+                  format: password
+                  description: The password of the user
+      responses:
+        '200':
+          description: Successful authentication
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: The token generated for the authenticated session
+                  userID:
+                    type: string
+                    description: The unique identifier of the user
+        '401':
+          description: Invalid username or password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating the authentication failure
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A message indicating a server-side error
+                  error:
+                    type: string
+                    description: Detailed error message
+  /logout:
+    post:
+      tags:
+        - Authentication
+      summary: User logout
+      description: This endpoint is used to signal the frontend to discard the authentication token from local storage. The API itself does not invalidate the token, as it is stateless. A valid token must be provided in the 'X-OBSERVATORY-AUTH' header.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token received upon successful login
+      responses:
+        '200':
+          description: Logout signal successfully received
+        '401':
+          description: Unauthorized - No token provided or token is invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating either no token was provided or the token is invalid
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A message indicating a server-side error
+                  error:
+                    type: string
+                    description: Detailed error message
+  /admin/healthcheck:
+    get:
+      tags:
+        - Admin
+      summary: System Health Check
+      description: Provides health status information of the system. Accessible only by admin users. Supports JSON and CSV response formats.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+        - in: query
+          name: format
+          required: false
+          schema:
+            type: string
+          description: Response format. Can be 'csv' for CSV format or 'json' for JSON format, defaults to JSON if not specified.
+      responses:
+        '200':
+          description: System is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Health status of the system
+                  dataconnection:
+                    type: string
+                    description: Connection string information
+            text/csv:
+              schema:
+                type: string
+                example: "status, dataconnection\nOK, Server=...; Database=...; Username=...; Password=..."
+        '401':
+          description: Unauthorized - Token not provided, invalid, or user is not an admin
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating lack of authorization
+        '500':
+          description: Health check failed or server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Health status indicating failure
+            text/csv:
+              schema:
+                type: string
+                example: "status, dataconnection\nfailed, Server=...; Database=...; Username=..."
+  /admin/upload/titlebasics:
+    post:
+      tags:
+        - Admin
+      summary: Upload Title Basics Data
+      description: Allows admins to upload a TSV (Tab-Separated Values) file containing title basics data. The file is processed and the data is inserted into the database.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The TSV file containing title basics data to be uploaded.
+      responses:
+        '200':
+          description: File processed and data inserted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success message
+        '400':
+          description: No file uploaded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating no file was uploaded
+        '401':
+          description: Unauthorized - Token not provided, invalid, or user is not an admin
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating lack of authorization
+        '500':
+          description: Error processing file or internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+  /admin/upload/titleakas:
+    post:
+      tags:
+        - Admin
+      summary: Upload Title Akas Data
+      description: Allows admins to upload a TSV (Tab-Separated Values) file containing title akas data. The file is processed and the data is inserted into the database.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The TSV file containing title akas data to be uploaded.
+      responses:
+        '200':
+          description: File processed and data inserted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success message
+        '400':
+          description: No file uploaded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating no file was uploaded
+        '401':
+          description: Unauthorized - Token not provided, invalid, or user is not an admin
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating lack of authorization
+        '500':
+          description: Error processing file or internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+  /admin/upload/namebasics:
+    post:
+      tags:
+        - Admin
+      summary: Upload Name Basics Data
+      description: Allows admins to upload a TSV (Tab-Separated Values) file containing name basics data. The file is processed and the data is inserted into the database.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The TSV file containing name basics data to be uploaded.
+      responses:
+        '200':
+          description: File processed and data inserted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success message
+        '400':
+          description: No file uploaded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating no file was uploaded
+        '401':
+          description: Unauthorized - Token not provided, invalid, or user is not an admin
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating lack of authorization
+        '500':
+          description: Error processing file or internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+  /admin/upload/titlecrew:
+    post:
+      tags:
+        - Admin
+      summary: Upload Title Crew Data
+      description: Allows admins to upload a TSV (Tab-Separated Values) file containing title crew data. The file is processed and the data is inserted into the database.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The TSV file containing title crew data to be uploaded.
+      responses:
+        '200':
+          description: File processed and data inserted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success message
+        '400':
+          description: No file uploaded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating no file was uploaded
+        '401':
+          description: Unauthorized - Token not provided, invalid, or user is not an admin
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating lack of authorization
+        '500':
+          description: Error processing file or internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+  /admin/upload/titleepisode:
+    post:
+      tags:
+        - Admin
+      summary: Upload Title Episode Data
+      description: Allows admins to upload a TSV (Tab-Separated Values) file containing title episode data. The file is processed and the data is inserted into the database.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The TSV file containing title episode data to be uploaded.
+      responses:
+        '200':
+          description: File processed and data inserted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success message
+        '400':
+          description: No file uploaded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating no file was uploaded
+        '401':
+          description: Unauthorized - Token not provided, invalid, or user is not an admin
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating lack of authorization
+        '500':
+          description: Error processing file or internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+  /admin/upload/titleprincipals:
+    post:
+      tags:
+        - Admin
+      summary: Upload Title Principals Data
+      description: Allows admins to upload a TSV (Tab-Separated Values) file containing title principals data. The file is processed and the data is inserted into the database.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The TSV file containing title principals data to be uploaded.
+      responses:
+        '200':
+          description: File processed and data inserted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success message
+        '400':
+          description: No file uploaded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating no file was uploaded
+        '401':
+          description: Unauthorized - Token not provided, invalid, or user is not an admin
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating lack of authorization
+        '500':
+          description: Error processing file or internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+  /admin/upload/titleratings:
+    post:
+      tags:
+        - Admin
+      summary: Upload Title Ratings Data
+      description: Allows admins to upload a TSV (Tab-Separated Values) file containing title ratings data. The file is processed and the data is inserted into the database.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The TSV file containing title ratings data to be uploaded.
+      responses:
+        '200':
+          description: File processed and data inserted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success message
+        '400':
+          description: No file uploaded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating no file was uploaded
+        '401':
+          description: Unauthorized - Token not provided, invalid, or user is not an admin
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating lack of authorization
+        '500':
+          description: Error processing file or internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+  /admin/resetall:
+    post:
+      tags:
+        - Admin
+      summary: Reset Database
+      description: Truncates all tables in the database, effectively resetting the database to its initial state. This endpoint is restricted to admin users and requires authentication.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint. Only admin users are authorized to perform this operation.
+      responses:
+        '200':
+          description: Database successfully reset
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Success status message
+        '401':
+          description: Unauthorized - Token not provided, invalid, or user is not an admin
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating lack of authorization
+        '500':
+          description: Internal server error during database reset
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Failure status message
+                  reason:
+                    type: string
+                    description: Reason for the failure
+  /admin/usermod/{username}/{password}:
+    post:
+      tags:
+        - Admin
+      summary: Modify User
+      description: Creates a new user or updates an existing user's details. Both email and isAdmin fields are required in the request body. This operation is restricted to admin users.
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user to be created or updated.
+        - in: path
+          name: password
+          required: true
+          schema:
+            type: string
+          description: The password for the user. This will be hashed before storage.
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - isAdmin
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: The email address of the user.
+                isAdmin:
+                  type: string
+                  enum: [0, 1]
+                  description: Flag (0 or 1) indicating whether the user has admin privileges.
+      responses:
+        '200':
+          description: User created or updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Success message
+        '400':
+          description: Bad Request - Missing required fields
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating missing required fields
+        '401':
+          description: Unauthorized - Token not provided, invalid, or user is not an admin
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Internal server error during user modification
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+  /admin/users/{username}:
+    get:
+      tags:
+        - Admin
+      summary: Get User Information
+      description: Retrieves details of a specific user by username. Supports JSON and CSV response formats. Accessible only by admin users.
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user to retrieve.
+        - in: query
+          name: format
+          required: false
+          schema:
+            type: string
+          description: Response format. Can be 'csv' for CSV format or 'json' for JSON format, defaults to JSON if not specified.
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      responses:
+        '200':
+          description: User information retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                      password:
+                        type: string
+                      email:
+                        type: string
+                      isAdmin:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+            text/csv:
+              schema:
+                type: string
+                example: "username, password, email, isAdmin, created_at\njohndoe, hashedpassword, john@example.com, 1, 2021-01-01T12:00:00"
+        '401':
+          description: Unauthorized - Token not provided, invalid, or user is not an admin
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating that the user was not found
+        '500':
+          description: Internal server error during user retrieval
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+  /title/{titleID}:
+    get:
+      tags:
+        - Titles
+      summary: Get Title Information by ID
+      description: Retrieves detailed information about a title, including genres, aliases, principals and rating based on the title ID. Supports JSON and CSV response formats.
+      parameters:
+        - in: path
+          name: titleID
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the title.
+        - in: query
+          name: format
+          required: false
+          schema:
+            type: string
+          description: Response format. Can be 'csv' for CSV format, defaults to JSON if not specified.
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      responses:
+        '200':
+          description: Title information retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  titleObject:
+                    type: object
+                    properties:
+                      titleID:
+                        type: string
+                      type:
+                        type: string
+                      originalTitle:
+                        type: string
+                      titlePoster:
+                        type: string
+                      startYear:
+                        type: string
+                      endYear:
+                        type: string
+                      genres:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            genreTitle:
+                              type: string
+                      titleAkas:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            akaTitle:
+                              type: string
+                            regionAbbrev:
+                              type: string
+                      principals:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            nameID:
+                              type: string
+                            name:
+                              type: string
+                            category:
+                              type: string
+                      rating:
+                        type: object
+                        properties:
+                          avRating:
+                            type: string
+                          nVotes:
+                            type: string
+            text/csv:
+              schema:
+                type: string
+                example: "titleID, type, originalTitle, titlePoster, startYear, endYear, genres, titleAkas, principals, avRating, nVotes"
+        '401':  
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Title not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating that the title was not found
+        '500':
+          description: Internal server error during title retrieval
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+  /searchtitle:
+    get:
+      tags:
+        - Titles
+      summary: Search Titles by Part of Name
+      description: Searches for titles where the original title contains a given part. Supports JSON and CSV response formats. Returns 404 if no titles are found.
+      parameters:
+        - in: query
+          name: format
+          required: false
+          schema:
+            type: string
+          description: Response format. Can be 'csv' for CSV format, defaults to JSON if not specified.
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titlePart:
+                  type: string
+                  description: Part of the title name to search for.
+      responses:
+        '200':
+          description: Titles found matching the search criteria
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  titleObjects:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        titleID:
+                          type: string
+                        type:
+                          type: string
+                        originalTitle:
+                          type: string
+                        titlePoster:
+                          type: string
+                        startYear:
+                          type: string
+                        endYear:
+                          type: string
+                        genres:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              genreTitle:
+                                type: string
+                        titleAkas:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              akaTitle:
+                                type: string
+                              regionAbbrev:
+                                type: string
+                        principals:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              nameID:
+                                type: string
+                              name:
+                                type: string
+                              category:
+                                type: string
+                        rating:
+                          type: object
+                          properties:
+                            avRating:
+                              type: string
+                            nVotes:
+                              type: string
+            text/csv:
+              schema:
+                type: string
+                example: "titleID, type, originalTitle, titlePoster, startYear, endYear, genres, titleAkas, principals, avRating, nVotes"
+        '400':
+          description: No title part provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating no title part was provided
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: No titles found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating that no titles were found
+        '500':
+          description: Internal server error during title search
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+  /bygenre:
+    get:
+      tags:
+        - Titles
+      summary: Get Titles by Genre
+      description: Fetches titles based on genre, minimum rating, and an optional year range. Supports JSON and CSV response formats. Returns 404 if no titles are found.
+      parameters:
+        - in: query
+          name: format
+          required: false
+          schema:
+            type: string
+          description: Response format. Can be 'csv' for CSV format, defaults to JSON if not specified.
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                qgenre:
+                  type: string
+                  description: Genre to filter the titles.
+                minrating:
+                  type: string
+                  description: Minimum rating to filter the titles.
+                yrFrom:
+                  type: string
+                  description: Start year of the range for filtering the titles. Optional.
+                yrTo:
+                  type: string
+                  description: End year of the range for filtering the titles. Optional.
+      responses:
+        '200':
+          description: Titles found matching the criteria
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  titleObjects:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        titleID:
+                          type: string
+                        type:
+                          type: string
+                        originalTitle:
+                          type: string
+                        titlePoster:
+                          type: string
+                        startYear:
+                          type: string
+                        endYear:
+                          type: string
+                        genres:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              genreTitle:
+                                type: string
+                        titleAkas:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              akaTitle:
+                                type: string
+                              regionAbbrev:
+                                type: string
+                        principals:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              nameID:
+                                type: string
+                              name:
+                                type: string
+                              category:
+                                type: string
+                        rating:
+                          type: object
+                          properties:
+                            avRating:
+                              type: string
+                            nVotes:
+                              type: string
+            text/csv:
+              schema:
+                type: string
+                example: "titleID, type, originalTitle, titlePoster, startYear, endYear, genres, titleAkas, principals, avRating, nVotes"
+        '400':
+          description: No genre or minimun rating provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating no genre or minimum rating was provided
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: No titles found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating that no titles were found
+        '500':
+          description: Internal server error during title retrieval
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+  /name/{nameID}:
+    get:
+      tags:
+        - Names
+      summary: Get Person Information by ID
+      description: Retrieves detailed information about a person, including related titles and professions, based on their unique identifier. Supports JSON and CSV response formats. Returns 404 if the person is not found.
+      parameters:
+        - in: path
+          name: nameID
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the person.
+        - in: query
+          name: format
+          required: false
+          schema:
+            type: string
+          description: Response format. Can be 'csv' for CSV format, defaults to JSON if not specified.
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      responses:
+        '200':
+          description: Person information retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nameObject:
+                    type: object
+                    properties:
+                      nameID:
+                        type: string
+                      name:
+                        type: string
+                      namePoster:
+                        type: string
+                      birthYr:
+                        type: string
+                      deathYr:
+                        type: string
+                      profession:
+                        type: string
+                      nameTitles:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            titleID:
+                              type: string
+                            category:
+                              type: string
+            text/csv:
+              schema:
+                type: string
+                example: "nameID, name, namePoster, birthYr, deathYr, profession, nameTitles"
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Person not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating that the person was not found
+        '500':
+          description: Internal server error during person retrieval
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+  /searchname:
+    get:
+      tags:
+        - Names
+      summary: Search Persons by Part of Name
+      description: Searches for persons where the name contains a given part. Supports JSON and CSV response formats. Returns 404 if no persons are found.
+      parameters:
+        - in: query
+          name: format
+          required: false
+          schema:
+            type: string
+          description: Response format. Can be 'csv' for CSV format, defaults to JSON if not specified.
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                namePart:
+                  type: string
+                  description: Part of the name to search for.
+      responses:
+        '200':
+          description: Persons found matching the search criteria
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nameObjects:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        nameID:
+                          type: string
+                        name:
+                          type: string
+                        namePoster:
+                          type: string
+                        birthYr:
+                          type: string
+                        deathYr:
+                          type: string
+                        profession:
+                          type: string
+                        nameTitles:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              titleID:
+                                type: string
+                              category:
+                                type: string
+            text/csv:
+                schema:
+                  type: string
+                  example: "nameID, name, namePoster, birthYr, deathYr, profession, nameTitles"
+        '400':
+          description: No name part provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating no name part was provided
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: No persons found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating that no persons were found
+        '500':
+          description: Internal server error during person search
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Detailed error message
+  /uploadrating:
+    post:
+      tags:
+        - Ratings
+      summary: Upload User Rating
+      description: Allows authenticated users to upload a rating for a title. Users can only upload ratings for their own user ID.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userID:
+                  type: string
+                titleID:
+                  type: string
+                userRating:
+                  type: string
+      responses:
+        '200':
+          description: Rating uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Bad Request - Missing required fields
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating missing required fields
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  error:
+                    type: string
+  /ratings/{userID}:
+    get:
+      tags:
+        - Ratings
+      summary: Get User Ratings
+      description: Retrieves all ratings made by a specific user. Users can only retrieve their own ratings.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+        - in: path
+          name: userID
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: format
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User ratings retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userID:
+                    type: string
+                  ratings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title_id: 
+                          type: string
+                        user_rating:
+                          type: string
+            text/csv:
+              schema:
+                type: string
+                example: "title_id, user_rating\ntt0000001, 5\n..."
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  error:
+                    type: string
+  /ratings/{userID}/{titleID}:
+    delete:
+      tags:
+        - Ratings
+      summary: Delete User Rating
+      description: Allows authenticated users to delete a rating for a title. Users can only delete ratings for their own user ID.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+        - in: path
+          name: userID
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: titleID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Rating deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Unauthorized to delete this rating
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Rating not found or already deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  error:
+                    type: string
+  /recommendations:
+    get:
+      tags:
+        - Ratings
+      summary: Get Movie Recommendations
+      description: Provides movie recommendations based on specified genres, actors, and a director. Retrieves top-rated movies for each criteria.
+      parameters:
+        - in: query
+          name: format
+          required: false
+          schema:
+            type: string
+          description: Response format. Can be 'csv' for CSV format, defaults to JSON if not specified.
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                genres:
+                  type: array
+                  items:
+                    type: string
+                  description: List of genres to base the recommendations on.
+                actors:
+                  type: array
+                  items:
+                    type: string
+                  description: List of actor IDs to base the recommendations on.
+                director:
+                  type: string
+                  description: Director ID to base the recommendations on.
+      responses:
+        '200':
+          description: Successful retrieval of movie recommendations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  movies:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title_id:
+                          type: string
+                        original_title:
+                          type: string
+                        image_url_poster:
+                          type: string
+                        average_rating:
+                          type: string
+                        num_votes:
+                          type: string
+            text/csv:
+              schema:
+                type: string
+                example: "title_id, original_title, image_url_poster, average_rating, num_votes\ntt0000001, title1, url1, 5, 100\n..."
+        '400':
+          description: Bad Request - Missing required fields
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating missing required fields
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating lack of authorization
+        '404':
+          description: No recommendations found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Server error during recommendations retrieval
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+  /titles/{titleID}/details:
+    get:
+      tags:
+        - Titles
+      summary: Get Detailed Information of a Title
+      description: Retrieves detailed information about a title, including top genres, lead actors, and directors, based on the title ID.
+      parameters:
+        - in: query
+          name: format
+          required: false
+          schema:
+            type: string
+          description: Response format. Can be 'csv' for CSV format, defaults to JSON if not specified.
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+        - in: path
+          name: titleID
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the title.
+      responses:
+        '200':
+          description: Detailed information of the title
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  titleDetails:
+                    type: object
+                    properties:
+                      titleID:
+                        type: string
+                      genres:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            genreTitle:
+                              type: string
+                      leadActors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            nameID:
+                              type: string
+                      directors:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            nameID:
+                              type: string
+            text/csv:
+              schema:
+                type: string
+                example: "titleID, genres, leadActors, directors"
+            
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating lack of authorization
+        '404':
+          description: Title not found, or not details available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  error:
+                    type: string
+  /home:
+    get:
+      tags:
+        - Home
+      summary: Get Data for Homepage
+      description: Retrieves various data for the homepage, including top-rated movies, new releases, and popular movies in different genres. Supports JSON and CSV response formats.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+        - in: query
+          name: format
+          required: false
+          schema:
+            type: string
+          description: Response format. Can be 'csv' for CSV format, defaults to JSON if not specified.
+      responses:
+        '200':
+          description: Data for the homepage
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      topRatedMovies:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            titleID:
+                              type: string
+                      newReleases:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            titleID:
+                              type: string
+                      popularInAction:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            titleID:
+                              type: string
+                      popularInComedy:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            titleID:
+                              type: string
+                      popularInDrama:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            titleID:
+                              type: string
+                      popularInRomance:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            titleID:
+                              type: string
+                      popularInThriller:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            titleID:
+                              type: string
+                      popularInHorror:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            titleID:
+                              type: string
+                      popularInDocumentary:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            titleID:
+                              type: string
+                      popularInAdventure:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            titleID:
+                              type: string
+            text/csv:
+              schema:
+                type: string
+                example: "topRatedMovies; newReleases; popularInAction; ..."
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message indicating lack of authorization
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  error:
+                    type: string
+                    description: Detailed error message
+  /tv-shows/episodes:
+    get:
+      tags:
+        - Titles
+      summary: Get All Episodes of TV Shows
+      description: Retrieves all episodes of TV shows along with their season and episode number.
+      parameters:
+        - in: header
+          name: X-OBSERVATORY-AUTH
+          required: true
+          schema:
+            type: string
+          description: Authentication token required for accessing this endpoint.
+        - in: query
+          name: format
+          required: false
+          schema:
+            type: string
+          description: Response format. Can be 'csv' for CSV format, defaults to JSON if not specified.
+      responses:
+        '200':
+          description: List of all TV show episodes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  shows:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        season_number:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              episode_title_id:
+                                type: string
+                              episode_title:
+                                type: string
+                              parent_tv_show_title_id:
+                                type: string
+                              season_number:
+                                type: string
+                              episode_number:
+                                type: string
+            text/csv: 
+                schema:
+                  type: string
+                  example: "episode_title_id, episode_title, parent_tv_show_title_id, season_number, episode_number\n..."
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  error:
+                    type: string
+
+
+
+          
+
+
+
+  
+
+
