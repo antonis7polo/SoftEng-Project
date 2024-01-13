@@ -1,0 +1,19 @@
+{
+    "answers": {
+        "phase":  "design",
+        "action":  "design decision",
+        "scope":   "uml class",
+        "action experience":  "none",
+        "prog lang": "n/a",
+        "other prog lang": "<fill in>",
+        "tool": "chat gpt 4.x",
+        "other tool": "<fill in>",
+        "tool option": "full",
+        "tool experience": "enough",
+        "time allocated (h)": "5",
+        "time saved estimate (h)": "2", 
+        "quality of ai help":  "major modifications needed",
+        "generic feeling":  "needs work",
+        "notes": "<fill in>"
+    }
+}

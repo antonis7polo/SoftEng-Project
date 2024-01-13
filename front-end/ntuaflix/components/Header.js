@@ -102,7 +102,6 @@ const Header = () => {
           className="container"
           sx={{ display: "flex", justifyContent: "flex-start", width: "60%" }}
         >
-          {/* NTUAFlix button moved to full left */}
           <Box sx={{ flexGrow: 0 }}>
             <Link href="/home" passHref>
               <Button

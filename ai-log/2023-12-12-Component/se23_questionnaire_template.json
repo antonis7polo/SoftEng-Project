@@ -1,0 +1,19 @@
+{
+    "answers": {
+        "phase":  "architecture",
+        "action":  "architectural decision",
+        "scope":   "uml component",
+        "action experience":  "none",
+        "prog lang": "n/a",
+        "other prog lang": "<fill in>",
+        "tool": "chat gpt 4.x",
+        "other tool": "<fill in>",
+        "tool option": "full",
+        "tool experience": "enough",
+        "time allocated (h)": "3",
+        "time saved estimate (h)": "3", 
+        "quality of ai help":  "minor modifications needed",
+        "generic feeling":  "great as-is",
+        "notes": "<fill in>"
+    }
+}

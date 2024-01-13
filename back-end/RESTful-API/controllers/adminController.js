@@ -10,7 +10,8 @@ async function healthCheck(req, res) {
     const connectionString = [
         `Server=${process.env.DB_HOST}`,
         `Database=${process.env.DB}`,
-        `Username=${process.env.DB_USER}`
+        `Username=${process.env.DB_USER}`,
+        `Password=${process.env.DB_PASS}`,
     ];
 
     const healthData = {
@@ -57,6 +58,14 @@ async function healthCheck(req, res) {
 async function userMod(req, res) {
     const { username, password } = req.params;
     const { email, isAdmin } = req.body; // Receive email and isAdmin from request body
+
+    if (email === undefined || isAdmin === undefined) {
+        return res.status(400).json({ message: 'Bad Request: Missing required fields.' });
+    }
+
+    if (isAdmin !== "0" && isAdmin !== "1") {
+        return res.status(400).json({ message: "Bad Request: isAdmin must be either '0' or '1'." });
+    }
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);

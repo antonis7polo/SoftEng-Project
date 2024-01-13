@@ -91,6 +91,10 @@ exports.getNameByID = getNameByID;
 async function searchName(req, res) {
     const { namePart } = req.body;
     const format = req.query.format;
+
+    if (!namePart) {
+        return res.status(400).json({ message: 'Missing namePart' });
+    }
     
     try {
         const searchQuery = `

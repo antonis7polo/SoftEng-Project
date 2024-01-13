@@ -4,7 +4,11 @@ const { pool } = require('../utils/database');
 
 exports.uploadTitleCrew = async (req, res) => {
     if (!req.file) {
-        return res.status(400).send('No file uploaded.');
+        return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    if (req.file.mimetype !== 'text/tab-separated-values') {
+        return res.status(400).json({ message: 'Invalid file type' });
     }
 
     try {

@@ -1,0 +1,19 @@
+{
+    "answers": {
+        "phase":  "coding",
+        "action":  "source code authoring",
+        "scope":   "frontend",
+        "action experience":  "little",
+        "prog lang": "js",
+        "other prog lang": "<fill in>",
+        "tool": "chat gpt 4.x",
+        "other tool": "<fill in>",
+        "tool option": "full",
+        "tool experience": "enough",
+        "time allocated (h)": "3",
+        "time saved estimate (h)": "5", 
+        "quality of ai help":  "major modifications needed",
+        "generic feeling":  "great in the future",
+        "notes": "When a problem occured in one component, it was deficult to explain the situation to the AI so that it could help. We lost a lot of time trying to find a solution. The frontend code is more chaotic than backend code (pages, components, styles) and it is more difficult to find the right place to make changes."
+    }
+}

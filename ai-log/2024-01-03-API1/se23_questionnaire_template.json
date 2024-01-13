@@ -1,0 +1,19 @@
+{
+    "answers": {
+        "phase":  "coding",
+        "action":  "source code authoring",
+        "scope":   "api",
+        "action experience":  "fair",
+        "prog lang": "js-node",
+        "other prog lang": "<fill in>",
+        "tool": "chat gpt 4.x",
+        "other tool": "<fill in>",
+        "tool option": "full",
+        "tool experience": "enough",
+        "time allocated (h)": "4",
+        "time saved estimate (h)": "10", 
+        "quality of ai help":  "minor modifications needed",
+        "generic feeling":  "great as-is",
+        "notes": "Great help for javascript node.js understanding and coding. The chat used is the same as the one used for previous API endpoints and it is very easy to use as it remembers the whole structure of the API."
+    }
+}

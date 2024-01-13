@@ -81,9 +81,9 @@ exports.getTitleByID = getTitleByID;
 async function searchTitleByPart(req, res) {
     const { titlePart } = req.body; 
     const format = req.query.format;
-
+    
     try {
-        if (!titlePart) {
+        if (!titlePart || typeof titlePart !== 'string') {
             return res.status(400).json({ message: 'No title part provided' });
         }
 
@@ -162,6 +162,17 @@ exports.searchTitleByPart = searchTitleByPart;
 
 async function getTitlesByGenre(req, res) {
     const { qgenre, minrating, yrFrom, yrTo } = req.body;
+
+    if (!qgenre || !minrating) {
+        return res.status(400).json({ message: 'Invalid parameters' });
+    }
+
+    const minRatingFloat = parseFloat(minrating);
+    if (isNaN(minRatingFloat)) {
+        return res.status(400).json({ message: 'Invalid minrating' });
+    }
+
+    
     const format = req.query.format;
     try {
         const minRatingFloat = parseFloat(minrating);
@@ -186,17 +197,37 @@ async function getTitlesByGenre(req, res) {
         `;
 
         let mainParams = [qgenre, minRatingFloat];
-
+        
+        
         // Add conditions for year range if provided
         if (yrFrom && yrTo) {
-            mainQuery += 'AND t.start_year BETWEEN ? AND ? ';
-            mainParams.push(yrFrom, yrTo);
+            const yrFromInt = parseInt(yrFrom, 10);
+            const yrToInt = parseInt(yrTo, 10);
+            if (!isNaN(yrFromInt) && !isNaN(yrToInt)) {
+                mainQuery += 'AND t.start_year BETWEEN ? AND ? ';
+                mainParams.push(yrFromInt, yrToInt);
+            }
+            else{
+                return res.status(400).json({ message: 'Invalid year range' });
+            }
         } else if (yrFrom) {
-            mainQuery += 'AND t.start_year >= ? ';
-            mainParams.push(yrFrom);
+            const yrFromInt = parseInt(yrFrom, 10);
+            if (!isNaN(yrFromInt)) {
+                mainQuery += 'AND t.start_year >= ? ';
+                mainParams.push(yrFromInt);
+            }
+            else{
+                return res.status(400).json({ message: 'Invalid year range' });
+            }
         } else if (yrTo) {
-            mainQuery += 'AND t.start_year <= ? ';
-            mainParams.push(yrTo);
+            const yrToInt = parseInt(yrTo, 10);
+            if (!isNaN(yrToInt)) {
+                mainQuery += 'AND t.start_year <= ? ';
+                mainParams.push(yrToInt);
+            }
+            else{
+                return res.status(400).json({ message: 'Invalid year range' });
+            }
         }
 
         const [titles] = await pool.query(mainQuery, mainParams);
@@ -274,7 +305,6 @@ exports.getTitlesByGenre = getTitlesByGenre;
 
 exports.getTitleDetails = async (req, res) => {
     const { titleID } = req.params;
-    console.log(titleID);
     const format = req.query.format;
 
     try {
@@ -300,6 +330,10 @@ exports.getTitleDetails = async (req, res) => {
             FROM directors 
             WHERE title_id = ?`;
         const [directorsResult] = await pool.query(directorsQuery, [titleID]);
+
+        if (genresResult.length === 0 && actorsResult.length === 0 && directorsResult.length === 0) {
+            return res.status(404).json({ message: 'No details found for the specified title or no such title' });
+        }
 
         // Construct the response object
         const titleDetails = {

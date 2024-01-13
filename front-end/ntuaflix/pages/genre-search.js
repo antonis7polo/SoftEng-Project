@@ -18,8 +18,11 @@ const GenreSearchPage = () => {
   const [startYear, setStartYear] = useState('');
   const [endYear, setEndYear] = useState('');
   const [movies, setMovies] = useState([]);
+  const [searchPerformed, setSearchPerformed] = useState(false); 
+
 
   const handleSearch = async () => {
+    setSearchPerformed(true);
     const tokenData = localStorage.getItem('tokenData');
     let token = null;
     if (tokenData) {
@@ -106,7 +109,11 @@ const GenreSearchPage = () => {
       <Button type="button" variant="contained" sx={{ width: 250 }} onClick={handleSearch}>
         Search
       </Button>
-      {movies.length > 0 && <MovieGrid movies={movies} />}
+      {movies.length > 0 ? (
+        <MovieGrid movies={movies} />
+      ) : (
+        searchPerformed && <Box>No movies found. Try adjusting your search criteria.</Box>
+      )}
     </Box>
   );
 };

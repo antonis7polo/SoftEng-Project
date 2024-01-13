@@ -1,0 +1,208 @@
+User
+The user Interface will communicate through REST API with the other components of ntuaflix, so i need to add a rest api lifeline right after the user interface lifeline to all 3 sequence diagrams (the search movie diagram(that has all 4 search types with title, date, genre and rating), the search cast/crew member diagram and the rating movie diagram). give me all the new messages and their type from and to the new rest api interface that need to be added for those 3 diagrams.
+
+ChatGPT
+Incorporating a REST API lifeline into your sequence diagrams for NTUAFlix involves adding an additional layer of interaction between the User Interface and the other components. This layer will handle the API calls and responses. Below are the new messages and their types for each of the three sequence diagrams, considering the REST API interactions.
+
+1. Search Movie Diagram (with Title, Date, Genre, and Rating Search Types):
+Initial User Interaction with REST API:
+User Interface -> REST API: sendSearchRequest(searchCriteria) (normal) [Note: searchCriteria varies: title, date, genre, rating]
+REST API -> Database: apiSearchQuery(searchCriteria) (normal)
+Database -> REST API: apiReturnResults(results) (response)
+REST API -> User Interface: receiveSearchResults(results) (response)
+2. Search Cast/Crew Member Diagram:
+Initial User Interaction with REST API:
+User Interface -> REST API: sendCastCrewSearchRequest(name) (normal)
+REST API -> Database: apiQueryCastCrewDatabase(name) (normal)
+Database -> REST API: apiReturnCastCrewResults(results) (response)
+REST API -> User Interface: receiveCastCrewResults(results) (response)
+3. Rating Movie Diagram:
+Rating a Movie with REST API:
+Registered User -> User Interface: rateMovie(titleId, rating) (normal)
+User Interface -> REST API: sendRating(titleId, rating) (normal)
+REST API -> Database: apiStoreRating(titleId, rating) (normal)
+Database -> REST API: apiConfirmRatingStored() (response)
+REST API -> User Interface: receiveRatingConfirmation() (response)
+Generating Recommendations with REST API:
+User Interface -> REST API: requestRecommendations(titleId) (normal)
+REST API -> Database: apiRequestRecommendations(titleId) (normal)
+Database -> REST API: apiReturnRecommendations(recommendations) (response)
+REST API -> User Interface: receiveRecommendations(recommendations) (response)
+In each case, the REST API acts as a mediator between the User Interface and the Database. It sends requests to and receives responses from the Database, then relays the information back to the User Interface. This extra layer reflects a more realistic architecture for modern web applications, where the front-end communicates with the back-end via an API.
+
+User
+search movie.txt
+Document
+i have created the component diagram and i want to make the lifelines beased on the components on this diagrams. tha components that i am going to be using as lifelines are ths iser interface, rest api, cast/crew info, movie info, search rating and database. the user interface communicates with rest api. the rest api then communicates with one of the cast/crew info, movie info, search or rating lifelines and then the selected lifeline communicates with the database. i will provide you with the messages that we made for the search movie sequence diagram and i want you to enhance them based on the information i just gave you above. for this specific diagram between the rest api and the database i want for the first flow of messages to add the search lifleine (instaed o search controller), for the second flow of messages replace the search controller with the movie info lifeline and for the third flow replace the search controller with the cast/crew info lifeline. give me all the message needed for this diagram in the form of the file i provided you with.
+ChatGPT
+Based on the provided messages and your new component diagram structure, here's the enhanced list of messages for the "Search Movie" sequence diagram with the inclusion of REST API, and specific components like Search, Movie Info, and Cast/Crew Info:
+
+1. Initial User Interaction with alt Fragment for Search Types:
+Condition 1 - Search by Title:
+User -> User Interface: searchMovieByTitle(title) (normal)
+User Interface -> REST API: sendSearchByTitleRequest(title) (normal)
+REST API -> Search: requestTitleSearch(title) (normal)
+Search -> Database: queryDatabaseByTitle(title) (normal)
+Database -> Search: returnTitleResults(results) (response)
+Search -> REST API: sendTitleResults(results) (response)
+REST API -> User Interface: displayTitleResults(results) (response)
+User Interface -> User: showTitleResults() (response)
+Condition 2 - Search by Genre:
+(Similar steps as above, replacing 'Title' with 'Genre')
+Condition 3 - Search by Name:
+(Similar steps as above, replacing 'Title' with 'Name')
+Condition 4 - Search by Rating:
+(Similar steps as above, replacing 'Title' with 'Rating')
+2. User Selects a Movie:
+User -> User Interface: selectMovie(movieId) (normal)
+User Interface -> REST API: sendSelectMovieRequest(movieId) (normal)
+REST API -> Movie Info: requestMovieDetails(movieId) (normal)
+Movie Info -> Database: getMovieDetails(movieId) (normal)
+Database -> Movie Info: returnMovieDetails(details) (response)
+Movie Info -> REST API: sendMovieDetails(details) (response)
+REST API -> User Interface: displayMovieDetails(details) (response)
+User Interface -> User: showMovieDetails() (response)
+3. Viewing Cast/Crew Details (Optional Post-Selection Action):
+User -> User Interface: viewCastCrew() (normal)
+User Interface -> REST API: sendViewCastCrewRequest(movieId) (normal)
+REST API -> Cast/Crew Info: requestCastCrewDetails(movieId) (normal)
+Cast/Crew Info -> Database: getCastCrewDetails(movieId) (normal)
+Database -> Cast/Crew Info: returnCastCrewDetails(castCrewDetails) (response)
+Cast/Crew Info -> REST API: sendCastCrewDetails(castCrewDetails) (response)
+REST API -> User Interface: displayCastCrewDetails(castCrewDetails) (response)
+User Interface -> User: showCastCrewDetails() (response)
+In each flow, the REST API acts as an intermediary, facilitating communication between the User Interface and the specific component (Search, Movie Info, or Cast/Crew Info), which in turn interacts with the Database. This reflects a more layered and realistic architecture.
+
+User
+give me the exact same messages but replace movieId with titleID (use capslock on both ID letters). also write me the messages for the other 3 conditions on the first flow for me to copy them on my diagram.
+ChatGPT
+Here are the enhanced messages for the "Search Movie" sequence diagram, with 'titleID' in place of 'movieId', and the complete messages for all search conditions:
+
+Initial User Interaction with alt Fragment for Search Types:
+Condition 1 - Search by Title:
+User -> User Interface: searchMovieByTitle(title) (normal)
+User Interface -> REST API: sendSearchByTitleRequest(title) (normal)
+REST API -> Search: requestTitleSearch(title) (normal)
+Search -> Database: queryDatabaseByTitle(title) (normal)
+Database -> Search: returnTitleResults(results) (response)
+Search -> REST API: sendTitleResults(results) (response)
+REST API -> User Interface: displayTitleResults(results) (response)
+User Interface -> User: showTitleResults() (response)
+Condition 2 - Search by Genre:
+User -> User Interface: searchMovieByGenre(genre) (normal)
+User Interface -> REST API: sendSearchByGenreRequest(genre) (normal)
+REST API -> Search: requestGenreSearch(genre) (normal)
+Search -> Database: queryDatabaseByGenre(genre) (normal)
+Database -> Search: returnGenreResults(results) (response)
+Search -> REST API: sendGenreResults(results) (response)
+REST API -> User Interface: displayGenreResults(results) (response)
+User Interface -> User: showGenreResults() (response)
+Condition 3 - Search by Name:
+User -> User Interface: searchMovieByName(name) (normal)
+User Interface -> REST API: sendSearchByNameRequest(name) (normal)
+REST API -> Search: requestNameSearch(name) (normal)
+Search -> Database: queryDatabaseByName(name) (normal)
+Database -> Search: returnNameResults(results) (response)
+Search -> REST API: sendNameResults(results) (response)
+REST API -> User Interface: displayNameResults(results) (response)
+User Interface -> User: showNameResults() (response)
+Condition 4 - Search by Rating:
+User -> User Interface: searchMovieByRating(rating) (normal)
+User Interface -> REST API: sendSearchByRatingRequest(rating) (normal)
+REST API -> Search: requestRatingSearch(rating) (normal)
+Search -> Database: queryDatabaseByRating(rating) (normal)
+Database -> Search: returnRatingResults(results) (response)
+Search -> REST API: sendRatingResults(results) (response)
+REST API -> User Interface: displayRatingResults(results) (response)
+User Interface -> User: showRatingResults() (response)
+User Selects a Movie:
+User -> User Interface: selectMovie(titleID) (normal)
+User Interface -> REST API: sendSelectMovieRequest(titleID) (normal)
+REST API -> Movie Info: requestMovieDetails(titleID) (normal)
+Movie Info -> Database: getMovieDetails(titleID) (normal)
+Database -> Movie Info: returnMovieDetails(details) (response)
+Movie Info -> REST API: sendMovieDetails(details) (response)
+REST API -> User Interface: displayMovieDetails(details) (response)
+User Interface -> User: showMovieDetails() (response)
+Viewing Cast/Crew Details (Optional Post-Selection Action):
+User -> User Interface: viewCastCrew() (normal)
+User Interface -> REST API: sendViewCastCrewRequest(titleID) (normal)
+REST API -> Cast/Crew Info: requestCastCrewDetails(titleID) (normal)
+Cast/Crew Info -> Database: getCastCrewDetails(titleID) (normal)
+Database -> Cast/Crew Info: returnCastCrewDetails(castCrewDetails) (response)
+Cast/Crew Info -> REST API: sendCastCrewDetails(castCrewDetails) (response)
+REST API -> User Interface: displayCastCrewDetails(castCrewDetails) (response)
+User Interface -> User: showCastCrewDetails() (response)
+These messages account for the various search types and the new component architecture, with the REST API as a key intermediary.
+
+User
+search crew.txt
+Document
+do the exact same thing with the messages of the search cast/crew member diagram i provide to you. add the rest api lifeline and as far as the search controller lifeline: in the first flow replace with searc, in the second with cast/crew info and in the third with movie info. also replace memberId with name ID nad movieId with titleID (both capslock on ID)
+ChatGPT
+Here are the enhanced messages for the "Search Cast/Crew Member" sequence diagram, incorporating the REST API, along with the Search, Cast/Crew Info, and Movie Info components. The terms 'memberId' and 'movieId' are replaced with 'nameID' and 'titleID', respectively:
+
+1. Initial User Interaction:
+User -> User Interface: searchCastCrewByName(name) (normal)
+User Interface -> REST API: sendSearchCastCrewRequest(name) (normal)
+REST API -> Search: requestCastCrewSearch(name) (normal)
+Search -> Database: queryCastCrewDatabase(name) (normal)
+Database -> Search: returnCastCrewResults(results) (response)
+Search -> REST API: sendCastCrewResults(results) (response)
+REST API -> User Interface: displayCastCrewResults(results) (response)
+User Interface -> User: showCastCrewResults() (response)
+2. User Selects a Cast/Crew Member:
+User -> User Interface: selectCastCrewMember(nameID) (normal)
+User Interface -> REST API: sendSelectCastCrewRequest(nameID) (normal)
+REST API -> Cast/Crew Info: requestMemberDetails(nameID) (normal)
+Cast/Crew Info -> Database: getMemberDetails(nameID) (normal)
+Database -> Cast/Crew Info: returnMemberDetails(details) (response)
+Cast/Crew Info -> REST API: sendMemberDetails(details) (response)
+REST API -> User Interface: displayMemberDetails(details) (response)
+User Interface -> User: showMemberDetails() (response)
+3. Selecting a Movie from Cast/Crew Details:
+User -> User Interface: selectMovieFromMember(titleID) (normal)
+User Interface -> REST API: sendSelectMovieFromMemberRequest(titleID) (normal)
+REST API -> Movie Info: requestMovieDetails(titleID) (normal)
+Movie Info -> Database: getMovieDetails(titleID) (normal)
+Database -> Movie Info: returnMovieDetails(movieDetails) (response)
+Movie Info -> REST API: sendMovieDetails(movieDetails) (response)
+REST API -> User Interface: displayMovieDetails(movieDetails) (response)
+User Interface -> User: showMovieDetails() (response)
+In this revised sequence, the REST API acts as a mediator between the User Interface and the appropriate component (Search, Cast/Crew Info, or Movie Info) based on the context of the interaction. Each component then communicates with the Database to perform the necessary queries and return the results.
+
+User
+rating.txt
+Document
+do the exact same thing with the messages of the rate movie diagram i provide to you. add the rest api lifeline and also add between the rest api and the database the rating lifeline on the first flow and the movie info lifeline on the second flow. also replace movieId and reccomendedMovieId with titleID (both capslock on ID)
+ChatGPT
+Here are the revised messages for the "Rating Movie" sequence diagram, incorporating the REST API, along with the Rating and Movie Info components, and replacing 'movieId' and 'recommendedMovieId' with 'titleID':
+
+1. Rating a Movie:
+Registered User -> User Interface: rateMovie(titleID, rating) (normal)
+User Interface -> REST API: sendRating(titleID, rating) (normal)
+REST API -> Rating: processRating(titleID, rating) (normal)
+Rating -> Database: storeRating(titleID, rating) (normal)
+Database -> Rating: confirmRatingStored() (response)
+Rating -> REST API: sendRatingConfirmation() (response)
+REST API -> User Interface: displayRatingConfirmation() (response)
+User Interface -> Registered User: showRatingConfirmation() (response)
+2. Generating Recommendations:
+User Interface -> REST API: requestRecommendations(titleID) (normal)
+REST API -> Movie Info: getRecommendations(titleID) (normal)
+Movie Info -> Database: generateRecommendations(titleID) (normal)
+Database: Internally processes and generates top 10 movie recommendations based on the same genre or featuring the same actor/director
+Database -> Movie Info: returnRecommendations(recommendations) (response)
+Movie Info -> REST API: sendRecommendations(recommendations) (response)
+REST API -> User Interface: displayRecommendations(recommendations) (response)
+User Interface -> Registered User: showRecommendations() (response)
+3. User Selects a Movie from Recommendations:
+Registered User -> User Interface: selectRecommendedMovie(titleID) (normal)
+User Interface -> REST API: sendSelectMovieRequest(titleID) (normal)
+REST API -> Movie Info: requestMovieDetails(titleID) (normal)
+Movie Info -> Database: getMovieDetails(titleID) (normal)
+Database -> Movie Info: returnMovieDetails(movieDetails) (response)
+Movie Info -> REST API: sendMovieDetails(movieDetails) (response)
+REST API -> User Interface: displayMovieDetails(movieDetails) (response)
+User Interface -> Registered User: showMovieDetails() (response)
+In this sequence, the REST API acts as a mediator between the User Interface and the Rating/Movie Info components. The Rating component handles the rating process, while the Movie Info component manages the generation and retrieval of movie recommendations.

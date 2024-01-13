@@ -1,0 +1,1939 @@
+[POST] /admin/upload/titlebasics
+Supports the HTTP POST method for uploading a TSV file containing movie title data. In the HTTP request, the file should be encoded as text/tab-separated-values. The required structure of the TSV file should match that of the provided primary data, with the additional inclusion of the "img_url_asset" field. 
+
+ChatGPT
+The endpoint [POST] /admin/upload/titlebasics you're describing is intended for uploading a TSV (Tab-Separated Values) file containing movie title data, with an additional requirement for an "img_url_asset" field. Here's a brief overview of how to set up and handle this endpoint in a Node.js Express application.
+
+1. Set Up the Endpoint
+First, you'll need to set up the route in your Express application to handle POST requests to /admin/upload/titlebasics. You'll also need middleware like multer for handling file uploads.
+
+Install multer
+bash
+Copy code
+npm install multer
+Create Route Handler
+In your route handler file (e.g., routes/adminRoutes.js):
+
+javascript
+Copy code
+const express = require('express');
+const multer = require('multer');
+const router = express.Router();
+const adminController = require('../controllers/adminController');
+
+// Setup multer for file uploads
+const upload = multer({ dest: 'uploads/' });
+
+router.post('/upload/titlebasics', upload.single('file'), adminController.uploadTitleBasics);
+
+module.exports = router;
+In this setup, multer is configured to save uploaded files in an uploads/ directory. The upload.single('file') middleware expects a single file with the form field name file.
+
+2. Process the Uploaded File
+In your controller (e.g., controllers/adminController.js), you'll need to add the logic to process the uploaded TSV file.
+
+Sample Controller Method
+javascript
+Copy code
+exports.uploadTitleBasics = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).send('No file uploaded.');
+        }
+
+        // req.file is the uploaded file
+        // Implement logic to process the TSV file
+        // The processing might involve parsing the TSV file, validating the structure,
+        // and then storing the data in your database
+
+        res.status(200).json({ message: 'File uploaded and processed successfully.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error processing file', error: error.message });
+    }
+};
+3. Handle File Parsing
+You'll need to parse the TSV file and validate its structure, including the "img_url_asset" field. There are libraries like papaparse (for CSV, but can be configured for TSV) that can help with parsing.
+
+4. Security and Validation
+Ensure that you validate the content of the uploaded file to prevent malicious data from being processed.
+Implement proper error handling to manage cases where the file format or content does not meet the expected standards.
+5. Additional Middleware for Authentication
+If this endpoint is only accessible to administrators, you should include authentication and authorization middleware to ensure only authorized users can upload files.
+
+This setup provides a basic structure for handling file uploads and processing in your Express application. Depending on your specific requirements, you might need to add more sophisticated file handling, parsing, and data validation logic.
+
+
+3 / 3
+
+
+
+
+User
+truncated_title.basics.tsv
+File
+implement the controller 
+
+ChatGPT
+To implement the controller function for handling the upload and processing of a TSV file in your Node.js Express application, you'll need to parse the uploaded file and potentially store its contents in a database. Let's assume you are using a simple TSV parser to handle the file.
+
+I'll provide an example implementation that includes the following steps:
+
+Parsing the TSV file.
+Validating the data structure.
+(Optional) Storing the data in the database.
+Step 1: Install Necessary Packages
+If you haven't already, you might need to install a package to help with parsing TSV files. For simplicity, I'll use csv-parser, which can handle both CSV and TSV formats.
+
+bash
+Copy code
+npm install csv-parser
+Step 2: Implement the Controller
+In your controller file (e.g., controllers/adminController.js), add the following function:
+
+controllers/adminController.js
+javascript
+Copy code
+const fs = require('fs');
+const csv = require('csv-parser');
+const { pool } = require('../utils/database'); // Assuming you have a utility for database connection
+
+exports.uploadTitleBasics = async (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('No file uploaded.');
+    }
+
+    try {
+        const results = [];
+        fs.createReadStream(req.file.path)
+            .pipe(csv({
+                separator: '\t', // Use tab separator for TSV
+                mapHeaders: ({ header }) => header.trim() // Trim headers
+            }))
+            .on('data', (data) => results.push(data))
+            .on('end', async () => {
+                // Validate and process your data here
+                // Example: Check if 'img_url_asset' field is present in each entry
+                for (const entry of results) {
+                    if (!entry.img_url_asset) {
+                        return res.status(400).json({ message: 'Missing img_url_asset in some entries' });
+                    }
+                    // Further processing, e.g., storing data in the database
+                }
+
+                res.status(200).json({ message: 'File processed successfully', data: results });
+            });
+    } catch (error) {
+        res.status(500).json({ message: 'Error processing file', error: error.message });
+    }
+};
+Explanation
+This function reads the uploaded TSV file and uses csv-parser to parse it. Although it's a CSV parser, you can configure it to handle TSV by setting the separator to \t (tab).
+The parsed data is collected in an array named results.
+After parsing, you can validate the data structure, such as checking for the presence of the img_url_asset field.
+Depending on your requirements, you can then store this data in your database.
+Step 3: Database Integration (Optional)
+The above example includes a placeholder for database interaction. Depending on your database schema and requirements, you'll need to insert or update the database with the parsed data.
+
+Security Considerations
+Validate the file type and contents to prevent malicious uploads.
+Implement error handling for file parsing and database interactions.
+Ensure that file uploads are handled securely, considering file size limits and potential directory traversal issues.
+This implementation provides a basic structure for processing TSV file uploads in an Express application. Depending on your specific use case, additional error handling, data validation, and database interaction logic may be required.
+
+
+
+
+User
+this is the current adminController
+const mysql = require('mysql2/promise');
+require('dotenv').config();
+
+async function healthCheck(req, res) {
+    try {
+        const pool = mysql.createPool({
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASS,
+            database: process.env.DB
+        });
+
+        await pool.query('SELECT 1'); // Simple query to test the connection
+        const connectionString = [
+            `Server=${process.env.DB_HOST}`,
+            `Database=${process.env.DB}`,
+            `Username=${process.env.DB_USER}`
+        ];
+        res.json({ status: "OK", dataconnection: connectionString });
+    } catch (error) {
+        const connectionString = [
+            `Server=${process.env.DB_HOST}`,
+            `Database=${process.env.DB}`,
+            `Username=${process.env.DB_USER}`
+        ];        
+        res.status(500).json({ status: "failed", dataconnection: connectionString });
+    }
+}
+
+module.exports = { healthCheck };
+
+
+
+ChatGPT
+To integrate the new uploadTitleBasics function into your existing adminController, you'll need to add it alongside the healthCheck function. Here's how you can expand the adminController to include both functionalities:
+
+Expanded adminController
+javascript
+Copy code
+const fs = require('fs');
+const csv = require('csv-parser');
+const mysql = require('mysql2/promise');
+require('dotenv').config();
+
+const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB
+});
+
+async function healthCheck(req, res) {
+    try {
+        await pool.query('SELECT 1'); // Simple query to test the connection
+        const connectionString = [
+            `Server=${process.env.DB_HOST}`,
+            `Database=${process.env.DB}`,
+            `Username=${process.env.DB_USER}`
+        ];
+        res.json({ status: "OK", dataconnection: connectionString });
+    } catch (error) {
+        const connectionString = [
+            `Server=${process.env.DB_HOST}`,
+            `Database=${process.env.DB}`,
+            `Username=${process.env.DB_USER}`
+        ];        
+        res.status(500).json({ status: "failed", dataconnection: connectionString });
+    }
+}
+
+async function uploadTitleBasics(req, res) {
+    if (!req.file) {
+        return res.status(400).send('No file uploaded.');
+    }
+
+    try {
+        const results = [];
+        fs.createReadStream(req.file.path)
+            .pipe(csv({
+                separator: '\t', // Use tab separator for TSV
+                mapHeaders: ({ header }) => header.trim() // Trim headers
+            }))
+            .on('data', (data) => results.push(data))
+            .on('end', async () => {
+                // Validate and process your data here
+                for (const entry of results) {
+                    if (!entry.img_url_asset) {
+                        return res.status(400).json({ message: 'Missing img_url_asset in some entries' });
+                    }
+                    // Further processing, e.g., storing data in the database
+                }
+
+                res.status(200).json({ message: 'File processed successfully', data: results });
+            });
+    } catch (error) {
+        res.status(500).json({ message: 'Error processing file', error: error.message });
+    }
+}
+
+module.exports = { healthCheck, uploadTitleBasics };
+Explanation
+The uploadTitleBasics function has been added to the adminController alongside the existing healthCheck function.
+Both functions are exported at the bottom of the file, making them available for use in your route definitions.
+The database connection pool is defined at the top of the file and is shared by both functions. This is more efficient than creating a new pool for each function call.
+Integration with Routes
+You will need to ensure that the routes are set up correctly to use these functions in your routes/adminRoutes.js:
+
+javascript
+Copy code
+const express = require('express');
+const multer = require('multer');
+const router = express.Router();
+const adminController = require('../controllers/adminController');
+const validateToken = require('../middleware/validateToken');
+const adminAuth = require('../middleware/adminAuth');
+
+const upload = multer({ dest: 'uploads/' });
+
+router.get('/healthcheck', validateToken, adminAuth, adminController.healthCheck);
+router.post('/upload/titlebasics', validateToken, adminAuth, upload.single('file'), adminController.uploadTitleBasics);
+
+module.exports = router;
+This setup allows your Express application to handle both the health check and the TSV file upload functionalities under the /admin route, with appropriate authentication and authorization checks.
+
+
+
+
+User
+help me implement the following endpoint
+[POST] /admin/resetall
+Supports the POST method and initializes all the data stored in the ntuaflix database. In case of success, it returns the JSON object: {"status": "OK"}. Otherwise, it returns {"status": "failed", "reason": "<...>"} with information about the failure.
+
+ChatGPT
+To implement the [POST] /admin/resetall endpoint, which initializes all the data in the ntuaflix database, you need to create a function that will effectively reset your database to its initial state. This process typically involves either deleting all data from the tables or dropping the tables and recreating them.
+
+This is a sensitive operation, as it will erase all the data in your database. Such an endpoint should be heavily guarded and only accessible by authorized system administrators.
+
+Here's a basic implementation:
+
+Step 1: Create the Controller Function
+In your adminController.js, add a function to handle the database reset:
+
+javascript
+Copy code
+async function resetAll(req, res) {
+    try {
+        // Example: Deleting data from tables or dropping and recreating tables
+        // This is highly dependent on your database schema and setup
+
+        // Example of deleting data from a table
+        await pool.query('DELETE FROM YourTableName');
+
+        // If you have multiple tables, repeat the process for each table
+        // ...
+
+        res.json({ status: "OK" });
+    } catch (error) {
+        res.status(500).json({ status: "failed", reason: error.message });
+    }
+}
+
+module.exports = { healthCheck, uploadTitleBasics, resetAll };
+Step 2: Define the Route
+In your routes/adminRoutes.js:
+
+javascript
+Copy code
+const express = require('express');
+const router = express.Router();
+const adminController = require('../controllers/adminController');
+const validateToken = require('../middleware/validateToken');
+const adminAuth = require('../middleware/adminAuth');
+
+// ... other routes ...
+
+router.post('/resetall', validateToken, adminAuth, adminController.resetAll);
+
+module.exports = router;
+Security and Access Control
+Given the nature of this endpoint, it's crucial to ensure robust security measures:
+
+Authentication and Authorization: Make sure that only authenticated users with administrative privileges can access this endpoint. The validateToken and adminAuth middleware should handle this.
+Additional Confirmations: Depending on the criticality, you might want to implement additional confirmation steps before performing the reset, such as requiring a specific payload in the request to confirm the operation.
+Backup and Recovery Plans: Always have a backup and recovery plan in place, especially for operations that can lead to data loss.
+Caution
+This endpoint can have significant effects if used improperly. It's crucial to ensure that it's not accidentally triggered and that all necessary precautions are in place to prevent unauthorized use. Depending on the requirements of your system, you might also consider implementing this functionality through a more controlled process outside of an HTTP endpoint, like a command-line script or an internal tool, to avoid exposure over the web.
+
+
+
+
+User
+help me implement the following endpoint
+[POST] /admin/usermod/:username/:password
+ http method POST for new user insertion or change of password if user already exists
+
+ChatGPT
+To implement the [POST] /admin/usermod/:username/:password endpoint, which allows for the insertion of a new user or the updating of an existing user's password, you'll need to create a function that checks if the user exists and then either adds a new user or updates the existing user's password. Let's walk through the steps to set this up:
+
+Step 1: Create the Controller Function
+In your adminController.js, add a function to handle user modification:
+
+javascript
+Copy code
+const bcrypt = require('bcrypt');
+
+async function userMod(req, res) {
+    const { username, password } = req.params;
+    try {
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Check if the user exists
+        const [users] = await pool.query('SELECT * FROM Users WHERE username = ?', [username]);
+        if (users.length === 0) {
+            // User does not exist, insert new user
+            await pool.query('INSERT INTO Users (username, password) VALUES (?, ?)', [username, hashedPassword]);
+            res.json({ message: "User created successfully." });
+        } else {
+            // User exists, update password
+            await pool.query('UPDATE Users SET password = ? WHERE username = ?', [hashedPassword, username]);
+            res.json({ message: "Password updated successfully." });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to modify user', error: error.message });
+    }
+}
+
+module.exports = { /* other exports, */ userMod };
+Step 2: Define the Route
+In your routes/adminRoutes.js:
+
+javascript
+Copy code
+const express = require('express');
+const router = express.Router();
+const adminController = require('../controllers/adminController');
+const validateToken = require('../middleware/validateToken');
+const adminAuth = require('../middleware/adminAuth');
+
+// ... other routes ...
+
+router.post('/usermod/:username/:password', validateToken, adminAuth, adminController.userMod);
+
+module.exports = router;
+Security and Access Control
+Given that this endpoint involves sensitive user data, ensure the following:
+
+Authentication and Authorization: Only authenticated users with administrative privileges can access this endpoint. The validateToken and adminAuth middleware should handle this.
+Password Security: The password is hashed using bcrypt, which is crucial for security.
+Validation: Validate input data for proper format, especially for usernames and passwords, to prevent SQL injection and other security vulnerabilities.
+Endpoint Usage
+To use this endpoint, make a POST request with the desired username and password in the URL path:
+
+bash
+Copy code
+POST /admin/usermod/johndoe/newpassword
+This request will either create a new user with username johndoe and password newpassword or update the password of the existing user johndoe.
+
+Caution
+Be careful with endpoints that allow modification of user credentials, as they can be powerful and potentially dangerous if misused. Ensure that all security best practices are followed.
+
+
+
+
+User
+users also have emails and isAdmin field (boolean)
+
+ChatGPT
+To accommodate the additional requirements where users also have email and isAdmin fields, you need to modify the [POST] /admin/usermod/:username/:password endpoint. This endpoint should now support updating or creating a user with not only a username and password but also an email and an administrative status.
+
+Step 1: Update the Route Parameters
+You'll need to adjust your route to accept email and isAdmin parameters. Since it's not practical to pass complex data like emails and boolean flags as URL parameters in a POST request, it's better to receive these details in the request body.
+
+Step 2: Modify the Controller Function
+Update the userMod function in adminController.js to handle these changes:
+
+javascript
+Copy code
+const bcrypt = require('bcrypt');
+
+async function userMod(req, res) {
+    const { username, password } = req.params;
+    const { email, isAdmin } = req.body; // Get email and isAdmin from request body
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const [users] = await pool.query('SELECT * FROM Users WHERE username = ?', [username]);
+        if (users.length === 0) {
+            // User does not exist, insert new user
+            await pool.query('INSERT INTO Users (username, email, password, isAdmin) VALUES (?, ?, ?, ?)', 
+                             [username, email, hashedPassword, isAdmin]);
+            res.json({ message: "User created successfully." });
+        } else {
+            // User exists, update password (and potentially email and isAdmin)
+            await pool.query('UPDATE Users SET password = ?, email = ?, isAdmin = ? WHERE username = ?', 
+                             [hashedPassword, email, isAdmin, username]);
+            res.json({ message: "User updated successfully." });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to modify user', error: error.message });
+    }
+}
+
+module.exports = { /* other exports, */ userMod };
+Step 3: Update the Route Definition
+Change your route in routes/adminRoutes.js to expect JSON data in the request body:
+
+javascript
+Copy code
+const express = require('express');
+const router = express.Router();
+const adminController = require('../controllers/adminController');
+const validateToken = require('../middleware/validateToken');
+const adminAuth = require('../middleware/adminAuth');
+
+// ... other routes ...
+
+// Update the route to handle JSON body data
+router.post('/usermod/:username/:password', validateToken, adminAuth, express.json(), adminController.userMod);
+
+module.exports = router;
+Step 4: Client-Side Changes
+When using this endpoint, the client should send a POST request with the email and isAdmin data in the JSON body:
+
+bash
+Copy code
+POST /admin/usermod/johndoe/newpassword
+Content-Type: application/json
+
+{
+  "email": "johndoe@example.com",
+  "isAdmin": true
+}
+Security and Validation
+Input Validation: Validate email format and ensure that isAdmin is a boolean. Incorrectly formatted input can lead to security issues and application errors.
+Password Security: Continue using bcrypt for hashing passwords.
+Authentication and Authorization: Ensure that only authorized administrators can access this endpoint.
+By following these steps, you will have an endpoint that can handle the creation and modification of user accounts with comprehensive details, including email and administrative status.
+
+
+2 / 2
+
+
+
+
+User
+[GET] /admin/users/:username
+http method GET in order to get a user's data
+
+ChatGPT
+To implement the [GET] /admin/users/:username endpoint, which retrieves data for a specific user identified by their username, you'll create a controller function that fetches this user's data from the database. This endpoint should be accessible only to administrators, so ensure it's protected with appropriate authentication and authorization middleware.
+
+Here's a step-by-step guide to implement this functionality:
+
+Step 1: Create the Controller Function
+In your adminController.js, add a function to handle fetching user data:
+
+javascript
+Copy code
+async function getUser(req, res) {
+    const { username } = req.params;
+
+    try {
+        const [users] = await pool.query('SELECT username, email, isAdmin FROM Users WHERE username = ?', [username]);
+        
+        if (users.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const user = users[0];
+        res.json({ user });
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving user', error: error.message });
+    }
+}
+
+module.exports = { /* other exports, */ getUser };
+Step 2: Define the Route
+In your routes/adminRoutes.js:
+
+javascript
+Copy code
+const express = require('express');
+const router = express.Router();
+const adminController = require('../controllers/adminController');
+const validateToken = require('../middleware/validateToken');
+const adminAuth = require('../middleware/adminAuth');
+
+// ... other routes ...
+
+router.get('/users/:username', validateToken, adminAuth, adminController.getUser);
+
+module.exports = router;
+Security and Access Control
+Authentication and Authorization: Make sure that only authenticated administrators can access this endpoint. The validateToken and adminAuth middleware should handle this.
+Data Exposure: Be cautious about what user data you expose. For instance, never expose passwords (even if hashed). The provided example only exposes the username, email, and isAdmin status.
+Endpoint Usage
+To use this endpoint, an authorized user (administrator) would make a GET request:
+
+bash
+Copy code
+GET /admin/users/johndoe
+This request will return data for the user with the username johndoe.
+
+Error Handling and Validation
+Implement error handling for scenarios like the user not being found or database query failures.
+Validate the input (username) to ensure it adheres to expected formats and prevent potential security vulnerabilities like SQL injection.
+By following these steps, you'll have a secure and functional endpoint for retrieving user data, which is an essential part of any administrative interface.
+
+
+
+
+User
+node server.js
+/Users/harrypapadakis/Documents/7th_semester/software_engineering/code/new_git/softeng23-21/back-end/RESTful-API/node_modules/nodemon/lib/utils/index.js:85
+utils.log = require('./log')(utils.isRequired);
+                            ^
+
+TypeError: require(...) is not a function
+    at Object.<anonymous> (/Users/harrypapadakis/Documents/7th_semester/software_engineering/code/new_git/softeng23-21/back-end/RESTful-API/node_modules/nodemon/lib/utils/index.js:85:29)
+    at Module._compile (node:internal/modules/cjs/loader:1241:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1295:10)
+    at Module.load (node:internal/modules/cjs/loader:1091:32)
+    at Module._load (node:internal/modules/cjs/loader:938:12)
+    at Module.require (node:internal/modules/cjs/loader:1115:19)
+    at require (node:internal/modules/helpers:130:18)
+    at Object.<anonymous> (/Users/harrypapadakis/Documents/7th_semester/software_engineering/code/new_git/softeng23-21/back-end/RESTful-API/node_modules/nodemon/lib/monitor/run.js:3:13)
+    at Module._compile (node:internal/modules/cjs/loader:1241:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1295:10)
+
+ChatGPT
+The error you're encountering, TypeError: require(...) is not a function, suggests an issue with the nodemon module in your Node.js environment. This could be due to a few different reasons, such as a corrupted nodemon installation, compatibility issues, or a problem in your server.js file. Let's go through some steps to troubleshoot and resolve this issue.
+
+1. Verify server.js File
+First, make sure that your server.js file is correctly set up and does not contain any syntax errors or issues. It should look something like this:
+
+javascript
+Copy code
+const app = require('./app'); // Assuming you have an app.js file setting up your Express app
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+2. Reinstall nodemon
+There might be a problem with the nodemon installation. Try reinstalling it:
+
+bash
+Copy code
+npm uninstall -g nodemon
+npm install -g nodemon
+Or, if you're using nodemon as a dev dependency:
+
+bash
+Copy code
+npm uninstall nodemon
+npm install --save-dev nodemon
+3. Update Node.js
+If the issue persists, it might be related to your Node.js version. Make sure your Node.js is up-to-date, as certain versions of nodemon might require newer versions of Node.js.
+
+You can check your Node.js version with:
+
+bash
+Copy code
+node --version
+And update it if necessary.
+
+4. Check for Global vs Local nodemon
+If you have nodemon installed both globally and locally, there might be a version conflict. Ensure that you're running the version you intend to. You can check which version you're running with:
+
+bash
+Copy code
+which nodemon
+5. Clear npm Cache
+Sometimes, clearing the npm cache can resolve module issues:
+
+bash
+Copy code
+npm cache clean --force
+6. Run Node Directly
+As a temporary solution, or to isolate the issue, try running your server with node instead of nodemon:
+
+bash
+Copy code
+node server.js
+If this works without error, the issue is likely specific to nodemon.
+
+7. Review package.json
+Make sure your package.json is correctly formatted and that all dependencies are correctly listed. If there's a syntax error or misconfiguration, it could potentially cause issues.
+
+8. Reinstall All Node Modules
+As a last resort, you can delete the node_modules folder and package-lock.json file, then reinstall all dependencies:
+
+bash
+Copy code
+rm -rf node_modules
+rm package-lock.json
+npm install
+Conclusion
+These steps should help you diagnose and fix the issue with nodemon. If the problem persists, it might be more specific to your project's setup or environment, and further investigation into your particular configuration might be necessary.
+
+
+
+
+User
+ node server.js                
+/Users/harrypapadakis/Documents/7th_semester/software_engineering/code/new_git/softeng23-21/back-end/RESTful-API/node_modules/bcrypt/bcrypt.js:5
+var binding_path = nodePreGyp.find(path.resolve(path.join(__dirname, './package.json')));
+                              ^
+
+TypeError: nodePreGyp.find is not a function
+    at Object.<anonymous> (/Users/harrypapadakis/Documents/7th_semester/software_engineering/code/new_git/softeng23-21/back-end/RESTful-API/node_modules/bcrypt/bcrypt.js:5:31)
+    at Module._compile (node:internal/modules/cjs/loader:1241:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1295:10)
+    at Module.load (node:internal/modules/cjs/loader:1091:32)
+    at Module._load (node:internal/modules/cjs/loader:938:12)
+    at Module.require (node:internal/modules/cjs/loader:1115:19)
+    at require (node:internal/modules/helpers:130:18)
+    at Object.<anonymous> (/Users/harrypapadakis/Documents/7th_semester/software_engineering/code/new_git/softeng23-21/back-end/RESTful-API/controllers/authController.js:2:16)
+    at Module._compile (node:internal/modules/cjs/loader:1241:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1295:10)
+
+Node.js v20.9.0
+
+ChatGPT
+The error you're encountering with bcrypt (TypeError: nodePreGyp.find is not a function) suggests there might be an issue with your bcrypt installation or a compatibility problem with your Node.js version. Here are some steps to resolve this issue:
+
+1. Reinstall bcrypt
+First, try reinstalling bcrypt, as the installation might have become corrupted or incomplete:
+
+bash
+Copy code
+npm uninstall bcrypt
+npm install bcrypt
+2. Check Node.js Version Compatibility
+bcrypt might have compatibility issues with certain versions of Node.js. Since you're using Node.js v20.9.0, make sure that the bcrypt version you are using is compatible with this Node.js version. You can check the bcrypt documentation or repository for compatibility information.
+
+3. Use bcryptjs as an Alternative
+If you continue to experience issues with bcrypt, consider using bcryptjs, which is a pure JavaScript implementation of bcrypt and tends to have fewer compatibility issues:
+
+bash
+Copy code
+npm uninstall bcrypt
+npm install bcryptjs
+And in your code, replace:
+
+javascript
+Copy code
+const bcrypt = require('bcrypt');
+with:
+
+javascript
+Copy code
+const bcrypt = require('bcryptjs');
+4. Ensure Correct Node.js and npm Installation
+Make sure that your Node.js and npm installations are set up correctly. Corrupted or improperly configured installations can cause various issues.
+
+5. Rebuild Node Modules
+Sometimes, rebuilding your Node modules can resolve native module compatibility issues:
+
+bash
+Copy code
+npm rebuild
+6. Check for Conflicting Dependencies
+Conflicting dependencies in your package.json can sometimes cause issues. Review your package.json file for any potential conflicts or issues.
+
+7. Clear npm Cache and Reinstall Dependencies
+Clearing the npm cache and reinstalling all dependencies can often resolve module-related issues:
+
+bash
+Copy code
+npm cache clean --force
+rm -rf node_modules
+rm package-lock.json
+npm install
+8. Create a New Project
+As a last resort, create a new project directory, initialize a new npm project (npm init), and install your dependencies afresh. Sometimes, starting fresh can resolve underlying issues that are hard to pinpoint.
+
+By following these steps, you should be able to resolve the bcrypt issue and successfully run your Node.js application.
+
+
+
+
+User
+exports.login = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        
+        const [users] = await pool.promise().query('SELECT * FROM Users WHERE username = ?', [username]);
+        const user = users[0];
+
+        if(user && await bcrypt.compare(password, user.password)) {
+            const token = generateToken(user);
+            return res.status(200).json({ token });
+        }
+        else {
+            return res.status(401).json({ message: 'Invalid username or password' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+{
+    "message": "Server error",
+    "error": "Commands.Query is not a constructor"
+}
+
+ChatGPT
+The error message "Commands.Query is not a constructor" in your Node.js Express application's login function typically indicates an issue with the way the database query is being executed. This can be related to the use of pool.promise().query. Let's go through some steps to troubleshoot and resolve this error:
+
+1. Check Your Database Pool Configuration
+First, ensure that your database pool is correctly set up to use promises. The mysql2/promise module should be used for this. Your pool initialization should look something like this:
+
+javascript
+Copy code
+const mysql = require('mysql2/promise');
+
+const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB
+});
+2. Verify Your Query Execution
+The way you're executing the query looks correct for a mysql2 promise-based pool. However, let's make sure there are no subtle issues:
+
+javascript
+Copy code
+const [users] = await pool.promise().query('SELECT * FROM Users WHERE username = ?', [username]);
+This line should correctly return a result set in an array, where users is the first element.
+
+3. Ensure mysql2 Package Version
+Check your mysql2 package version in your package.json file. It's possible that an outdated or incompatible version might be causing issues. If necessary, update it to the latest version:
+
+bash
+Copy code
+npm install mysql2@latest
+4. Check for Syntax Errors
+Review your code for any syntax errors or typos, especially around the query part.
+
+5. Test the Database Connection Separately
+To isolate the issue, try running a simple query separately (perhaps in a different file or function) to test the database connection and query execution.
+
+javascript
+Copy code
+async function testQuery() {
+    try {
+        const [result] = await pool.promise().query('SELECT 1');
+        console.log(result);
+    } catch (error) {
+        console.error('Error during test query', error);
+    }
+}
+
+testQuery();
+6. Log More Details
+Add more console.log statements to log the state and data at various points in your function to get more insight into where exactly it fails.
+
+7. Check Node.js and npm Versions
+Ensure that your Node.js and npm versions are compatible with the mysql2 package you are using.
+
+8. Reinstall Node Modules
+Sometimes, reinstalling node modules can resolve unexpected errors:
+
+bash
+Copy code
+rm -rf node_modules
+npm install
+Conclusion
+By following these steps, you should be able to identify and fix the issue causing the "Commands.Query is not a constructor" error. If the problem persists, it might be more specific to your project's setup or environment, and further investigation into your particular configuration might be necessary.
+
+
+
+
+User
+Uploaded image
+help me implement the following endpoint
+ChatGPT
+To implement a [GET] /title/:titleID endpoint that retrieves data for a specific title identified by its titleID, you will follow these general steps in your Node.js Express application:
+
+1. Define the Data Model
+Based on the image you provided, you'll need a data model that represents the structure of a titleObject. This model should match the database schema and include fields such as titleID, type, originalTitle, titlePoster, startYear, endYear, genres, titleAkas, principals, and rating.
+
+2. Create the Route Handler
+In your controller file (e.g., controllers/titleController.js), create a function to handle the GET request:
+
+javascript
+Copy code
+async function getTitleByID(req, res) {
+    const { titleID } = req.params;
+
+    try {
+        // Replace the following query with the actual query needed to fetch data
+        // from your database, based on the titleID
+        const query = 'SELECT * FROM TitleTable WHERE titleID = ?'; // Make sure to use the correct table name and structure
+        const [titleData] = await pool.promise().query(query, [titleID]);
+        
+        if (titleData.length === 0) {
+            return res.status(404).json({ message: 'Title not found' });
+        }
+
+        const title = titleData[0]; // Assuming each titleID corresponds to a unique title
+
+        // Transform title data into the required format if necessary
+
+        res.json({ titleObject: title });
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving title', error: error.message });
+    }
+}
+
+module.exports = { getTitleByID };
+3. Define the Endpoint in Your Routes
+Create or update a routes file (e.g., routes/titleRoutes.js):
+
+javascript
+Copy code
+const express = require('express');
+const router = express.Router();
+const titleController = require('../controllers/titleController');
+
+// Define the route for getting a title by ID
+router.get('/title/:titleID', titleController.getTitleByID);
+
+module.exports = router;
+4. Add the Route to Your Application
+In your app.js or main application file, make sure to include the title routes:
+
+javascript
+Copy code
+const titleRoutes = require('./routes/titleRoutes');
+// other imports and middleware setup...
+
+app.use('/api', titleRoutes);
+
+// continue with the rest of your app setup...
+5. Handle Authentication and Authorization
+If this endpoint should only be accessible by administrators, protect it with appropriate middleware for authentication and authorization.
+
+Security Considerations
+Validate the titleID parameter to prevent SQL injection.
+Ensure that sensitive information is not exposed in the response.
+Testing the Endpoint
+Once implemented, you can test this endpoint by making a GET request to /api/title/{titleID} with a valid titleID. You should receive a JSON response with the title data.
+
+Remember to replace placeholder names like TitleTable with your actual database table names and adjust the query to match your schema. The transformation of data into the required format will depend on how your database schema is set up and how you want to present the data in the response.
+
+
+
+
+User
+mysql> desc titles;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| title_id        | varchar(255) | NO   |     | NULL    |       |
+| title_type      | varchar(50)  | YES  |     | NULL    |       |
+| primary_title   | text         | YES  |     | NULL    |       |
+| original_title  | text         | YES  |     | NULL    |       |
+| is_adult        | tinyint(1)   | YES  |     | NULL    |       |
+| start_year      | int          | YES  |     | NULL    |       |
+| end_year        | int          | YES  |     | NULL    |       |
+| runtime_minutes | int          | YES  |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+
+mysql> desc title_genres;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| title_id | varchar(255) | NO   |     | NULL    |       |
+| genre    | varchar(255) | NO   |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+
+mysql> desc aliases;
++-------------------+--------------+------+-----+---------+-------+
+| Field             | Type         | Null | Key | Default | Extra |
++-------------------+--------------+------+-----+---------+-------+
+| title_id          | varchar(255) | NO   |     | NULL    |       |
+| ordering          | int          | NO   |     | NULL    |       |
+| title             | text         | NO   |     | NULL    |       |
+| region            | char(4)      | YES  |     | NULL    |       |
+| language          | char(4)      | YES  |     | NULL    |       |
+| is_original_title | tinyint(1)   | YES  |     | NULL    |       |
++-------------------+--------------+------+-----+---------+-------+
+
+mysql> desc principals;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| title_id     | varchar(255) | NO   |     | NULL    |       |
+| ordering     | tinyint      | NO   |     | NULL    |       |
+| name_id      | varchar(255) | NO   |     | NULL    |       |
+| job_category | varchar(255) | YES  |     | NULL    |       |
+| job          | text         | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+
+mysql> desc names_;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| name_id    | varchar(255) | NO   |     | NULL    |       |
+| name_      | varchar(255) | NO   |     | NULL    |       |
+| birth_year | smallint     | YES  |     | NULL    |       |
+| death_year | smallint     | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+
+rating will be added to titles table
+
+ChatGPT
+Given the database schema you've provided, let's implement the [GET] /title/:titleID endpoint in a hypothetical Express.js application. This endpoint will aggregate information from multiple tables to construct a titleObject as defined in the image you uploaded.
+
+Step 1: Define the Endpoint in the Router
+In your routes directory, add a new route definition:
+
+javascript
+Copy code
+const express = require('express');
+const router = express.Router();
+const titleController = require('../controllers/titleController');
+
+router.get('/title/:titleID', titleController.getTitleByID);
+
+module.exports = router;
+Step 2: Implement the Controller Function
+In your controllers/titleController.js, implement the getTitleByID function:
+
+javascript
+Copy code
+const pool = require('../utils/database').pool; // Assuming you have a pool export in your database utility
+
+exports.getTitleByID = async (req, res) => {
+    const { titleID } = req.params;
+
+    try {
+        // Query for the main title information
+        const titleQuery = 'SELECT * FROM titles WHERE title_id = ?';
+        const [titleResult] = await pool.query(titleQuery, [titleID]);
+
+        if (titleResult.length === 0) {
+            return res.status(404).json({ message: 'Title not found' });
+        }
+
+        // Query for the genres related to the title
+        const genresQuery = 'SELECT genre FROM title_genres WHERE title_id = ?';
+        const [genresResult] = await pool.query(genresQuery, [titleID]);
+
+        // Query for aliases of the title
+        const aliasesQuery = 'SELECT * FROM aliases WHERE title_id = ?';
+        const [aliasesResult] = await pool.query(aliasesQuery, [titleID]);
+
+        // Query for principals related to the title
+        const principalsQuery = 'SELECT * FROM principals WHERE title_id = ?';
+        const [principalsResult] = await pool.query(principalsQuery, [titleID]);
+
+        // Assemble the response object
+        const titleObject = {
+            titleID: titleResult[0].title_id,
+            titleType: titleResult[0].title_type,
+            primaryTitle: titleResult[0].primary_title,
+            originalTitle: titleResult[0].original_title,
+            isAdult: titleResult[0].is_adult,
+            startYear: titleResult[0].start_year,
+            endYear: titleResult[0].end_year,
+            runtimeMinutes: titleResult[0].runtime_minutes,
+            genres: genresResult.map(g => g.genre),
+            aliases: aliasesResult,
+            principals: principalsResult.map(principal => {
+                return {
+                    nameID: principal.name_id,
+                    jobCategory: principal.job_category,
+                    job: principal.job,
+                    // You would join with the names_ table to get the actual name
+                    // This is placeholder logic
+                    name: 'Name associated with name_id'
+                };
+            }),
+            // Add rating information once available
+            rating: 'Rating will be here'
+        };
+
+        res.json({ titleObject });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+Step 3: Use the Router in Your Application
+In your main application file (usually app.js), use the router:
+
+javascript
+Copy code
+const express = require('express');
+const app = express();
+const titleRouter = require('./routes/titleRoutes');
+
+// Other app.use() calls...
+
+app.use('/admin', titleRouter);
+
+// Other app setup...
+Note on the principals and names_ Tables
+In the provided code, I've included placeholder logic for the principals array. In practice, you would likely need to perform a JOIN operation with the names_ table to retrieve the actual names associated with each name_id. Adjust the query and processing logic accordingly.
+
+Security Considerations
+Protect this endpoint with the necessary authentication and authorization checks to ensure only administrators can access it.
+Validate the titleID parameter to prevent SQL injection attacks.
+Consider limiting the data returned by the endpoint to avoid exposing sensitive information.
+Testing
+Test the endpoint using a REST client like Postman or a simple curl command:
+
+bash
+Copy code
+curl -X GET http://localhost:3000/admin/title/some-title-id
+Make sure to replace some-title-id with an actual title_id from your database.
+
+
+4 / 4
+
+
+
+
+User
+        const titleObject = {
+            titleID: titleResult[0].title_id,
+            type: titleResult[0].title_type,
+            originalTitle: titleResult[0].original_title,
+            titlePoster: titleResult[0].img_url_poster,
+            startYear: titleResult[0].start_year,
+            endYear: titleResult[0].end_year,
+            genres: genresResult.map(g => g.genre),
+            aliases: aliasesResult,
+            principals: principalsResult.map(principal => {
+                return {
+                    nameID: principal.name_id,
+                    jobCategory: principal.job_category,
+                    job: principal.job,
+                    // You would join with the names_ table to get the actual name
+                    // This is placeholder logic
+                    name: 'Name associated with name_id'
+                };
+            }),
+            // Add rating information once available
+            rating: 'Rating will be here'
+        };
+
+
+genres must be a list containing genreTitle strings,
+titleAkas must be a list containing akaTitle and regionAbbrev strings, 
+principals must be a list containing nameID, name and category strings
+and rating must be a json object containing avRating and nVotes strings
+
+ChatGPT
+Given your specifications, let's refine the titleObject within the getTitleByID function to match the structure you described:
+
+genres as a list of genreTitle strings
+titleAkas as a list with objects containing akaTitle and regionAbbrev strings
+principals as a list with objects containing nameID, name, and category strings
+rating as a JSON object containing avRating and nVotes strings
+Here is the updated implementation:
+
+javascript
+Copy code
+async function getTitleByID(req, res) {
+    const { titleID } = req.params;
+
+    try {
+        // Main title information query
+        const titleQuery = 'SELECT * FROM titles WHERE title_id = ?';
+        const [titleResult] = await pool.query(titleQuery, [titleID]);
+
+        if (titleResult.length === 0) {
+            return res.status(404).json({ message: 'Title not found' });
+        }
+
+        // Genres related to the title query
+        const genresQuery = 'SELECT genre FROM title_genres WHERE title_id = ?';
+        const [genresResult] = await pool.query(genresQuery, [titleID]);
+
+        // Aliases of the title query
+        const aliasesQuery = 'SELECT title as akaTitle, region as regionAbbrev FROM aliases WHERE title_id = ?';
+        const [aliasesResult] = await pool.query(aliasesQuery, [titleID]);
+
+        // Principals related to the title query
+        const principalsQuery = `
+            SELECT p.name_id, p.category, n.name_ as name 
+            FROM principals AS p 
+            JOIN names_ AS n ON p.name_id = n.name_id 
+            WHERE p.title_id = ?
+        `;
+        const [principalsResult] = await pool.query(principalsQuery, [titleID]);
+
+        // Assemble the response object with the new structure
+        const titleObject = {
+            titleID: titleResult[0].title_id,
+            type: titleResult[0].title_type,
+            originalTitle: titleResult[0].original_title,
+            titlePoster: titleResult[0].img_url_poster, // Assuming your titles table has an 'img_url_poster' field
+            startYear: titleResult[0].start_year,
+            endYear: titleResult[0].end_year,
+            genres: genresResult.map(g => g.genre), // List of genreTitle strings
+            titleAkas: aliasesResult, // List of objects with akaTitle and regionAbbrev
+            principals: principalsResult, // List of objects with nameID, name, and category
+            rating: {
+                avRating: titleResult[0].average_rating, // Placeholder, assuming you will have an 'average_rating' field
+                nVotes: titleResult[0].num_votes // Placeholder, assuming you will have a 'num_votes' field
+            }
+        };
+
+        res.json({ titleObject });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+Please note the following:
+
+The img_url_poster, average_rating, and num_votes fields are placeholders and should match your actual database schema.
+The JOIN operation in the principals query is assuming that the names_ table can be joined on name_id to get the person's name. Adjust the fields accordingly to match your actual database schema.
+Ensure that your database schema has the appropriate fields and relationships to support these queries.
+For the rating, once you have added it to the titles table, you would replace the placeholders with the actual column names from your database.
+This implementation should now return the titleObject in the format you've specified. Remember to test the endpoint thoroughly to ensure it behaves as expected.
+
+
+
+
+User
+aliases and principals can be more than one
+const pool = require('../utils/database').pool; 
+
+async function getTitleByID(req, res) {
+    const { titleID } = req.params;
+
+    try {
+        // Main title information query
+        const titleQuery = 'SELECT * FROM titles WHERE title_id = ?';
+        const [titleResult] = await pool.query(titleQuery, [titleID]);
+
+        if (titleResult.length === 0) {
+            return res.status(404).json({ message: 'Title not found' });
+        }
+
+        // Genres related to the title query
+        const genresQuery = 'SELECT genre FROM title_genres WHERE title_id = ?';
+        const [genresResult] = await pool.query(genresQuery, [titleID]);
+
+        // Aliases of the title query
+        const aliasesQuery = 'SELECT title as akaTitle, region as regionAbbrev FROM aliases WHERE title_id = ?';
+        const [aliasesResult] = await pool.query(aliasesQuery, [titleID]);
+
+        // Principals related to the title query
+        const principalsQuery = `
+            SELECT p.name_id, n.name_ as name, p.category 
+            FROM principals AS p 
+            JOIN names_ AS n ON p.name_id = n.name_id 
+            WHERE p.title_id = ?
+        `;
+        const [principalsResult] = await pool.query(principalsQuery, [titleID]);
+
+        // Assemble the response object with the new structure
+        const titleObject = {
+            titleID: titleResult[0].title_id,
+            type: titleResult[0].title_type,
+            originalTitle: titleResult[0].original_title,
+            titlePoster: titleResult[0].img_url_poster, 
+            startYear : titleResult[0].start_year,
+            endYear: titleResult[0].end_year,
+            genres: genresResult.map(g => g.genre), 
+            titleAkas: aliasesResult, // List of objects with akaTitle and regionAbbrev
+            principals: principalsResult, // List of objects with nameID, name, and category
+            rating: {
+                avRating: titleResult[0].average_rating, // Placeholder, assuming you will have an 'average_rating' field
+                nVotes: titleResult[0].num_votes // Placeholder, assuming you will have a 'num_votes' field
+            }
+        };
+
+        res.json({ titleObject });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+ChatGPT
+Your current implementation of the getTitleByID function seems correctly set up to handle multiple aliases and principals associated with a title. Both the aliases and principals are queried and stored as arrays, which can hold multiple items. Here's a quick verification of each part to ensure that it handles multiple records properly:
+
+Genres: The genresResult is mapped to an array of genre strings.
+Title Akas (aliases): The aliasesResult is directly used as an array, which will include all records from the aliases table that match the title_id.
+Principals: Similarly, principalsResult is directly used as an array, and it will contain all matching records from the principals table joined with the names_ table.
+Your titleObject is then constructed using these arrays, which means it will represent all associated genres, aliases, and principals for the given titleID.
+
+Here is a brief explanation of how the array data is handled:
+
+genres: Since this is a straightforward mapping from the title_genres table, it will create an array of strings where each string is a genre associated with the title.
+
+titleAkas: This will be an array of objects, with each object containing akaTitle and regionAbbrev properties. If there are multiple aliases for the title, each alias will be an object in this array.
+
+principals: This is also an array of objects, with each object representing a principal's name_id, name, and category. The JOIN operation with the names_ table allows you to pull in the human-readable name associated with each name_id.
+
+Here are a few additional considerations:
+
+Ensure that the img_url_poster, average_rating, and num_votes fields exist in your titles table or adjust the properties accordingly to match your database schema.
+Once you add the rating to the titles table, you should modify the titleQuery to select these fields and remove the placeholders in the rating object of titleObject.
+Always validate and sanitize inputs like titleID to protect against SQL injection attacks.
+This function should correctly return a single titleObject with arrays for genres, titleAkas, and principals, which can include multiple items, and a rating object if those fields are present in your titles table.
+
+
+
+
+User
+{
+    "message": "Server error",
+    "error": "You have tried to call .then(), .catch(), or invoked await on the result of query that is not a promise, which is a programming error. Try calling con.promise().query(), or require('mysql2/promise') instead of 'mysql2' for a promise-compatible version of the query interface. To learn how to use async/await or Promises check out documentation at https://www.npmjs.com/package/mysql2#using-promise-wrapper, or the mysql2 documentation at https://github.com/sidorares/node-mysql2/tree/master/documentation/en/Promise-Wrapper.md"
+}
+
+const pool = require('../utils/database').pool; 
+
+async function getTitleByID(req, res) {
+    const { titleID } = req.params;
+
+    try {
+        // Main title information query
+        const titleQuery = 'SELECT * FROM titles WHERE title_id = ?';
+        const [titleResult] = await pool.query(titleQuery, [titleID]);
+
+        if (titleResult.length === 0) {
+            return res.status(404).json({ message: 'Title not found' });
+        }
+
+        // Genres related to the title query
+        const genresQuery = 'SELECT genre FROM title_genres WHERE title_id = ?';
+        const [genresResult] = await pool.query(genresQuery, [titleID]);
+
+        // Aliases of the title query
+        const aliasesQuery = 'SELECT title as akaTitle, region as regionAbbrev FROM aliases WHERE title_id = ?';
+        const [aliasesResult] = await pool.query(aliasesQuery, [titleID]);
+
+        // Principals related to the title query
+        const principalsQuery = `
+            SELECT p.name_id, n.name_ as name, p.category 
+            FROM principals AS p 
+            JOIN names_ AS n ON p.name_id = n.name_id 
+            WHERE p.title_id = ?
+        `;
+        const [principalsResult] = await pool.query(principalsQuery, [titleID]);
+
+        const titleObject = {
+            titleID: titleResult[0].title_id,
+            type: titleResult[0].title_type,
+            originalTitle: titleResult[0].original_title,
+            titlePoster: titleResult[0].img_url_poster, 
+            startYear : titleResult[0].start_year,
+            endYear: titleResult[0].end_year,
+            genres: genresResult.map(g => g.genre), 
+            titleAkas: aliasesResult, 
+            principals: principalsResult, 
+            rating: {
+                avRating: titleResult[0].average_rating, 
+                nVotes: titleResult[0].num_votes 
+            }
+        };
+
+        res.json({ titleObject });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+exports.getTitleByID = getTitleByID;
+
+
+ChatGPT
+The error message indicates that pool.query is being called as if it returns a promise, but the actual pool object does not support promises in its current state. This typically happens when using mysql2 without the promise wrapper.
+
+To resolve the error, you need to make sure that the pool object is created from mysql2/promise, which provides promise support for queries. Here’s how you can correct the issue:
+
+Step 1: Update Your Database Utility
+In your ../utils/database.js module, ensure that you are creating the pool using mysql2/promise. It should look something like this:
+
+javascript
+Copy code
+const mysql = require('mysql2/promise');
+
+const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB
+});
+
+module.exports = { pool };
+Step 2: Use the Promise-Based Query Method
+Once you have a promise-based pool, you can use await with pool.query directly without having to call .promise() on it each time. Your controller's queries would remain the same as they already use await.
+
+Step 3: Verify Your Controller Function
+Make sure your controller function getTitleByID is using the updated promise-based pool. Since you are exporting and requiring pool from your database utility, as long as pool is set up to use promises as shown in Step 1, no further changes should be needed in the controller function.
+
+With these changes, the getTitleByID function should work correctly without throwing errors about promises. Always ensure that all parts of your application that interact with the database use the promise-based pool to avoid similar issues.
+
+
+
+
+User
+genre list must contain objects (with only one string inside)
+
+ChatGPT
+
+
+
+User
+genre list must contain objects (with only one string inside)
+
+
+const pool = require('../utils/database').pool; 
+
+async function getTitleByID(req, res) {
+    const { titleID } = req.params;
+
+    try {
+        // Main title information query
+        const titleQuery = 'SELECT * FROM titles WHERE title_id = ?';
+        const [titleResult] = await pool.query(titleQuery, [titleID]);
+
+        if (titleResult.length === 0) {
+            return res.status(404).json({ message: 'Title not found' });
+        }
+
+        // Genres related to the title query
+        const genresQuery = 'SELECT genre FROM title_genres WHERE title_id = ?';
+        const [genresResult] = await pool.query(genresQuery, [titleID]);
+
+        // Aliases of the title query
+        const aliasesQuery = 'SELECT title as akaTitle, region as regionAbbrev FROM aliases WHERE title_id = ?';
+        const [aliasesResult] = await pool.query(aliasesQuery, [titleID]);
+
+        // Principals related to the title query
+        const principalsQuery = `
+            SELECT p.name_id, n.name_ as name, p.job_category as category
+            FROM principals AS p 
+            JOIN names_ AS n ON p.name_id = n.name_id 
+            WHERE p.title_id = ?
+        `;
+        const [principalsResult] = await pool.query(principalsQuery, [titleID]);
+
+        const titleObject = {
+            titleID: titleResult[0].title_id,
+            type: titleResult[0].title_type,
+            originalTitle: titleResult[0].original_title,
+            titlePoster: titleResult[0].image_url_poster, 
+            startYear : titleResult[0].start_year,
+            endYear: titleResult[0].end_year,
+            genres: genresResult.map(g => g.genre), 
+            titleAkas: aliasesResult, 
+            principals: principalsResult, 
+            rating: {
+                avRating: titleResult[0].average_rating, 
+                nVotes: titleResult[0].num_votes 
+            }
+        };
+
+        res.json({ titleObject });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+exports.getTitleByID = getTitleByID;
+
+ChatGPT
+To adjust the genres list so that it contains objects with a single string inside, you will need to modify the way the genres array is constructed in the getTitleByID function. Each genre should be an object with one property (let's call it genreTitle), like this:
+
+json
+Copy code
+"genres": [
+  { "genreTitle": "Action" },
+  { "genreTitle": "Drama" }
+]
+Here's the updated part of your getTitleByID function that makes this change:
+
+javascript
+Copy code
+// ... rest of your code ...
+
+// Genres related to the title query
+const genresQuery = 'SELECT genre FROM title_genres WHERE title_id = ?';
+const [genresResult] = await pool.query(genresQuery, [titleID]);
+
+const titleObject = {
+    titleID: titleResult[0].title_id,
+    type: titleResult[0].title_type,
+    originalTitle: titleResult[0].original_title,
+    titlePoster: titleResult[0].image_url_poster, 
+    startYear : titleResult[0].start_year,
+    endYear: titleResult[0].end_year,
+    genres: genresResult.map(g => ({ genreTitle: g.genre })), // Each genre is now an object
+    titleAkas: aliasesResult, 
+    principals: principalsResult.map(principal => ({
+        nameID: principal.name_id,
+        name: principal.name,
+        category: principal.category
+    })), 
+    rating: {
+        avRating: titleResult[0].average_rating, 
+        nVotes: titleResult[0].num_votes 
+    }
+};
+
+// ... rest of your code ...
+Now, genres is an array of objects, and each object has one property, genreTitle, which is a string representing the genre.
+
+Please note that the rating object is also included in the response. Ensure that your titles table contains average_rating and num_votes columns, or adjust the fields accordingly.
+
+Lastly, make sure that image_url_poster is the correct field name in your titles table for the URL of the title poster image. If the field name is different, update it to match your actual database schema.
+
+
+
+
+User
+Uploaded image
+now help me create the following endpoint
+
+ChatGPT
+The endpoint described in the image, [GET] /searchtitle, is a bit unusual because typically, a GET request should not contain a body. Instead, query parameters are used for GET requests. However, for the sake of following the instructions as given, we will assume that the body is somehow being sent and can be accessed.
+
+Please note that this is not standard practice, and in real-world scenarios, you should use query parameters for GET requests.
+
+Here's how you could implement such an endpoint:
+
+Step 1: Define the Endpoint in the Router
+Create a new route in your routes directory:
+
+javascript
+Copy code
+const express = require('express');
+const router = express.Router();
+const titleController = require('../controllers/titleController');
+
+router.get('/searchtitle', titleController.searchTitleByPart);
+
+module.exports = router;
+Step 2: Implement the Controller Function
+In your controllers/titleController.js, implement the searchTitleByPart function:
+
+javascript
+Copy code
+async function searchTitleByPart(req, res) {
+    // This is not standard and typically you should use req.query or req.params
+    const { titlePart } = req.body; // Getting titlePart from the body
+
+    try {
+        if (!titlePart) {
+            return res.status(400).json({ message: 'No title part provided' });
+        }
+
+        const searchQuery = 'SELECT * FROM titles WHERE original_title LIKE ?';
+        const likeTitlePart = `%${titlePart}%`; // Prepare the string for a LIKE query
+        const [searchResults] = await pool.query(searchQuery, [likeTitlePart]);
+
+        const titleObjects = searchResults.map(result => ({
+            titleID: result.title_id,
+            titleType: result.title_type,
+            originalTitle: result.original_title,
+            // ... include other fields as needed
+        }));
+
+        res.json({ titleObjects });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+
+exports.searchTitleByPart = searchTitleByPart;
+Step 3: Use the Router in Your Application
+In your main application file (usually app.js), use the router:
+
+javascript
+Copy code
+const express = require('express');
+const app = express();
+const searchRoutes = require('./routes/searchRoutes');
+
+// Other app.use() calls...
+app.use(express.json()); // Needed to parse JSON bodies
+
+app.use('/api', searchRoutes);
+
+// continue with the rest of your app setup...
+Notes and Best Practices:
+The LIKE operator is used in the SQL query to find titles that contain the titlePart string. The % symbols are wildcards that match any sequence of characters.
+This implementation assumes that the client is sending a JSON body with the titlePart field, even though this is not standard for GET requests. If you decide to use query parameters, which is the recommended way, you would retrieve titlePart using req.query.titlePart instead of req.body.titlePart.
+Always sanitize user input to prevent SQL injection attacks. Using parameterized queries, as shown in the example, helps prevent SQL injection.
+In practice, ensure that your server and client are configured to handle request bodies for GET requests if you choose to go against the standard practice. However, it's highly recommended to refactor the request to use query parameters instead.
+Here's how you would typically implement it using query parameters:
+
+javascript
+Copy code
+// In your controller function
+const { titlePart } = req.query; // Instead of req.body
+And the client would make the request like this:
+
+bash
+Copy code
+GET /api/searchtitle?titlePart=partOfTheTitle
+Remember to adjust your client-side application to send the request parameters accordingly.
+
+
+
+
+User
+the titleobject must be the same as in here
+async function getTitleByID(req, res) {
+    const { titleID } = req.params;
+
+    try {
+        // Main title information query
+        const titleQuery = 'SELECT * FROM titles WHERE title_id = ?';
+        const [titleResult] = await pool.query(titleQuery, [titleID]);
+
+        if (titleResult.length === 0) {
+            return res.status(404).json({ message: 'Title not found' });
+        }
+
+        // Genres related to the title query
+        const genresQuery = 'SELECT genre FROM title_genres WHERE title_id = ?';
+        const [genresResult] = await pool.query(genresQuery, [titleID]);
+
+        // Aliases of the title query
+        const aliasesQuery = 'SELECT title as akaTitle, region as regionAbbrev FROM aliases WHERE title_id = ?';
+        const [aliasesResult] = await pool.query(aliasesQuery, [titleID]);
+
+        // Principals related to the title query
+        const principalsQuery = `
+            SELECT p.name_id, n.name_ as name, p.job_category as category
+            FROM principals AS p 
+            JOIN names_ AS n ON p.name_id = n.name_id 
+            WHERE p.title_id = ?
+        `;
+        const [principalsResult] = await pool.query(principalsQuery, [titleID]);
+
+        const titleObject = {
+            titleID: titleResult[0].title_id,
+            type: titleResult[0].title_type,
+            originalTitle: titleResult[0].original_title,
+            titlePoster: titleResult[0].image_url_poster, 
+            startYear : titleResult[0].start_year,
+            endYear: titleResult[0].end_year,
+            genres: genresResult.map(g => ({ genreTitle: g.genre })), 
+            titleAkas: aliasesResult, 
+            principals: principalsResult, 
+            rating: {
+                avRating: titleResult[0].average_rating, 
+                nVotes: titleResult[0].num_votes 
+            }
+        };
+
+        res.json({ titleObject });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+ChatGPT
+To ensure the titleObject returned by the /searchtitle endpoint matches the structure used in the getTitleByID function, you will need to modify the searchTitleByPart function to construct the titleObject in the same way. Here's how you can do it:
+
+Adjusted searchTitleByPart Function
+javascript
+Copy code
+async function searchTitleByPart(req, res) {
+    // Typically, you should use req.query for GET requests
+    const { titlePart } = req.query; // Using query parameters instead of body
+
+    try {
+        if (!titlePart) {
+            return res.status(400).json({ message: 'No title part provided' });
+        }
+
+        // Query to search titles by part of their name
+        const searchQuery = 'SELECT * FROM titles WHERE original_title LIKE ?';
+        const likeTitlePart = `%${titlePart}%`; // Prepare the string for a LIKE query
+        const [searchResults] = await pool.query(searchQuery, [likeTitlePart]);
+
+        // Check if any titles were found
+        if (searchResults.length === 0) {
+            return res.status(404).json({ message: 'No titles found' });
+        }
+
+        // You will need to iterate over each search result to construct the full titleObject for each one
+        const titleObjects = await Promise.all(searchResults.map(async (title) => {
+            // Genres query
+            const [genresResult] = await pool.query('SELECT genre FROM title_genres WHERE title_id = ?', [title.title_id]);
+            // Aliases query
+            const [aliasesResult] = await pool.query('SELECT title as akaTitle, region as regionAbbrev FROM aliases WHERE title_id = ?', [title.title_id]);
+            // Principals query
+            const [principalsResult] = await pool.query(`
+                SELECT p.name_id, n.name_ as name, p.job_category as category
+                FROM principals AS p 
+                JOIN names_ AS n ON p.name_id = n.name_id 
+                WHERE p.title_id = ?
+            `, [title.title_id]);
+
+            return {
+                titleID: title.title_id,
+                type: title.title_type,
+                originalTitle: title.original_title,
+                titlePoster: title.image_url_poster, 
+                startYear : title.start_year,
+                endYear: title.end_year,
+                genres: genresResult.map(g => ({ genreTitle: g.genre })),
+                titleAkas: aliasesResult,
+                principals: principalsResult, 
+                rating: {
+                    avRating: title.average_rating, // Assuming these fields exist
+                    nVotes: title.num_votes
+                }
+            };
+        }));
+
+        res.json({ titleObjects });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+
+exports.searchTitleByPart = searchTitleByPart;
+In the adjusted function, for each title found by the search, it performs the same queries to fetch genres, aliases, and principals to construct the titleObject just like in the getTitleByID function.
+
+Notes:
+The function now uses req.query to access the titlePart parameter which is more in line with the standard practice for GET requests.
+Promise.all is used to process multiple asynchronous operations in parallel, which is necessary because we need to perform additional queries for each title found.
+The structure of the titleObject is kept consistent with the getTitleByID function, including genres, aliases, principals, and rating.
+The function assumes that the average_rating and num_votes fields are available in the titles table. If they are not yet implemented, you'll need to adjust the code accordingly.
+Remember to test the endpoint thoroughly to ensure it behaves as expected and returns the correct structure for each title found in the search.
+
+
+
+
+User
+explain this
+        const titleObjects = await Promise.all(searchResults.map(async (title) => {
+
+ChatGPT
+The line you're referring to uses Promise.all combined with Array.prototype.map to handle multiple asynchronous operations concurrently. Let's break down what's happening here:
+
+searchResults.map(): This is a call to the map method of the searchResults array. The map function is used to transform each item in the array into something else. In this case, it's being used to transform each title in searchResults into a Promise. This transformation is done by passing an async function to map, which automatically returns a Promise.
+
+async (title) => { ... }: For each title in the searchResults, an anonymous async function is called. Because it's an async function, it implicitly returns a Promise. Inside the function, you perform additional asynchronous operations to fetch related data for each title (like genres, aliases, and principals).
+
+Promise.all(): This function is used to wait for all promises in the iterable (in this case, the array of promises returned by the map function) to be resolved, or for any of them to be rejected. If all of the passed-in promises fulfill, Promise.all is fulfilled with an array of the results from the input promises, in the same order as the promises passed in. If any of the passed-in promises reject, Promise.all immediately rejects with the reason of the promise that rejected, disregarding the rest of the promises.
+
+Putting it all together:
+
+javascript
+Copy code
+const titleObjects = await Promise.all(searchResults.map(async (title) => {
+    // ... fetch related data for `title` ...
+}));
+This line is essentially saying:
+
+For each title in searchResults, perform some asynchronous operations to gather additional data.
+Because these operations are asynchronous and we're using async functions, each operation returns a Promise.
+We want to wait for all these asynchronous operations to complete before proceeding. Promise.all takes an array of these promises and returns a new promise that resolves when all of the input promises have resolved, or rejects if any of them reject.
+The await keyword is used to pause the execution of the function until the promise returned by Promise.all is settled. After all promises resolve, titleObjects becomes an array of the resolved values.
+In summary, this pattern is a way to efficiently perform many asynchronous operations at the same time and wait for all of them to complete before moving on. It's particularly useful when the operations are not dependent on the results of one another and can be executed in parallel.
+
+
+
+
+User
+I have the following error at login
+{
+    "message": "Server error",
+    "error": "pool.promise is not a function"
+}
+
+//database.js
+const mysql = require('mysql2/promise');
+
+/* create connection and export it */
+const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB,
+});
+
+module.exports = { pool };
+
+
+// controllers/authController.js
+const bcrypt = require('bcrypt');
+const { pool } = require('../utils/database');
+const { generateToken } = require('../utils/tokenUtil');
+
+exports.login = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        
+        const [users] = await pool.promise().query('SELECT * FROM Users WHERE username = ?', [username]);
+        const user = users[0];
+
+        if(user && await bcrypt.compare(password, user.password)) {
+            const token = generateToken(user);
+            return res.status(200).json({ token });
+        }
+        else {
+            return res.status(401).json({ message: 'Invalid username or password' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+ChatGPT
+The error message "pool.promise is not a function" indicates that the pool object from mysql2/promise does not have a promise method. This is correct because when using mysql2/promise, the pool itself is already promise-enabled, and you should directly use pool.query without the .promise() part.
+
+The code in authController.js should be updated to use pool.query directly:
+
+javascript
+Copy code
+// controllers/authController.js
+const bcrypt = require('bcrypt');
+const { pool } = require('../utils/database');
+const { generateToken } = require('../utils/tokenUtil');
+
+exports.login = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        
+        // Use pool.query directly since you're using the promise version of mysql2
+        const [users] = await pool.query('SELECT * FROM Users WHERE username = ?', [username]);
+        const user = users[0];
+
+        if (user && await bcrypt.compare(password, user.password)) {
+            const token = generateToken(user);
+            return res.status(200).json({ token });
+        } else {
+            return res.status(401).json({ message: 'Invalid username or password' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+With this change, the pool.query method will return a promise, which you can await on. This is the correct usage when working with the promise wrapper of mysql2.
+
+Make sure to apply this change wherever you're using pool.promise().query in your code. Since the pool object you're importing from database.js is already using the promise-based version of mysql2, you can use pool.query directly.
+
+
+
+
+User
+async function searchTitleByPart(req, res) {
+    const { titlePart } = req.body; 
+
+    try {
+        if (!titlePart) {
+            return res.status(400).json({ message: 'No title part provided' });
+        }
+
+        // Query to search titles by part of their name
+        const searchQuery = 'SELECT * FROM titles WHERE original_title LIKE ?';
+        const likeTitlePart = `%${titlePart}%`; 
+        const [searchResults] = await pool.query(searchQuery, [likeTitlePart]);
+
+        if (searchResults.length === 0) {
+            return res.status(404).json({ message: 'No titles found' });
+        }
+
+        const titleObjects = await Promise.all(searchResults.map(async (title) => {
+            const [genresResult] = await pool.query('SELECT genre FROM title_genres WHERE title_id = ?', [title.title_id]);
+
+            const [aliasesResult] = await pool.query('SELECT title as akaTitle, region as regionAbbrev FROM aliases WHERE title_id = ?', [title.title_id]);
+
+            const [principalsResult] = await pool.query(`
+                SELECT p.name_id, n.name_ as name, p.job_category as category
+                FROM principals AS p 
+                JOIN names_ AS n ON p.name_id = n.name_id 
+                WHERE p.title_id = ?
+            `, [title.title_id]);
+
+            return {
+                titleID: title.title_id,
+                type: title.title_type,
+                originalTitle: title.original_title,
+                titlePoster: title.image_url_poster, 
+                startYear : title.start_year,
+                endYear: title.end_year,
+                genres: genresResult.map(g => ({ genreTitle: g.genre })),
+                titleAkas: aliasesResult,
+                principals: principalsResult, 
+                rating: {
+                    avRating: title.average_rating, 
+                    nVotes: title.num_votes
+                }
+            };
+        }));
+
+        res.json({ titleObjects });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+
+exports.searchTitleByPart = searchTitleByPart;
+
+
+{
+    "titlepart": "small"
+}
+
+{
+    "message": "No title part provided"
+}
+
+ChatGPT
+The error message "No title part provided" suggests that the titlePart property is not being sent correctly in the request body, or the server is not correctly parsing the request body.
+
+Here are some steps to troubleshoot this issue:
+
+1. Check the Request Body on the Client-Side
+Ensure that the client making the request to the /searchtitle endpoint is sending the correct JSON body with a property named titlepart. The property name is case-sensitive, so it should match exactly what the server expects, which is titlePart. If the client sends titlepart, the server will not recognize it because it's looking for titlePart.
+
+2. Verify Content-Type Header
+Ensure that the client sends the correct Content-Type header with the value application/json. If the Content-Type is not set correctly, the server may not parse the body as JSON.
+
+3. Ensure Body Parsing Middleware is Set Up
+Make sure that you have body parsing middleware set up in your Express application to handle JSON. Without this, req.body will be undefined.
+
+In your app.js or main server file, you should have a line like this:
+
+javascript
+Copy code
+const express = require('express');
+const app = express();
+
+// Body parsing middleware
+app.use(express.json());
+This middleware should be set up before your route definitions.
+
+4. Use Correct Case in the Request
+If you're manually testing the endpoint with a tool like Postman or curl, ensure that the JSON body you send has the correct case for the titlePart key.
+
+Example using curl:
+
+bash
+Copy code
+curl -X GET http://localhost:3000/searchtitle -H "Content-Type: application/json" -d '{"titlePart": "small"}'
+5. Adjust the Function to Match the Request
+If the client cannot be changed and sends titlepart with a lowercase p, you should adjust the server code to expect titlepart instead of titlePart.
+
+javascript
+Copy code
+const { titlepart } = req.body; // Change to match the case sent by the client
+After following these troubleshooting steps, the server should be able to read the titlePart from the request body, and the function will proceed to execute the search query.
+
+Remember, as previously mentioned, using the request body in a GET request is not a standard practice. If possible, you should consider changing the client and server to use query parameters instead.
+
+
+
+
+User
+i want the like to be case insensitive
+
+ChatGPT
+To perform a case-insensitive search with the LIKE operator in MySQL, you can make use of the fact that, by default, string comparison is case-insensitive if the column uses a case-insensitive collation. Most MySQL string columns with varchar or text types use the default collation of the database, which is usually case-insensitive (e.g., utf8_general_ci where ci stands for case-insensitive).
+
+If your database and column collation settings are already case-insensitive, the LIKE operator should work in a case-insensitive manner without any additional modifications.
+
+However, if for some reason the collation is set to be case-sensitive (e.g., utf8_bin or with cs in the collation name), you can explicitly convert the strings to lowercase using the LOWER() function in MySQL for both the column and the search term:
+
+javascript
+Copy code
+const searchQuery = 'SELECT * FROM titles WHERE LOWER(original_title) LIKE LOWER(?)';
+const likeTitlePart = `%${titlePart.toLowerCase()}%`; // Convert the search term to lowercase in JavaScript
+const [searchResults] = await pool.query(searchQuery, [likeTitlePart]);
+This way, regardless of the collation of the original_title column, your search will be case-insensitive, as you're converting both the data in the column and the search term to lowercase before performing the comparison.
+
+Please ensure that such case conversion does not impact the performance of your query negatively, especially if you're working with large datasets. Using functions like LOWER() can sometimes prevent the use of indexes, so it's important to test and potentially use full-text search capabilities or look at other optimization strategies if necessary.
+
+
+
+
+
