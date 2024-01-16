@@ -18,6 +18,7 @@ const searchNameCommand = (program) => {
             }
         } catch (error) {
             console.error('Error searching for name:', error.message);
+            process.exit(1);
         }
         });
 };

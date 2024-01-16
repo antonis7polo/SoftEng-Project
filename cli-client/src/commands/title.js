@@ -18,6 +18,7 @@ const titleCommand = (program) => {
         }
       } catch (error) {
         console.error('Error retrieving title:', error.message);
+        process.exit(1);
       }
     });
 };

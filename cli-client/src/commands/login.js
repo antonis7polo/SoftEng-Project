@@ -11,8 +11,11 @@ const loginCommand = (program) => {
         try {
             const result = await login(username, passw);
             console.log('Welcome to NTUAFLIX!');
+            console.log('Your ID is:', result.userID);
         } catch (error) {
             console.error('Login failed:', error.message);
+            process.exit(1); // Set exit code to 1 on error
+
         }
     });
 };

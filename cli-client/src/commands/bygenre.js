@@ -22,6 +22,7 @@ const byGenreCommand = (program) => {
         }
       } catch (error) {
         console.error('Error retrieving titles:', error.message);
+        process.exit(1);
       }
     });
 };

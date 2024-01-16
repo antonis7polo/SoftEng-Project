@@ -17,6 +17,7 @@ const tvShowsEpisodesCommand = (program) => {
         }
       } catch (error) {
         console.error('Error retrieving TV shows episodes:', error.message);
+        process.exit(1);
       }
     });
 };

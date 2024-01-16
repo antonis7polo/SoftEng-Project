@@ -10,6 +10,7 @@ const logoutCommand = (program) => {
         console.log('Logout successful!');
       } catch (error) {
         console.error('Logout failed:', error.message);
+        process.exit(1); // Set exit code to 1 on error
       }
     });
 };

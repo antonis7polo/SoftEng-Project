@@ -11,6 +11,7 @@ const resetAllCommand = (program) => {
         console.log('Reset all operation successful:', result.status);
       } catch (error) {
         console.error('Reset all operation failed:', error.message);
+        process.exit(1);
       }
     });
 };

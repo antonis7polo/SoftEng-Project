@@ -18,6 +18,7 @@ const searchTitleCommand = (program) => {
         }
       } catch (error) {
         console.error('Error searching for title:', error.message);
+        process.exit(1);
       }
     });
 };
