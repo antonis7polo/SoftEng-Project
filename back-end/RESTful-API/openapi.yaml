@@ -2034,6 +2034,15 @@ paths:
                 schema:
                   type: string
                   example: "episode_title_id, episode_title, parent_tv_show_title_id, season_number, episode_number\n..."
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
         '500':
           description: Server error
           content:

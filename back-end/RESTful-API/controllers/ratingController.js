@@ -194,6 +194,11 @@ exports.getMovieRecommendations = async (req, res) => {
         return res.status(400).json({ message: 'Missing required information' });
     }
 
+    // ensure genres and actors are arrays of strings
+    if (!Array.isArray(genres) || !Array.isArray(actors)) {
+        return res.status(400).json({ message: 'Genres and actors should be arrays of strings' });
+    }
+
     try {
         const allMovies = new Map();
 
