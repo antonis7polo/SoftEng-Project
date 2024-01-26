@@ -71,14 +71,14 @@ ALTER DATABASE IMDb CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 CREATE TABLE Titles (
   title_id 			  VARCHAR(255) NOT NULL, -- not null bc PK
   title_type 			VARCHAR(50),
-  primary_title 	TEXT, -- some are really long
-  original_title 	TEXT, -- some are really long
+  primary_title 	VARCHAR(255), -- some are really long
+  original_title 	VARCHAR(255), -- some are really long
   is_adult 			  BOOLEAN,
   start_year			INTEGER, -- add better domain here (>1800)
   end_year 			  INTEGER, -- add better domain here (>0)
   runtime_minutes	INTEGER, -- add better domain here (>0)
-  img_url_assets   VARCHAR(255),
-  average_rating   FLOAT,
+  img_url_poster   VARCHAR(255) NULL,
+  average_rating   decimal(3,2),
     num_votes        INTEGER
 );
 
@@ -89,15 +89,12 @@ CREATE TABLE Aliases (
   title             TEXT NOT NULL,
   region				    CHAR(4),
   language          CHAR(4),
-  is_original_title	BOOLEAN
+  is_original_title	BOOLEAN,
+  attribute        VARCHAR(255) NULL,
+  type            VARCHAR(255) NULL
 );
 
 
-CREATE TABLE Alias_attributes (
-  title_id			VARCHAR(255) NOT NULL, -- not null bc PK
-  ordering			INTEGER NOT NULL, -- not null bc PK
-  attribute			VARCHAR(255) NOT NULL -- only stored if not null
-);
 
 CREATE TABLE Episode_belongs_to (
   episode_title_id          VARCHAR(255) NOT NULL, -- not null bc PK
@@ -118,6 +115,7 @@ CREATE TABLE Names_ (
   name_         VARCHAR(255) NOT NULL, -- everybody has a name
   birth_year    SMALLINT, -- add a better domain here
   death_year    SMALLINT -- add a better domain here
+  image_url     VARCHAR(255) NULL
 );
 
 CREATE TABLE Name_worked_as (
@@ -154,7 +152,8 @@ CREATE TABLE Principals (
   ordering      TINYINT NOT NULL, -- not null bc PK
   name_id       VARCHAR(255) NOT NULL,
   job_category  VARCHAR(255),
-  job           TEXT
+  job           TEXT,
+  image_url     VARCHAR(255) NULL
 );
 
 -- Existing code for creating database and tables...
@@ -165,7 +164,8 @@ CREATE TABLE Users (
   username      VARCHAR(255) NOT NULL,
   email         VARCHAR(255) NOT NULL,
   password      VARCHAR(255) NOT NULL, -- Store hashed passwords, never plain text
-  created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  is_admin      BOOLEAN NOT NULL
 );
 
 

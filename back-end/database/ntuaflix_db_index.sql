@@ -26,6 +26,7 @@ CREATE INDEX Name_worked_as_index ON Name_worked_as(profession);
 
 -- Names_
 CREATE INDEX Names_index ON Names_(name_id);
+CREATE INDEX Names_name_index ON Names_(name_);
 
 -- Principals
 CREATE INDEX Principals_index ON Principals(title_id);
@@ -36,6 +37,7 @@ CREATE INDEX Title_genres_genre_index ON Title_genres(genre);
 
 -- Titles
 CREATE INDEX Titles_index ON Titles(title_id);
+CREATE INDEX Titles_types_index ON Titles(original_title);
 
 -- Writers
 CREATE INDEX Writers_title_id_index ON Writers(title_id);

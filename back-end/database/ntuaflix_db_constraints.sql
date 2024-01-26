@@ -16,10 +16,6 @@ ADD CONSTRAINT Titles_pri_key PRIMARY KEY (title_id);
 ALTER TABLE Aliases
 ADD CONSTRAINT Aliases_pri_key PRIMARY KEY (title_id,ordering);
 
-ALTER TABLE Alias_attributes
-ADD CONSTRAINT Alias_attributes_pri_key PRIMARY KEY (title_id,ordering);
-
-
 ALTER TABLE Directors
 ADD CONSTRAINT Directors_pri_key PRIMARY KEY (title_id,name_id);
 
@@ -84,9 +80,6 @@ ADD CONSTRAINT Aliases_title_id_fkey FOREIGN KEY (title_id) REFERENCES Titles(ti
 -- SELECT * FROM Aliases AS A WHERE A.title_id NOT IN (SELECT title_id FROM Titles) LIMIT 10;
 -- SELECT * FROM Titles WHERE title_id = 'tt0021006';
 -- SELECT * FROM Aliases WHERE title_id = 'tt0021006';
-
-ALTER TABLE Alias_attributes
-ADD CONSTRAINT Alias_attributes_title_id_fkey FOREIGN KEY (title_id) REFERENCES Titles(title_id);
 
 -- Ditto for Episode_belongs_to table.
 ALTER TABLE Episode_belongs_to
