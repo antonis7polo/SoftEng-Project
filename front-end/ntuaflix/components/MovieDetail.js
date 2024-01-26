@@ -179,7 +179,7 @@ const MovieDetail = ({ movie }) => {
                     </Typography>
                     {Object.entries(principalCategories).map(([category, names]) => (
                         <Typography key={category} variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
-                            {`${category.charAt(0).toUpperCase() + category.slice(1)}: `}
+                            {`${category.charAt(0).toUpperCase() + category.slice(1).replace(/_/g, ' ')}: `}
                             {names.reduce((prev, curr) => [prev, ', ', curr])}
                         </Typography>
                     ))}
