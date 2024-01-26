@@ -11,14 +11,13 @@ const addUserCommand = (program) => {
     .action(async (cmd) => {
       try {
         const { username, passw, email, isAdmin } = cmd;
-        const isAdminInt = parseInt(isAdmin, 10);
-        if (isAdminInt !== 0 && isAdminInt !== 1) {
-            throw new Error('isAdmin must be either 1 or 0');
-        }
-        await addUser(username, passw, email, isAdminInt);
+
+        await addUser(username, passw, email, isAdmin);
         console.log('User added/updated successfully.');
       } catch (error) {
         console.error('Failed to add/update user:', error.message);
+        process.exit(1);
+
       }
     });
 };

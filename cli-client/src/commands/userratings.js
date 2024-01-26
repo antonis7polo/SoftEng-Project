@@ -18,6 +18,7 @@ const userRatingsCommand = (program) => {
         }
       } catch (error) {
         console.error('Error retrieving user ratings:', error.message);
+        process.exit(1);
       }
     });
 };

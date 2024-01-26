@@ -13,6 +13,7 @@ const deleteRatingCommand = (program) => {
         console.log(result.message);
       } catch (error) {
         console.error('Failed to delete rating:', error.message);
+        process.exit(1);
       }
     });
 };

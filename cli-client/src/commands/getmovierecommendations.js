@@ -6,7 +6,7 @@ const recommendationsCommand = (program) => {
     .description('Get movie recommendations')
     .requiredOption('-g, --genres <genres>', 'Genres (comma-separated)')
     .requiredOption('-a, --actors <actors>', 'Actors (comma-separated IDs)')
-    .option('-d, --director <director>', 'Director ID')
+    .requiredOption('-d, --director <director>', 'Director ID')
     .option('-f, --format <format>', 'Specify the format of the output (json or csv)', 'json')
     .action(async (cmd) => {
       try {
@@ -22,6 +22,7 @@ const recommendationsCommand = (program) => {
         }
       } catch (error) {
         console.error('Error getting recommendations:', error.message);
+        process.exit(1);
       }
     });
 };

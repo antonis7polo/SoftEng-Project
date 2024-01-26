@@ -17,6 +17,7 @@ const homeCommand = (program) => {
         }
       } catch (error) {
         console.error('Error retrieving homepage data:', error.message);
+        process.exit(1);
       }
     });
 };

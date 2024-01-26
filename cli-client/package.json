@@ -4,7 +4,7 @@
   "description": "CLI client of REST API",
   "main": "cli.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest __tests__/login.test.js && jest __tests__/tvShowsEpisodes.test.js"
   },
   "repository": {
     "type": "git",
@@ -29,5 +29,10 @@
     "path": "^0.12.7",
     "request": "^2.88.2",
     "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nock": "^13.4.0",
+    "shelljs": "^0.8.5"
   }
 }

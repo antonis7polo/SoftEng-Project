@@ -17,6 +17,7 @@ const healthCheckCommand = (program) => {
         }
       } catch (error) {
         console.error('Health Check failed:', error.message);
+        process.exit(1);
       }
     });
 };
