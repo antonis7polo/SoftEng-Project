@@ -114,7 +114,7 @@ CREATE TABLE Names_ (
   name_id       VARCHAR(255) NOT NULL, -- not null bc PK
   name_         VARCHAR(255) NOT NULL, -- everybody has a name
   birth_year    SMALLINT, -- add a better domain here
-  death_year    SMALLINT -- add a better domain here
+  death_year    SMALLINT, -- add a better domain here
   image_url     VARCHAR(255) NULL
 );
 

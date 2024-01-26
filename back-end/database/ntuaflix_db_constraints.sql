@@ -60,6 +60,9 @@ ALTER TABLE Title_genres
 ADD CONSTRAINT Title_genres_title_id_fkey FOREIGN KEY (title_id) REFERENCES Titles(title_id);
 
 ALTER TABLE User_Title_Ratings
+ADD CONSTRAINT User_Title_Ratings_pri_key PRIMARY KEY (user_id,title_id);
+
+ALTER TABLE User_Title_Ratings
 ADD CONSTRAINT User_Title_Ratings_user_id_fkey FOREIGN KEY (user_id) REFERENCES Users(user_id);
 
 ALTER TABLE User_Title_Ratings

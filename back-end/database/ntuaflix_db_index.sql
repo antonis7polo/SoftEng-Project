@@ -1,8 +1,5 @@
 -- Add at least one index per table
 
--- Alias_attributes
-CREATE INDEX Alias_attributes_index ON Alias_attributes(title_id);
-
 -- Aliases
 CREATE INDEX Aliases_index ON Aliases(title_id);
 
