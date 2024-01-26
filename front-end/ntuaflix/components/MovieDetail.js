@@ -114,7 +114,11 @@ const MovieDetail = ({ movie }) => {
         if (recommendations) {
             router.push({
                 pathname: '/recommendations',
-                query: recommendations
+                query: {
+                ...recommendations,
+                currentTitleId: titleObject.titleID
+                }
+
             });
         }
     };
@@ -147,13 +151,14 @@ const MovieDetail = ({ movie }) => {
     }, {});
 
     return (
-        <Box sx={{ maxWidth: '1000px', mx: 'auto', p: theme.spacing(2), display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ maxWidth: '800px', mx: 'auto', p: theme.spacing(2), display: 'flex', justifyContent: 'center' }}>
             <Card className="movie-card" sx={{
-                maxWidth: '100%',
+                maxWidth: '80%',
                 boxShadow: 'var(--shadow)',
                 borderRadius: 'var(--border-radius)',
                 margin: 'auto',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                maxHeight: '80%'
             }}>
                 <Box component="img" src={posterUrl} alt={titleObject.originalTitle} sx={{ width: '100%', display: 'block', height: '500px' }} />
                 <CardContent sx={{ padding: theme.spacing(3) }}>

@@ -38,9 +38,9 @@ const NameDetail = ({ nameDetails }) => {
     }
 
     return (
-        <Box sx={{ maxWidth: '1000px', mx: 'auto', p: theme.spacing(2), display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ maxWidth: '600px', mx: 'auto', p: theme.spacing(2), display: 'flex', justifyContent: 'center' }}>
             <Card className="movie-card" sx={{
-                maxWidth: '100%',
+                maxWidth: '80%',
                 boxShadow: 'var(--shadow)',
                 borderRadius: 'var(--border-radius)',
                 margin: 'auto',
@@ -65,7 +65,7 @@ const NameDetail = ({ nameDetails }) => {
                         </Typography>
                     )}
                     <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
-                        Professions: {nameDetails.profession.split(',').join(', ')}
+                        Professions: {nameDetails.profession.split(',').map(profession => profession.replace(/_/g, ' ')).join(', ')}
                     </Typography>
                     {nameDetails.nameTitles && (
                        <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>

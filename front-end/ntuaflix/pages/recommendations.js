@@ -44,7 +44,7 @@ const RecommendationsPage = () => {
 
         const fetchRecommendations = async () => {
             // Extracting query parameters
-            const { genres, actors, director } = router.query;
+            const { genres, actors, director, currentTitleId } = router.query;
 
             // Preparing the request body
             const requestBody = {
@@ -63,7 +63,13 @@ const RecommendationsPage = () => {
             try {
                 const config = { headers: { 'X-OBSERVATORY-AUTH': token } };
                 const response = await axios.post('https://localhost:9876/ntuaflix_api/recommendations', requestBody, config);
-                setRecommendations(response.data);
+                const filteredRecommendations = Object.fromEntries(
+                    Object.entries(response.data).map(([category, movies]) => [
+                        category,
+                        movies.filter(movie => movie.title_id !== currentTitleId)
+                    ])
+                );
+                setRecommendations(filteredRecommendations);
             } catch (error) {
                 console.error('Error fetching recommendations:', error);
                 setRecommendations({});

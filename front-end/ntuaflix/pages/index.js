@@ -36,7 +36,7 @@ const LoginPage = () => {
     };
 
     return (
-        <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ backgroundColor: 'var(--background-color)' }}>
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh" sx={{ backgroundColor: 'var(--background-color)' }}>
             <Card variant="outlined" sx={{ minWidth: 300 }}>
                 <CardContent>
                     <Typography variant="h5" component="h2" gutterBottom>

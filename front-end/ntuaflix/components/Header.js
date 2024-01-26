@@ -35,6 +35,10 @@ const Header = () => {
   const handleSearch = (event) => {
     event.preventDefault();
     // Redirect to the search page with query parameters
+    if (!isLoggedIn) {
+      router.push("/");
+      return;
+    }
     router.push(
       `/search?term=${encodeURIComponent(searchTerm)}&type=${searchType}`
     );
@@ -103,7 +107,7 @@ const Header = () => {
           sx={{ display: "flex", justifyContent: "flex-start", width: "60%" }}
         >
           <Box sx={{ flexGrow: 0 }}>
-            <Link href="/home" passHref>
+            <Link href={isLoggedIn ? "/home" : "/"} passHref>
               <Button
                 sx={{
                   color: `rgb(var(--primary-color))`,

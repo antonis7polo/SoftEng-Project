@@ -26,7 +26,7 @@ const LoginForm = ({ onLogin, onError }) => {
     };
 
  return (
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box className='login-form' component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 } }>
             <TextField
                 margin="normal"
                 required
