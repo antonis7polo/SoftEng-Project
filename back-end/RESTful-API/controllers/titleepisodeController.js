@@ -62,6 +62,9 @@ async function insertData(titleEpisodes) {
     try {
         await connection.beginTransaction();
 
+        await connection.query('SET FOREIGN_KEY_CHECKS=0');
+        
+
         const sql = `INSERT INTO episode_belongs_to
         (episode_title_id, parent_tv_show_title_id, season_number, episode_number)
         VALUES (?, ?, ?, ?)`;
@@ -69,6 +72,8 @@ async function insertData(titleEpisodes) {
         for (const titleEpisode of titleEpisodes) {
             await connection.query(sql, [titleEpisode.title_id, titleEpisode.parent_title_id, titleEpisode.season_number, titleEpisode.episode_number]);
         }
+        await connection.query('SET FOREIGN_KEY_CHECKS=1');
+
 
         await connection.commit();
     } catch (error) {

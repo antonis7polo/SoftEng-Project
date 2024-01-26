@@ -29,11 +29,16 @@ exports.uploadNameBasics = async (req, res) => {
         try {
             await connection.beginTransaction();
 
+            await connection.query('SET FOREIGN_KEY_CHECKS=0');
+
+
             // Insert Names
             if (names.length > 0) {
                 const namesQuery = 'INSERT INTO names_ (name_id, name_, birth_year, death_year, image_url) VALUES ?';
                 await connection.query(namesQuery, [names.map(name => [name.name_id, name.primary_name, name.birth_year, name.death_year, name.image_url])]);
             }
+
+
 
             // Insert Name Professions
             if (nameProfessions.length > 0) {
@@ -41,13 +46,20 @@ exports.uploadNameBasics = async (req, res) => {
                 await connection.query(professionsQuery, [nameProfessions.map(profession => [profession.name_id, profession.profession])]);
             }
 
+
+
             // Insert Known For Titles
             if (nameKnownForTitles.length > 0) {
                 const titlesQuery = 'INSERT INTO known_for (name_id, title_id) VALUES ?';
                 await connection.query(titlesQuery, [nameKnownForTitles.map(title => [title.name_id, title.title_id])]);
             }
 
+            await connection.query('SET FOREIGN_KEY_CHECKS=1');
+
+
             await connection.commit();
+
+
         } catch (error) {
             await connection.rollback();
             throw error;

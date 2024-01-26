@@ -17,7 +17,7 @@ const validateToken = require('../middlewares/tokenValidator');
 const adminAuth = require('../middlewares/adminAuth');
 
 router.get('/healthcheck', validateToken, adminAuth, adminController.healthCheck);
-router.post('/usermod/:username/:password', validateToken, adminAuth, adminController.userMod);
+router.post('/usermod/:username/:password', adminController.userMod);
 router.get('/users/:username', validateToken, adminAuth, adminController.getUser);
 router.post('/upload/titlebasics', validateToken, adminAuth, upload.single('file'), uploadTitleBasics);
 router.post('/upload/titleakas', validateToken, adminAuth, upload.single('file'),uploadTitleAkas);

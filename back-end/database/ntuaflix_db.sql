@@ -54,8 +54,6 @@ ALTER DATABASE IMDb CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 -- DROP TABLE IF EXISTS Titles;
 -- DROP TABLE IF EXISTS Title_ratings;
 -- DROP TABLE IF EXISTS Aliases;
--- DROP TABLE IF EXISTS Alias_types;
--- DROP TABLE IF EXISTS Alias_attributes;
 -- DROP TABLE IF EXISTS Episode_belongs_to;
 -- DROP TABLE IF EXISTS Title_genres;
 -- DROP TABLE IF EXISTS Names_;
@@ -77,9 +75,9 @@ CREATE TABLE Titles (
   start_year			INTEGER, -- add better domain here (>1800)
   end_year 			  INTEGER, -- add better domain here (>0)
   runtime_minutes	INTEGER, -- add better domain here (>0)
-  img_url_poster   VARCHAR(255) NULL,
-  average_rating   decimal(3,2),
-    num_votes        INTEGER
+  image_url_poster  VARCHAR(255) NULL,
+  average_rating  DECIMAL(3,2),
+  num_votes     INTEGER
 );
 
 
@@ -90,8 +88,8 @@ CREATE TABLE Aliases (
   region				    CHAR(4),
   language          CHAR(4),
   is_original_title	BOOLEAN,
-  attribute        VARCHAR(255) NULL,
-  type            VARCHAR(255) NULL
+  attribute         VARCHAR(255) NULL,
+  type              VARCHAR(255) NULL
 );
 
 
@@ -165,7 +163,7 @@ CREATE TABLE Users (
   email         VARCHAR(255) NOT NULL,
   password      VARCHAR(255) NOT NULL, -- Store hashed passwords, never plain text
   created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  is_admin      BOOLEAN NOT NULL
+  isAdmin       BOOLEAN NOT NULL
 );
 
 

@@ -8,18 +8,18 @@ const resetallController = async (req, res) => {
         await connection.beginTransaction();
 
         // Truncate all data from the tables
-        await connection.query('TRUNCATE TABLE aliases');
-        await connection.query('TRUNCATE TABLE directors');
-        await connection.query('TRUNCATE TABLE episode_belongs_to');
-        await connection.query('TRUNCATE TABLE had_role');
-        await connection.query('TRUNCATE TABLE known_for');
-        await connection.query('TRUNCATE TABLE name_worked_as');
-        await connection.query('TRUNCATE TABLE principals');
-        await connection.query('TRUNCATE TABLE title_genres');
-        await connection.query('TRUNCATE TABLE user_title_ratings');
-        await connection.query('TRUNCATE TABLE writers');
-        await connection.query('TRUNCATE TABLE names_');
-        await connection.query('TRUNCATE TABLE titles');
+        await connection.query('DELETE FROM aliases');
+        await connection.query('DELETE FROM directors');
+        await connection.query('DELETE FROM episode_belongs_to');
+        await connection.query('DELETE FROM had_role');
+        await connection.query('DELETE FROM known_for');
+        await connection.query('DELETE FROM name_worked_as');
+        await connection.query('DELETE FROM principals');
+        await connection.query('DELETE FROM title_genres');
+        await connection.query('DELETE FROM user_title_ratings');
+        await connection.query('DELETE FROM writers');
+        await connection.query('DELETE FROM names_');
+        await connection.query('DELETE FROM titles');
 
         await connection.commit();
 

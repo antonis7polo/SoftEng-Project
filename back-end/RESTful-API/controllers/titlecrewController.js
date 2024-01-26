@@ -77,6 +77,10 @@ async function insertData(directors, writers) {
     try {
         await connection.beginTransaction();
 
+        await connection.query('SET FOREIGN_KEY_CHECKS=0');
+
+
+
         const sql1 = 'INSERT INTO directors (title_id, name_id) VALUES (?, ?)';
 
         // Insert Directors
@@ -90,6 +94,9 @@ async function insertData(directors, writers) {
         for (const writer of writers) {
             await connection.query(sql2, [writer.title_id, writer.writer]);
         }
+
+        await connection.query('SET FOREIGN_KEY_CHECKS=1');
+
 
         await connection.commit();
     } catch (error) {
