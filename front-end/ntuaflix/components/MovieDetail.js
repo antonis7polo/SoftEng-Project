@@ -13,6 +13,8 @@ const MovieDetail = ({ movie }) => {
     const { titleObject } = movie;
     const genres = titleObject.genres.map(g => g.genreTitle).join(', ');
     const akas = titleObject.titleAkas.map(aka => `${aka.akaTitle}${aka.regionAbbrev ? ` (${aka.regionAbbrev})` : ''}`).join(', ');
+    const [averageRating, setAverageRating] = useState(movie.titleObject.rating.avRating);
+    const [numberOfVotes, setNumberOfVotes] = useState(movie.titleObject.rating.nVotes);
 
     useEffect(() => {
         const fetchUserRatings = async () => {
@@ -102,9 +104,17 @@ const MovieDetail = ({ movie }) => {
                 setUserRating(newValue);
                 setShowRecommendationButton(newValue >= 7);
 
+                const response = await axios.get(`https://localhost:9876/ntuaflix_api/title/${titleObject.titleID}`, config);
+                if (response.status === 200) {
+                    setAverageRating(response.data.titleObject.rating.avRating);
+                    setNumberOfVotes(response.data.titleObject.rating.nVotes);
+                }
+
             } catch (error) {
                 console.error('Error updating rating:', error);
             }
+
+            
         
         }
     };
@@ -183,6 +193,9 @@ const MovieDetail = ({ movie }) => {
                             {names.reduce((prev, curr) => [prev, ', ', curr])}
                         </Typography>
                     ))}
+                    <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
+                        Average Rating: {averageRating} ({numberOfVotes} votes)
+                    </Typography>
                     <Rating
                     name="user-rating"
                     value={userRating || 0}

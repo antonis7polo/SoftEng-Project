@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, FormControl, Select, MenuItem, TextField, Button } from '@mui/material';
+import { Box, FormControl, Select, MenuItem, TextField, Button, FormHelperText } from '@mui/material';
 import MovieGrid from '../components/MovieGrid';
 import axios from 'axios';
 
@@ -19,9 +19,17 @@ const GenreSearchPage = () => {
   const [endYear, setEndYear] = useState('');
   const [movies, setMovies] = useState([]);
   const [searchPerformed, setSearchPerformed] = useState(false); 
+  const [formError, setFormError] = useState('');
+
 
 
   const handleSearch = async () => {
+    if (!selectedGenre || !rating) {
+      setFormError('Please select a genre and enter a minimum rating to search.');
+      return;
+    }
+    setFormError(''); 
+
     setSearchPerformed(true);
     const tokenData = localStorage.getItem('tokenData');
     let token = null;
@@ -65,31 +73,34 @@ const GenreSearchPage = () => {
 
   return (
     <Box sx={{ margin: '20px', display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center' }}>
-      <FormControl sx={{ width: 250 }}> {/* Adjusted width */}
+      <FormControl sx={{ width: 250 }} error={!selectedGenre && formError}>
         <Select
           value={selectedGenre}
           onChange={(e) => setSelectedGenre(e.target.value)}
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
         >
-          <MenuItem value="" disabled>Select Genre</MenuItem>
+          <MenuItem value="" disabled>Select Genre *</MenuItem>
           {genres.map(genre => (
             <MenuItem key={genre} value={genre}>{genre}</MenuItem>
           ))}
         </Select>
+        {!selectedGenre && <FormHelperText>Required</FormHelperText>}
       </FormControl>
 
       <TextField
-        label="Minimum Rating (0-10)"
-        type="text" // Change to text to allow empty strings
-        value={rating}
-        onChange={handleRatingChange}
-        onFocus={(event) => event.target.select()} // Select all text on focus
-        sx={{ width: 250 }}
+       label="Minimum Rating (0-10) *"
+       type="text"
+       value={rating}
+       onChange={handleRatingChange}
+       onFocus={(event) => event.target.select()}
+       sx={{ width: 250 }}
+       error={!rating && formError}
+       helperText={!rating ? 'Required' : ''}
       />
 
       <TextField
-        label="Start Year (1900-Current Year)"
+        label="Start Year (optional)"
         type="text"
         value={startYear}
         onChange={handleYearChange(setStartYear)}
@@ -98,7 +109,7 @@ const GenreSearchPage = () => {
       />
 
       <TextField
-        label="End Year (1900-Current Year)"
+        label="End Year (optional)"
         type="text"
         value={endYear}
         onChange={handleYearChange(setEndYear)}
@@ -109,6 +120,11 @@ const GenreSearchPage = () => {
       <Button type="button" variant="contained" sx={{ width: 250 }} onClick={handleSearch}>
         Search
       </Button>
+      {formError && (
+      <Box sx={{ color: `rgb(var(--accent-color-1))`, marginTop: '10px' }}>
+        {formError}
+      </Box>
+      )}
       {movies.length > 0 ? (
         <MovieGrid movies={movies} />
       ) : (
