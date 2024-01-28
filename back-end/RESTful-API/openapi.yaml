@@ -1544,11 +1544,13 @@ paths:
           required: true
           schema:
             type: integer
+          description: The user ID of the user whose ratings are to be retrieved.
         - in: query
           name: format
           required: false
           schema:
             type: string
+          description: Response format. Can be 'csv' for CSV format, defaults to JSON if not specified.
       responses:
         '200':
           description: User ratings retrieved successfully
@@ -1610,11 +1612,13 @@ paths:
           required: true
           schema:
             type: integer
+          description: The user ID of the user whose rating is to be deleted.
         - in: path
           name: titleID
           required: true
           schema:
             type: string
+          description: The title ID of the title whose rating is to be deleted.
       responses:
         '200':
           description: Rating deleted successfully
