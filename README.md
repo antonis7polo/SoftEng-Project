@@ -29,7 +29,7 @@ While Ntuaflix does not directly host film content, it excels in providing an en
   - [CLI Client](#cli-client)
   - [Testing](#testing)
 - [Diagrams](#diagrams)
-- [AI Assistance Log](#ai_assistance_log)
+- [AI Assistance Log](#ai-assistance-log)
 
 ## Installation
 
