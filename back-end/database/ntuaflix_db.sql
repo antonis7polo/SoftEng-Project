@@ -21,16 +21,13 @@ To use the IMDb scripts:
 $ mysql -u root -p --local-infile
 
 2) Create IMDb data base in MySQL:
-mysql> SOURCE path_to_.sql_file
+mysql> SOURCE path_to_ntuaflix_db.sql_file
 
-3) Load data using this script in MySQL:
-mysql> SOURCE ./imdb-load-data.sql
+3) Add constraints to the IMDb database in MySQL
+mysql> SOURCE path_to_ntuaflix_db_constraints.sql
 
-4) Add constraints to the IMDb database in MySQL
-mysql> SOURCE ./imdb-add-constraints.sql
-
-5) Add indexes to the IMDb database in MySQL
-mysql> SOURCE ./imdb-index-tables.sql
+4) Add indexes to the IMDb database in MySQL
+mysql> SOURCE path_to_ntuaflix_db_index.sql
 
 */
 
