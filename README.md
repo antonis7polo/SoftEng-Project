@@ -23,8 +23,8 @@ While Ntuaflix does not directly host film content, it excels in providing an en
 
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Front-End](#front-end)
   - [Back-End](#back-end)
+  - [Front-End](#front-end)
   - [CLI Client](#cli-client)
   - [Testing](#testing)
 - [Diagrams](#diagrams)
@@ -34,7 +34,7 @@ While Ntuaflix does not directly host film content, it excels in providing an en
 ## Installation
 
 ### Prerequisites
-
+---
 Before you begin, ensure you have met the following requirements:
 
 - **Operating System**: A compatible operating system such as Windows, macOS, or Linux.
@@ -48,116 +48,336 @@ Before you begin, ensure you have met the following requirements:
 
 - To include all the libraries and dependencies in your README file, you can organize them based on the specific parts of your project: backend, frontend, CLI, etc. Here's an example of how you might format it:
 
----
-
-### Libraries and Dependencies
-
-#### Backend (REST API)
-
-- **bcrypt**: `^5.1.1`
-- **body-parser**: `^1.20.2`
-- **cors**: `^2.8.5`
-- **dotenv**: `^16.3.1`
-- **express**: `^4.18.2`
-- **fs**:`^0.0.1-security`
-- **https**: `^1.0.0
-- **json2csv**: `^6.0.0-alpha.2`
-- **jsonwebtoken**: `^9.0.2`
-- **multer**: ^1.4.5-lts.1`
-- **mysql2**: `^3.6.5`
-- **path**:`^0.12.7`
-- **readline**: `^0.12.7`
-- **swagger-jsdoc**: `^1.3.0`
-- **swagger-ui-express**: `^5.0.0`
-- **ws**: `^8.16.0`
-- **yamljs**: `^0.3.0`
-- **Dev Dependencies**:
-  - **nodemon**: `^3.0.3`
-
-### Frontend (Next.js)
-
-- **@emotion/react**: `^11.11.3`
-- **@emotion/styled**: `^11.11.0`
-- **@mui/icons-material**: `^5.15.3`
-- **@mui/lab**: `^5.0.0-alpha.159`
-- **@mui/material**: `^5.15.3`
-- **next**: `^14.0.4`
-- **react**: `^18`
-- **react-dom**: `^18`
-- **react-material-ui-carousel**: `^3.4.2`
-- **react-router-dom**: `^6.21.1`
-- **react-slick**: `^0.29.0`
-- **slick-carousel**: `^1.8.1`
-- **url**: `^0.11.3`
-
-### CLI Client
-
-- **axios**: `^1.6.4`
-- **commander**: `^11.1.0`
-- **csv-parse**: `^5.5.3`
-- **csv-parser**: `^3.0.0`
-- **form-data**: `^4.0.0`
-- **request**: `^2.88.2`
-- **yargs**: `^17.7.2`
-- **Dev Dependencies**:
-  - **jest**: `^29.7.0`
-  - **nock**: `^13.4.0`
-  - **shelljs**: `^0.8.5`
-
-### Testing Tools
-
-- **Jest**: `^29.7.0`
-- **Supertest**: For HTTP request testing.
-
 
 ### Setting Up the Environment
+---
 
-Provide instructions for setting up the local development environment. Include steps for setting up the database and any environment variables.
+To set up the local development environment for your project, you'll need to guide users through several steps, including cloning the repository, installing dependencies, setting up the database, and running the servers for the backend, frontend, and CLI client. Here's an example of how you can structure these instructions in your README file:
 
-```bash
-# Example of environment setup commands
-cp .env.example .env
-```
+
 
 ## Usage
 
-Detailed instructions on how to use each component of the project.
+### Prerequisites
+---
 
-### Front-End
+Before setting up the project, ensure you have the following installed:
+- Node.js (version as per `package.json`)
+- MySQL Server
+- Git
 
-Instructions to run the Next.js front-end.
 
-```bash
-# Running the front-end
-npm run dev
+
+### Cloning the Repository
+---
+
+1. Clone the repository to your local machine:
+
+   ```sh
+   git clone https://github.com/ntua/softeng23-21
+   ```
+
+2. Navigate to the project directory:
+
+   ```sh
+   cd softeng23-21
+   ```
+3.Install the necessary Node.js packages:
+
+   ```sh
+   npm install
+   ```
+
+## Back-End
+
+### Database Setup
+---
+
+To set up the Ntuaflix database locally using MySQL, follow these steps:
+
+1. Open MySQL in your terminal:
+
+    ```bash
+    mysql -u root -p --local-infile
+    ```
+
+    Enter your MySQL root password when prompted.
+
+2. Create the Ntuaflix database in MySQL:
+
+    Within the MySQL shell, run the following command, replacing `path_to_ntuaflix_db.sql_file` with the actual path to the SQL file provided with the project:
+
+    ```sql
+    SOURCE path_to_ntuaflix_db.sql_file;
+    ```
+
+3. Add constraints to the Ntuaflix database:
+
+    Still within the MySQL shell, execute the following command, replacing `path_to_ntuaflix_db_constraints.sql` with the path to the constraints SQL file:
+
+    ```sql
+    SOURCE path_to_ntuaflix_db_constraints.sql;
+    ```
+
+4. Add indexes to the Ntuaflix database:
+
+    Lastly, run the following command, replacing `path_to_ntuaflix_db_index.sql` with the path to the index SQL file:
+
+    ```sql
+    SOURCE path_to_ntuaflix_db_index.sql;
+    ```
+
+After completing these steps, your local Ntuaflix database should be set up and ready for use with the rest of the application.
+
+
+### API Setup
+---
+
+1. Navigate to the API directory:
+
+   ```sh
+   cd back-end/RESTful-API
+   ```
+
+2. Install the necessary Node.js packages:
+
+   ```sh
+   npm install
+   ```
+
+#### Setting Up Environment Variables
+---
+To run the API, you need to set environment variables. Create a `.env` file in the root of the RESTful-API directory and configure the following variables:
+
+1. **Database Configuration:**
+    - `DB_HOST`: The hostname of your database server (e.g., `localhost`).
+    - `DB_PORT`: The port number on which your database is running (e.g., `3306` for MySQL).
+    - `DB_USER`: Your database username (e.g., `root`).
+    - `DB_PASS`: Your database password.
+    - `DB`: The name of the database you are using (e.g., `IMDb`).
+
+2. **SSL Certificate Paths:**
+    - `KEY_PATH`: The file path to your SSL key (e.g., `/Users/harrypapadakis/key.pem`).
+    - `CERT_PATH`: The file path to your SSL certificate (e.g., `/Users/harrypapadakis/cert.pem`).
+
+3. **JWT Secret:**
+    - `JWT_SECRET`: A secret key for JSON Web Token (JWT) generation. It can be any string, preferably a complex and unique one (e.g., `V3ryS3cr3tK3y!2023`).
+
+Here is a sample `.env` file for reference:
+
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASS=root
+DB=IMDb
+KEY_PATH=/path/to/your/key.pem
+CERT_PATH=/path/to/your/cert.pem
+JWT_SECRET=YourSecretKey
+
+Replace the values with your specific configurations. Ensure that the paths to the SSL key and certificate are correct and that the JWT secret is kept confidential.
+
+#### Setting Up Self-Signed SSL Certificates
+---
+For the API to function securely, you need to set up SSL certificates. If you don't have existing SSL certificates, you can create self-signed certificates for development purposes. Follow these steps:
+
+1. **Creating Self-Signed Certificates:**
+    - Open your terminal or command prompt.
+    - Run the following commands to generate a self-signed SSL certificate and key:
+
+      ```shell
+      openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
+      ```
+
+    - This command will prompt you for information and a password. Remember the password as you will need it to access the certificate.
+
+2. **Configuring the API to Use the Certificates:**
+    - Place the generated `key.pem` and `cert.pem` files in a secure directory on your machine.
+    - Update your `.env` file to include the paths to these files. For example:
+
+      ```plaintext
+      KEY_PATH=/path/to/your/key.pem
+      CERT_PATH=/path/to/your/cert.pem
+      ```
+
+    - Make sure the paths are correct and point to where you've stored your key and certificate files.
+
+3. **Important Notes:**
+    - Self-signed certificates are suitable for development and testing but are not recommended for production environments. For production, consider obtaining certificates from a trusted Certificate Authority (CA).
+    - Keep your private key (`key.pem`) secure and do not share it publicly.
+
+After setting up the SSL certificates, ensure that the other necessary environment variables are also configured in your `.env` file as described in the previous section.
+
+
+
+## Front-End 
+1. Navigate to the frontend directory from the root of the project:
+
+   ```sh
+   cd ../front-end/ntuaflix
+   ```
+
+2. Install the dependencies:
+
+   ```sh
+   npm install
+   ```
+
+### Frontend SSL Certificate Configuration
+---
+
+If your backend API is configured to use SSL, you will need to set up the frontend to work with these SSL configurations. This ensures secure communication between your frontend and the backend API. Follow these steps to set up SSL certificates for the frontend:
+
+1. **Locate the SSL Certificate Files:**
+   - Ensure you have the `key.pem` and `cert.pem` files that you generated for the backend. If you haven't created these yet, refer to the backend setup instructions.
+
+2. **Configure `.env` File:**
+   - In the root directory of the frontend project, create a `.env` file if it doesn't already exist.
+   - Add the paths to your SSL certificate and key in the `.env` file, similar to how you did for the backend. For example:
+
+     ```plaintext
+     REACT_APP_KEY_PATH=/path/to/your/key.pem
+     REACT_APP_CERT_PATH=/path/to/your/cert.pem
+     ```
+
+   - Make sure the paths correctly point to the SSL certificate and key files on your machine.
+
+3. **Security Note:**
+   - As with the backend, self-signed certificates are suitable for development and testing but not recommended for production. In a production environment, use certificates from a trusted CA.
+   - Keep your private key secure and do not expose it in your public code repositories.
+
+By configuring the frontend to recognize and use the SSL certificates, you ensure secure communication with the backend API, especially important when handling sensitive data or authentication information.
+
+
+## CLI Client 
+The project includes a Command Line Interface (CLI) client, which allows interaction with the backend API via command line. The CLI is accessed through the command `se2321`.
+
+1. Navigate to the CLI directory:
+
+   ```sh
+   cd ../cli
+   ```
+
+2. Install the CLI dependencies:
+
+   ```sh
+   npm install
+   ```
+
+### Setup
+---
+
+Before using the CLI, ensure that it is properly installed and linked to the `se2321` command. 
+
+1. **Create Symbolic Link**: You need to create a symbolic link named `se2321` that points to the `cli.js` file. This link allows you to use `se2321` as a command from anywhere in your terminal.
+
+   Open your terminal and run the following command (replace `path/to/cli.js` with the actual path to your `cli.js` file):
+   
+```
+ln -s /absolute/path/to/cli.js /usr/local/bin/se2321
 ```
 
-### Back-End
+2. **Make `cli.js` Executable**: Ensure that `cli.js` is executable. Run the following command:
 
-Steps to start the Node.js API server.
-
-```bash
-# Starting the back-end server
-npm start
+```
+chmod +x /absolute/path/to/cli.js
 ```
 
-### CLI Client
 
-How to use the CLI client, including example commands.
+### Accessing the CLI
+---
+After installation, you can access the CLI from your terminal by using the `se2321` command followed by the specific action you want to perform. For instance, to log in, you would use:
 
-```bash
-# Example CLI command
-se2321 adduser --username user --passw pass
 ```
+se2321 login -u username -p password
+```
+
+### CLI Commands
+---
+The CLI includes several commands that allow you to interact with the backend system. These commands are defined in `cli.js` and are structured as follows:
+
+- `login` - Authenticate with the API.
+- `logout` - Logout from the API.
+- `adduser` - Add or update a user.
+- `user` - Get details of a user.
+- `healthcheck` - Perform a health check of the API.
+- `resetall` - Reset all data in the database.
+- `newtitles` - Upload new title basics.
+- `newakas` - Upload new title akas.
+- `newnames` - Upload new name basics.
+- `newcrew` - Upload new title crew.
+- `newepisode` - Upload new title episode.
+- `newprincipals` - Upload new title principals.
+- `newratings` - Upload new title ratings.
+- `title` - Get details of a title by ID.
+- `searchtitle` - Search for titles containing a part of a title.
+- `bygenre` - Get titles by genre.
+- `name` - Get details of a person by their ID.
+- `searchname` - Search for names containing a part of a name.
+- `uploadrating` - Upload a rating for a title.
+- `userratings` - Get ratings by a user.
+- `deleterating` - Delete a user rating for a title.
+- `recommendations` - Get movie recommendations.
+- `titledetails` - Get detailed information of a title.
+- `home` - Retrieve homepage data.
+- `tvshowsepisodes` - Retrieve all TV shows episodes.
+- `help` - Display help for command.
+
+Each command comes with its own set of options and arguments. For detailed usage of each command, you can use the help option:
+
+```
+se2321 [command] --help
+```
+
+This will display the usage information for the specified command.
+
+### Example Usage
+---
+To use the `adduser` command for adding a new user, the syntax would be:
+
+```
+se2321 adduser -u newusername -p newpassword -e user@example.com -a 0
+```
+
+### Note
+---
+The CLI is designed for interaction with the backend API, so ensure that your API server is running and accessible for the CLI to function correctly.
+
+### Running the Application
+1. Start the backend server:
+
+   ```sh
+   cd backend
+   npm start
+   ```
+
+   This will start the backend server, typically running on `https://localhost:9876`.
+
+2. In a new terminal, start the frontend application:
+
+   ```sh
+   cd frontend
+   npm run dev
+   ```
+
+   The frontend should now be accessible at `http://localhost:3000`.
+
+3. Use the CLI client by running its commands from the CLI directory.
+
+   ```sh
+   cd cli
+   node cli.js <command>
+   ```
 
 ### Testing
+To run the tests for the backend and CLI, navigate to their respective directories and run:
 
-Instructions for running functional tests for the API and CLI client.
-
-```bash
-# Running tests
+```sh
 npm test
 ```
+
+---
+
+Replace the placeholders like `your-repository-url`, `your-project-name`, and directory names (`backend`, `frontend`, `cli`) with the actual names used in your project. This setup guide assumes a standard Node.js project structure and should be adjusted according to your specific project setup and requirements.
 
 ## Diagrams
 
