@@ -143,8 +143,10 @@ To run the API, you need to set environment variables. Create a `.env` file in t
 3. **JWT Secret:**
     - `JWT_SECRET`: A secret key for JSON Web Token (JWT) generation. It can be any string, preferably a complex and unique one (e.g., `V3ryS3cr3tK3y!2023`).
 
+
 Here is a sample `.env` file for reference:
 
+```
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
@@ -153,7 +155,10 @@ DB=IMDb
 KEY_PATH=/path/to/your/key.pem
 CERT_PATH=/path/to/your/cert.pem
 JWT_SECRET=YourSecretKey
+```
 
+
+This format ensures that each line is displayed separately and retains the intended formatting in your README file.
 Replace the values with your specific configurations. Ensure that the paths to the SSL key and certificate are correct and that the JWT secret is kept confidential.
 
 ### Initial User Creation
