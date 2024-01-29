@@ -157,10 +157,6 @@ CERT_PATH=/path/to/your/cert.pem
 JWT_SECRET=YourSecretKey
 ```
 
-
-This format ensures that each line is displayed separately and retains the intended formatting in your README file.
-Replace the values with your specific configurations. Ensure that the paths to the SSL key and certificate are correct and that the JWT secret is kept confidential.
-
 ### Initial User Creation
 ---
 To create the first user, use the provided `createUsers.js` script found in the RESTful-API folder. This script utilizes bcrypt for password hashing and MySQL for database interaction. Follow the example below to set up your first user.
