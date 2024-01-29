@@ -1,17 +1,17 @@
 # Ntuaflix
 
-### Project Overview
+## Project Overview
 
 Ntuaflix is a comprehensive platform designed to aggregate and present detailed metadata about films and television series. This project was developed as part of the Software Engineering course at ECE NTUA, aimed at showcasing our ability to design and implement a full-stack application.
 
-### Contributors
+## Contributors
 
 This project is the result of collaborative efforts by a team of aspiring software engineers:
 
-- **Antonios Alexiadis** - Dedicated to frontend development and user interface design, with additional involvement in documentation.
-- **Chrisostomos Kopitas** - Specialized in the development of the database and management of data.
-- **Charidimos Papadakis** - Concentrated on API development and also contributed to the CLI client.
-- **Nikolaos Bothos Vouterakos** - Oversaw project management and led testing initiatives, while also contributing to frontend development.
+- **Antonios Alexiadis el20167@mail.ntua.gr** - Dedicated to frontend development and user interface design, with additional involvement in documentation.
+- **Chrisostomos Kopitas el20136@mail.ntua.gr** - Specialized in the development of the database and management of data.
+- **Charidimos Papadakis el20022@mail.ntua.gr** - Concentrated on API development and also contributed to the CLI client.
+- **Nikolaos Bothos Vouterakos el20158@mail.ntua.gr** - Oversaw project management and led testing initiatives, while also contributing to frontend development.
 
 ## Description
 Ntuaflix is an innovative platform meticulously crafted for cinephiles and industry professionals, functioning as a comprehensive repository of metadata for films and television series. This dynamic platform primarily focuses on providing in-depth information, such as detailed synopses, extensive cast and crew lists, genre classifications and ratings. It stands out by offering personalized recommendations, tailored to enhance the users' exploration and discovery of cinematic content.
@@ -24,6 +24,7 @@ While Ntuaflix does not directly host film content, it excels in providing an en
 - [Installation](#installation)
 - [Usage](#usage)
   - [Back-End](#back-end)
+  - [API Documentation](#api-documentation)
   - [Front-End](#front-end)
   - [CLI Client](#cli-client)
   - [Testing](#testing)
@@ -35,6 +36,7 @@ While Ntuaflix does not directly host film content, it excels in providing an en
 
 ### Prerequisites
 ---
+
 Before you begin, ensure you have met the following requirements:
 
 - **Operating System**: A compatible operating system such as Windows, macOS, or Linux.
@@ -46,30 +48,10 @@ Before you begin, ensure you have met the following requirements:
 - **Git**: [Git](https://git-scm.com/) for version control.
 - **API Testing Tool**: (Optional) An API testing tool like Postman for testing the API endpoints.
 
-- To include all the libraries and dependencies in your README file, you can organize them based on the specific parts of your project: backend, frontend, CLI, etc. Here's an example of how you might format it:
-
-
-### Setting Up the Environment
----
-
-To set up the local development environment for your project, you'll need to guide users through several steps, including cloning the repository, installing dependencies, setting up the database, and running the servers for the backend, frontend, and CLI client. Here's an example of how you can structure these instructions in your README file:
-
-
 
 ## Usage
 
-### Prerequisites
----
-
-Before setting up the project, ensure you have the following installed:
-- Node.js (version as per `package.json`)
-- MySQL Server
-- Git
-
-
-
-### Cloning the Repository
----
+## Cloning the Repository
 
 1. Clone the repository to your local machine:
 
@@ -82,14 +64,13 @@ Before setting up the project, ensure you have the following installed:
    ```sh
    cd softeng23-21
    ```
-3.Install the necessary Node.js packages:
+3. Install the necessary Node.js packages:
 
    ```sh
    npm install
    ```
 
 ## Back-End
-
 ### Database Setup
 ---
 
@@ -145,7 +126,7 @@ After completing these steps, your local Ntuaflix database should be set up and 
    npm install
    ```
 
-#### Setting Up Environment Variables
+### Setting Up Environment Variables
 ---
 To run the API, you need to set environment variables. Create a `.env` file in the root of the RESTful-API directory and configure the following variables:
 
@@ -176,7 +157,19 @@ JWT_SECRET=YourSecretKey
 
 Replace the values with your specific configurations. Ensure that the paths to the SSL key and certificate are correct and that the JWT secret is kept confidential.
 
-#### Setting Up Self-Signed SSL Certificates
+### Initial User Creation
+---
+To create the first user, use the provided `createUsers.js` script found in the RESTful-API folder. This script utilizes bcrypt for password hashing and MySQL for database interaction. Follow the example below to set up your first user.
+
+#### Example Usage
+---
+```bash
+node createUsers.js username newemail@example.com el20xxx 1
+```
+Replace username, newemail@example.com and el20xxx with a username, email and password of your choice respectively. 1 must be used so that the user created is an Admin and has access to every endpoint. 
+
+
+### Setting Up Self-Signed SSL Certificates
 ---
 For the API to function securely, you need to set up SSL certificates. If you don't have existing SSL certificates, you can create self-signed certificates for development purposes. Follow these steps:
 
@@ -206,6 +199,34 @@ For the API to function securely, you need to set up SSL certificates. If you do
     - Keep your private key (`key.pem`) secure and do not share it publicly.
 
 After setting up the SSL certificates, ensure that the other necessary environment variables are also configured in your `.env` file as described in the previous section.
+
+## API Documentation
+
+### Overview
+---
+The NTUAflix API is comprehensively documented using the OpenAPI 3.0 specification, providing details about all available API endpoints, parameters, and response structures.
+
+### OpenAPI Specification
+---
+Our API specification is available in an `openapi.yaml` file and includes:
+
+- **General Information**: Title, description, and version of the API.
+- **Servers**: URLs where the API is hosted.
+- **Paths**: Descriptions of all API endpoints, their methods, parameters, and response schemas.
+
+### Accessing the Documentation
+---
+#### Local File
+---
+The `openapi.yaml` file is located in the root directory of our API project (RESTful-API). You can use tools like [Swagger UI](https://swagger.io/tools/swagger-ui/) or [Redoc](https://github.com/Redocly/redoc) to visualize and interact with the API's resources.
+
+#### Online Access
+---
+For a more interactive experience, the API documentation is also accessible via a web interface at:
+
+[https://localhost:9876/api-docs/](https://localhost:9876/api-docs/)
+
+This URL hosts a user-friendly version of our API documentation, allowing you to easily explore and test the API endpoints.
 
 
 
@@ -254,7 +275,7 @@ The project includes a Command Line Interface (CLI) client, which allows interac
 1. Navigate to the CLI directory:
 
    ```sh
-   cd ../cli
+   cd ../cli-client
    ```
 
 2. Install the CLI dependencies:
@@ -342,12 +363,12 @@ se2321 adduser -u newusername -p newpassword -e user@example.com -a 0
 ---
 The CLI is designed for interaction with the backend API, so ensure that your API server is running and accessible for the CLI to function correctly.
 
-### Running the Application
+## Running the Application
 1. Start the backend server:
 
    ```sh
-   cd backend
-   npm start
+   cd back-end
+   node server.js
    ```
 
    This will start the backend server, typically running on `https://localhost:9876`.
@@ -355,50 +376,177 @@ The CLI is designed for interaction with the backend API, so ensure that your AP
 2. In a new terminal, start the frontend application:
 
    ```sh
-   cd frontend
-   npm run dev
+   cd front-end
+   node server.js
    ```
 
-   The frontend should now be accessible at `http://localhost:3000`.
+   The frontend should now be accessible at `https://localhost:3000`.
 
-3. Use the CLI client by running its commands from the CLI directory.
+3. Use the CLI client directly by using the se2321 command as described previously.
 
-   ```sh
-   cd cli
-   node cli.js <command>
-   ```
+## Testing
 
-### Testing
-To run the tests for the backend and CLI, navigate to their respective directories and run:
+## API Functional Testing
+
+### Overview
+---
+
+As part of ensuring the robustness and reliability of the Ntuaflix API, we have implemented comprehensive functional testing using Postman. This testing process covers a wide range of scenarios to validate the functionality, performance, and security of our API endpoints.
+
+### Postman Testing Details
+---
+The Postman tests for the Ntuaflix API include:
+
+- **Endpoint Descriptions**: Detailed information about each endpoint, including its purpose and functionality.
+- **Test Scenarios**: Multiple scenarios for each endpoint, such as successful operations, handling of invalid input, and server error responses.
+- **Request Specifications**: Detailed request structures, including HTTP methods, headers, body parameters, and URL configurations.
+- **Response Validation**: Tests to validate response status codes, response times, content types, and the structure of the response body.
+- **Environment Variables**: Use of variables like `{{baseUrl}}`, `{{username}}`, and `{{password}}` to enable flexible testing across different environments.
+- **Response Examples**: Sample responses for different test cases to provide a clear expectation of API outputs.
+
+### Importing the Collection
+---
+To use the Postman collection for testing:
+
+1. Download the provided JSON file from our repository(API Testing folder).
+2. Import the collection into Postman.
+3. Configure the environment variables as per your setup.
+4. Execute the tests to validate API endpoint behaviors. Ensure that the server is running.
+
+### Conclusion
+---
+These tests are integral to our development workflow, helping us to maintain high standards of quality and reliability for the Ntuaflix API. We encourage developers and testers to utilize this collection for a thorough understanding and verification of the API's capabilities.
+
+## CLI Client Functional Testing
+
+### Overview
+---
+Our project includes a comprehensive suite of functional tests for the CLI client, located in the `__tests__` folder within the `cli-client` directory. These tests are designed to ensure the reliability and correctness of the CLI client's functionalities.
+
+### Testing Framework and Libraries
+---
+We use Jest as our testing framework, combined with ShellJS for executing CLI commands. This setup allows us to simulate real-world usage scenarios of our CLI client and validate its behavior.
+Each test case simulates a CLI command and checks for expected outcomes, such as exit codes, error messages, and success confirmations.
+
+### Executing the Tests
+---
+To run the tests for the CLI client, you need to navigate to the `cli-client` directory and execute the test command defined in the `package.json` file. Here is an example of how the test script is set up in the `package.json`:
+
+```json
+"scripts": {
+  "test": "jest __tests__/login.test.js && jest __tests__/tvShowsEpisodes.test.js"
+}
+```
+
+This script tells Jest to run tests from the specified test files. To execute these tests, use the following command in your terminal:
 
 ```sh
 npm test
 ```
 
----
+This command will sequentially run the `login.test.js` and `tvShowsEpisodes.test.js` test suites. You can modify the script in `package.json` to include additional test files as required for your application.
 
-Replace the placeholders like `your-repository-url`, `your-project-name`, and directory names (`backend`, `frontend`, `cli`) with the actual names used in your project. This setup guide assumes a standard Node.js project structure and should be adjusted according to your specific project setup and requirements.
+
+
+### Test Configuration
+---
+The Jest configuration for our tests is specified in the `jest.config.js` file. This configuration sets the test environment to Node.js, ensuring that our tests run in an environment similar to where the CLI client operates.
+
+### Contributing to Tests
+---
+We encourage contributions to our test suite. If you're adding new features or fixing bugs in the CLI client, please include corresponding test cases. This practice ensures the continued reliability and robustness of the CLI client.
 
 ## Diagrams
 
-Explain how to access and interpret the Visual Paradigm diagrams included with the project.
-
-## Contributing
-
-Guidelines for how to contribute to the project. You can include instructions for forking, creating pull requests, and reporting bugs.
-
-## License
-
-Include the project's license. If you haven't chosen a license yet, you can find one that suits your project's needs at [Choose a License](https://choosealicense.com/).
-
+### Overview
 ---
+In our project documentation, we have utilized Visual Paradigm to create a comprehensive set of diagrams. These diagrams provide a detailed visual representation of various aspects of the Ntuaflix system, aiding in understanding the design, architecture, and functionality of the platform.
 
-### Tips for a Great README:
+### Types of Diagrams and Their Purposes
+---
+We have included the following diagrams:
 
-- **Clarity and Simplicity**: Keep the language simple and clear.
-- **Consistency**: Use a consistent format throughout the document.
-- **Detail-Oriented**: Include all necessary details, but avoid overwhelming the reader.
-- **Visuals**: If possible, add screenshots or GIFs to demonstrate key features.
-- **Updates**: Regularly update the README to reflect changes in the project.
+1. **Requirements Diagram**: This diagram visually represents the system requirements, helping to clarify and communicate the functional and non-functional requirements of the Ntuaflix platform.
 
-Remember, the `README.md` is often the first thing users and potential contributors see, so it should be as informative and welcoming as possible.
+2. **UML Use Case Diagram**: Illustrates the interactions between users (actors) and the system, showcasing different user scenarios and how the system responds to user actions.
+
+3. **Entity-Relationship (ER) Diagram**: Depicts the database schema and relationships between different data entities. It is crucial for understanding the data model and the underlying structure of the database.
+
+4. **UML Activity/State Diagram**: Shows the workflow or the sequence of activities in the system, highlighting the states of various entities through different operations.
+
+5. **UML Class/API Diagram**: Provides an overview of the system's classes, their attributes, methods, and the relationships between them. This is particularly useful for understanding the API structure and object-oriented design of the system.
+
+6. **UML Sequence Diagram**: Illustrates the sequence of messages exchanged between different objects or components of the system in a particular scenario, which is key for understanding the interaction and timing between system components.
+
+7. **UML Deployment Diagram**: Demonstrates how the software is deployed on the hardware architecture, showing the physical configuration of hardware nodes and their software counterparts.
+
+8. **UML Component Diagram**: Outlines the organization and dependencies among a set of components, which include software components, libraries, packages, files, etc.
+
+### Accessing the Diagrams
+---
+These diagrams are available in the `documentation` folder within our project repository. 
+
+### Usage
+---
+These diagrams serve as an essential reference for developers, architects, and project managers. They are instrumental in onboarding new team members, conducting system audits, and facilitating discussions about system enhancements and maintenance.
+
+## AI Assistance Log
+
+### Overview
+---
+In our development process, we have incorporated AI tools for assistance in various phases of the project. The `ai-log` folder in our repository is a dedicated space for documenting these interactions.
+
+### Contents of the AI Log
+---
+The `ai-log` folder contains several zip files, each representing a different instance of interaction with an AI tool. Inside each zip file, you will find:
+
+- **Text File (`.txt`) Containing the Prompt**: This file includes the exact prompt we used with the AI tool. It serves as a record of our query or request, providing context for the AI's response.
+
+- **Corresponding JSON File**: Alongside each text file, there's a JSON file that contains the AI's response to our prompt. This structured format makes it easy to review and analyze the AI's output.
+
+For instance, a zip file could contain:
+
+1. `architecture_decision_prompt.txt` - The text of our query about architectural decision-making.
+2. `architecture_decision_response.json` - The AI-generated response, offering insights or solutions based on the prompt.
+
+### Example JSON Record
+---
+Each AI interaction is also summarized in a JSON record format like the following:
+
+```json
+{
+    "answers": {
+        "phase":  "architecture",
+        "action":  "architectural decision",
+        "scope":   "uml component",
+        "action experience":  "fair",
+        "prog lang": "n/a",
+        "other prog lang": "<fill in>",
+        "tool": "chat gpt 4.x",
+        "other tool": "<fill in>",
+        "tool option": "full",
+        "tool experience": "enough",
+        "time allocated (h)": "3",
+        "time saved estimate (h)": "3",
+        "quality of ai help":  "minor modifications needed",
+        "generic feeling":  "great in the future",
+        "notes": "Used the tool to generate a component and a deployment diagram, understanding how the front end can be deployed and how the different components interact with each other."
+    }
+}
+```
+
+This file provides a structured summary of the interaction, detailing the context, tools used, time invested, and the perceived quality and impact of the AI's assistance.
+
+### Purpose and Use
+---
+The AI log serves to:
+
+- **Document AI Interactions**: It offers a transparent account of how AI tools were used during the development of Ntuaflix.
+- **Analyze AI's Effectiveness**: By reviewing these logs, we can assess the impact and efficiency of AI assistance in our project.
+- **Inform Future Projects**: These logs act as a learning tool for future teams to understand the potential and limitations of AI in software development processes.
+
+By meticulously documenting our AI interactions, we aim to provide insights into the integration of AI in software engineering and its evolving role.
+
+
+
+
