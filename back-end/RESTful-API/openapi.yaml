@@ -1460,6 +1460,9 @@ paths:
                   message:
                     type: string
                     description: Detailed error message
+                  error:
+                    type: string
+                    description: Error message
   /uploadrating:
     post:
       tags:

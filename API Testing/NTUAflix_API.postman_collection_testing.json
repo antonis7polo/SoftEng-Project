@@ -6340,7 +6340,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n  \"message\": \"<string>\"\n}"
+							"body": "{\n  \"message\": \"<string>\",\n  \"error\": \"<string>\"\n}"
 						}
 					]
 				}
@@ -7463,6 +7463,7 @@
 							],
 							"query": [
 								{
+									"description": "Response format. Can be 'csv' for CSV format, defaults to JSON if not specified.",
 									"key": "format",
 									"value": "{{format}}"
 								}
@@ -8683,8 +8684,13 @@
 									},
 									"status": "Unauthorized",
 									"code": 401,
-									"_postman_previewlanguage": null,
-									"header": [],
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
 									"cookie": [],
 									"body": "{\n    \"message\": \"<string>\"\n}"
 								},
