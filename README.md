@@ -88,7 +88,7 @@ To set up the Ntuaflix database locally using MySQL, follow these steps:
     Within the MySQL shell, run the following command, replacing `path_to_ntuaflix_db.sql_file` with the actual path to the SQL file provided with the project:
 
     ```sql
-    SOURCE path_to_ntuaflix_db.sql_file;
+    SOURCE path_to_ntuaflix_db.sql;
     ```
 
 3. Add constraints to the Ntuaflix database:
