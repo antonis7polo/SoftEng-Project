@@ -30,7 +30,7 @@ async function getNameByID(req, res) {
                 p.title_id,
                 p.job_category as category
             FROM 
-                principals p
+                Principals p
             WHERE 
                 p.name_id = ?
             ;
@@ -105,7 +105,7 @@ async function searchName(req, res) {
                 n.birth_year as birthYr, 
                 n.death_year as deathYr
             FROM 
-                names_ n
+                Names_ n
             WHERE 
                 LOWER(n.name_) LIKE LOWER(?)
         `;
@@ -138,7 +138,7 @@ async function searchName(req, res) {
                     p.title_id,
                     p.job_category as category
                 FROM 
-                    principals p
+                    Principals p
                 WHERE 
                     p.name_id = ?
             `;

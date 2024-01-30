@@ -62,7 +62,7 @@ async function insertData(titleRatings) {
         await connection.beginTransaction();
 
         // Insert the title ratings
-        const sql = 'UPDATE titles SET average_rating = ?, num_votes = ? WHERE title_id = ?';
+        const sql = 'UPDATE Titles SET average_rating = ?, num_votes = ? WHERE title_id = ?';
 
         for (const titleRating of titleRatings) {
             await connection.query(sql, [titleRating.average_rating, titleRating.num_votes, titleRating.title_id]);

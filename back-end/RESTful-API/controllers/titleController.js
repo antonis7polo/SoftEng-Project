@@ -88,7 +88,7 @@ async function searchTitleByPart(req, res) {
         }
 
         // Query to search titles by part of their name
-        const searchQuery = 'SELECT * FROM titles WHERE LOWER(original_title) LIKE LOWER(?)';
+        const searchQuery = 'SELECT * FROM Titles WHERE LOWER(original_title) LIKE LOWER(?)';
         const likeTitlePart = `%${titlePart.toLowerCase()}%`; 
         const [searchResults] = await pool.query(searchQuery, [likeTitlePart]);
 
@@ -100,12 +100,12 @@ async function searchTitleByPart(req, res) {
 
             const [genresResult] = await pool.query('SELECT genre FROM Title_genres WHERE title_id = ?', [title.title_id]);
 
-            const [aliasesResult] = await pool.query('SELECT title as akaTitle, region as regionAbbrev FROM aliases WHERE title_id = ?', [title.title_id]);
+            const [aliasesResult] = await pool.query('SELECT title as akaTitle, region as regionAbbrev FROM Aliases WHERE title_id = ?', [title.title_id]);
 
             const [principalsResult] = await pool.query(`
                 SELECT p.name_id as nameID, n.name_ as name, p.job_category as category
-                FROM principals AS p 
-                JOIN names_ AS n ON p.name_id = n.name_id 
+                FROM Principals AS p 
+                JOIN Names_ AS n ON p.name_id = n.name_id 
                 WHERE p.title_id = ?
             `, [title.title_id]);
 
@@ -187,7 +187,7 @@ async function getTitlesByGenre(req, res) {
                 t.average_rating,
                 t.num_votes
             FROM 
-                titles t
+                Titles t
             JOIN 
                 Title_genres g ON t.title_id = g.title_id
             WHERE 
@@ -242,14 +242,14 @@ async function getTitlesByGenre(req, res) {
             const [genresResult] = await pool.query(genresQuery, [title.title_id]);
 
             // Subquery for aliases
-            const aliasesQuery = 'SELECT title as akaTitle, region as regionAbbrev FROM aliases WHERE title_id = ?';
+            const aliasesQuery = 'SELECT title as akaTitle, region as regionAbbrev FROM Aliases WHERE title_id = ?';
             const [aliasesResult] = await pool.query(aliasesQuery, [title.title_id]);
 
             // Subquery for principals
             const principalsQuery = `
                 SELECT p.name_id as nameID, n.name_ as name, p.job_category as category
-                FROM principals p
-                JOIN names_ n ON p.name_id = n.name_id
+                FROM Principals p
+                JOIN Names_ n ON p.name_id = n.name_id
                 WHERE p.title_id = ?
             `;
             const [principalsResult] = await pool.query(principalsQuery, [title.title_id]);
@@ -319,7 +319,7 @@ exports.getTitleDetails = async (req, res) => {
         // Query to get the top two actors/actresses based on ordering
         const actorsQuery = `
             SELECT name_id
-            FROM principals 
+            FROM Principals 
             WHERE title_id = ? AND job_category IN ('actor', 'actress')
             ORDER BY ordering ASC
             LIMIT 2`;
@@ -327,7 +327,7 @@ exports.getTitleDetails = async (req, res) => {
 
         const directorsQuery = `
             SELECT name_id 
-            FROM directors 
+            FROM Directors 
             WHERE title_id = ?`;
         const [directorsResult] = await pool.query(directorsQuery, [titleID]);
 
@@ -529,8 +529,8 @@ exports.getAllTvShowsEpisodes = async (req, res) => {
         // Query to get all episodes along with their TV show and season information
         const episodesQuery = `
             SELECT t.title_id AS episode_title_id, t.original_title AS episode_title, e.parent_tv_show_title_id, CAST(e.season_number AS CHAR) AS season_number, CAST(e.episode_number AS CHAR) AS episode_number
-            FROM episode_belongs_to e
-            JOIN titles t ON e.episode_title_id = t.title_id
+            FROM Episode_belongs_to e
+            JOIN Titles t ON e.episode_title_id = t.title_id
             ORDER BY e.parent_tv_show_title_id, e.season_number, e.episode_number;
         `;
         const [episodesResult] = await pool.query(episodesQuery);

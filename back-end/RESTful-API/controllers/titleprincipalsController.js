@@ -96,7 +96,7 @@ async function insertData(principals, hadRoles) {
             ]);
         }
 
-        const insertHadRoleQuery = `INSERT INTO had_role (title_id, name_id, role_) VALUES (?, ?, ?)`;
+        const insertHadRoleQuery = `INSERT INTO Had_role (title_id, name_id, role_) VALUES (?, ?, ?)`;
         for (const role of hadRoles) {
             await connection.query(insertHadRoleQuery, [
                 role.title_id, role.name_id, role.role_

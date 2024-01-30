@@ -68,7 +68,7 @@ async function insertData(titleAkas) {
     try {
         await connection.beginTransaction();
 
-        const insertAliasesQuery = 'INSERT INTO aliases (title_id, ordering, title, region, language, type, attribute, is_original_title) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+        const insertAliasesQuery = 'INSERT INTO Aliases (title_id, ordering, title, region, language, type, attribute, is_original_title) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
         for (const titleAka of titleAkas) {
             await connection.query(insertAliasesQuery, [titleAka.title_id, titleAka.ordering, titleAka.title, titleAka.region, titleAka.language, titleAka.types, titleAka.attributes, titleAka.is_original_title]);

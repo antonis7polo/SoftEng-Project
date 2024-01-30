@@ -65,7 +65,7 @@ async function insertData(titleEpisodes) {
         await connection.query('SET FOREIGN_KEY_CHECKS=0');
         
 
-        const sql = `INSERT INTO episode_belongs_to
+        const sql = `INSERT INTO Episode_belongs_to
         (episode_title_id, parent_tv_show_title_id, season_number, episode_number)
         VALUES (?, ?, ?, ?)`;
 

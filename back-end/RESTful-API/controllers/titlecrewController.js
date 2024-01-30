@@ -81,7 +81,7 @@ async function insertData(directors, writers) {
 
 
 
-        const sql1 = 'INSERT INTO directors (title_id, name_id) VALUES (?, ?)';
+        const sql1 = 'INSERT INTO Directors (title_id, name_id) VALUES (?, ?)';
 
         // Insert Directors
         for (const director of directors) {
@@ -89,7 +89,7 @@ async function insertData(directors, writers) {
         }
 
         // Insert Writers
-        const sql2 = 'INSERT INTO writers (title_id, name_id) VALUES (?, ?)';
+        const sql2 = 'INSERT INTO Writers (title_id, name_id) VALUES (?, ?)';
 
         for (const writer of writers) {
             await connection.query(sql2, [writer.title_id, writer.writer]);

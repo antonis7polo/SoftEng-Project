@@ -28,11 +28,11 @@ async function uploadRating(req, res) {
         await connection.beginTransaction();
 
         // Check if the rating already exists
-        const existingRatingQuery = `SELECT user_rating FROM user_title_ratings WHERE user_id = ? AND title_id = ?`;
+        const existingRatingQuery = `SELECT user_rating FROM User_Title_Ratings WHERE user_id = ? AND title_id = ?`;
         const [existingRating] = await connection.query(existingRatingQuery, [authenticatedUserID, titleID]);
 
         // Retrieve the current average rating and number of votes
-        const currentRatingQuery = `SELECT average_rating, num_votes FROM titles WHERE title_id = ?`;
+        const currentRatingQuery = `SELECT average_rating, num_votes FROM Titles WHERE title_id = ?`;
         const [currentRatingData] = await connection.query(currentRatingQuery, [titleID]);
 
         if (currentRatingData.length === 0) {
@@ -47,14 +47,14 @@ async function uploadRating(req, res) {
             // Rating exists, update it
             const oldUserRating = existingRating[0].user_rating;
 
-            const updateRatingQuery = `UPDATE user_title_ratings SET user_rating = ? WHERE user_id = ? AND title_id = ?`;
+            const updateRatingQuery = `UPDATE User_Title_Ratings SET user_rating = ? WHERE user_id = ? AND title_id = ?`;
             await connection.query(updateRatingQuery, [userRatingInt, authenticatedUserID, titleID]);
 
             // Update the average rating (considering the old rating)
             currentAverage = ((currentAverage * currentNumVotes) - oldUserRating + userRatingInt) / currentNumVotes;
         } else {
             // Rating does not exist, insert new rating
-            const insertRatingQuery = `INSERT INTO user_title_ratings (user_id, title_id, user_rating) VALUES (?, ?, ?)`;
+            const insertRatingQuery = `INSERT INTO User_Title_Ratings (user_id, title_id, user_rating) VALUES (?, ?, ?)`;
             await connection.query(insertRatingQuery, [authenticatedUserID, titleID, userRatingInt]);
 
             // Update the average rating (considering this as a new rating)
@@ -63,7 +63,7 @@ async function uploadRating(req, res) {
         }
 
         // Update the titles table with the new average and new number of votes
-        const updateTitleRatingQuery = `UPDATE titles SET average_rating = ?, num_votes = ? WHERE title_id = ?`;
+        const updateTitleRatingQuery = `UPDATE Titles SET average_rating = ?, num_votes = ? WHERE title_id = ?`;
         await connection.query(updateTitleRatingQuery, [currentAverage.toFixed(2), currentNumVotes, titleID]);
 
         // Commit the transaction
@@ -95,7 +95,7 @@ async function getUserRatings(req, res) {
     try {
         const ratingsQuery = `
             SELECT title_id, CAST(user_rating AS CHAR) AS user_rating
-            FROM user_title_ratings
+            FROM User_Title_Ratings
             WHERE user_id = ?;
         `;
 
@@ -139,7 +139,7 @@ async function deleteRating(req, res) {
         }
 
         // Fetch the rating to be deleted
-        const ratingQuery = `SELECT user_rating FROM user_title_ratings WHERE user_id = ? AND title_id = ?`;
+        const ratingQuery = `SELECT user_rating FROM User_Title_Ratings WHERE user_id = ? AND title_id = ?`;
         const [ratingToDelete] = await connection.query(ratingQuery, [userID, titleID]);
 
         if (!ratingToDelete.length) {
@@ -148,11 +148,11 @@ async function deleteRating(req, res) {
         }
 
         // Delete the rating
-        const deleteQuery = `DELETE FROM user_title_ratings WHERE user_id = ? AND title_id = ?`;
+        const deleteQuery = `DELETE FROM User_Title_Ratings WHERE user_id = ? AND title_id = ?`;
         await connection.query(deleteQuery, [userID, titleID]);
 
         // Fetch the current average rating and number of votes
-        const currentRatingQuery = `SELECT average_rating, num_votes FROM titles WHERE title_id = ?`;
+        const currentRatingQuery = `SELECT average_rating, num_votes FROM Titles WHERE title_id = ?`;
         const [currentRatings] = await connection.query(currentRatingQuery, [titleID]);
 
         if (currentRatings.length) {
@@ -164,7 +164,7 @@ async function deleteRating(req, res) {
             average_rating = num_votes > 0 ? ((average_rating * (num_votes + 1)) - deletedRating) / num_votes : 0;
 
             // Update the titles table with the new average rating and number of votes
-            const updateRatingQuery = `UPDATE titles SET average_rating = ?, num_votes = ? WHERE title_id = ?`;
+            const updateRatingQuery = `UPDATE Titles SET average_rating = ?, num_votes = ? WHERE title_id = ?`;
             await connection.query(updateRatingQuery, [average_rating, num_votes, titleID]);
         }
 
@@ -215,8 +215,8 @@ exports.getMovieRecommendations = async (req, res) => {
         for (const genre of genres) {
             const genreQuery = `
                 SELECT t.title_id, t.original_title, image_url_poster, t.average_rating, CAST(t.num_votes AS CHAR) AS num_votes
-                FROM titles t
-                JOIN title_genres tg ON t.title_id = tg.title_id
+                FROM Titles t
+                JOIN Title_genres tg ON t.title_id = tg.title_id
                 WHERE LOWER(tg.genre) = LOWER(?)
                 ORDER BY t.average_rating DESC
                 LIMIT 10`;
@@ -228,8 +228,8 @@ exports.getMovieRecommendations = async (req, res) => {
         for (const actor of actors) {
             const actorQuery = `
                 SELECT t.title_id, t.original_title, image_url_poster, t.average_rating, CAST(t.num_votes AS CHAR) AS num_votes
-                FROM titles t
-                JOIN principals p ON t.title_id = p.title_id
+                FROM Titles t
+                JOIN Principals p ON t.title_id = p.title_id
                 WHERE p.name_id = ?
                 ORDER BY t.average_rating DESC
                 LIMIT 10`;
@@ -240,8 +240,8 @@ exports.getMovieRecommendations = async (req, res) => {
         // Fetch top 10 movies by director and add to allMovies
         const directorQuery = `
             SELECT t.title_id, t.original_title, image_url_poster, t.average_rating, CAST(t.num_votes AS CHAR) AS num_votes
-            FROM titles t
-            JOIN directors d ON t.title_id = d.title_id
+            FROM Titles t
+            JOIN Directors d ON t.title_id = d.title_id
             WHERE d.name_id = ?
             ORDER BY t.average_rating DESC
             LIMIT 10`;
