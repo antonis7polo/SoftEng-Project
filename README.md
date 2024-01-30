@@ -164,10 +164,9 @@ To create the first user, use the provided `createUsers.js` script found in the 
 #### Example Usage
 ---
 ```bash
-node createUsers.js username newemail@example.com el20xxx 1
+node createUsers.js username newemail@example.com el20xxx 
 ```
-Replace username, newemail@example.com and el20xxx with a username, email and password of your choice respectively. 1 must be used so that the user created is an Admin and has access to every endpoint. 
-
+Replace username, newemail@example.com and el20xxx with a username, email and password of your choice respectively. 
 
 ### Setting Up Self-Signed SSL Certificates
 ---
@@ -256,8 +255,8 @@ If your backend API is configured to use SSL, you will need to set up the fronte
    - Add the paths to your SSL certificate and key in the `.env` file, similar to how you did for the backend. For example:
 
      ```plaintext
-     REACT_APP_KEY_PATH=/path/to/your/key.pem
-     REACT_APP_CERT_PATH=/path/to/your/cert.pem
+     KEY_PATH=/path/to/your/key.pem
+     CERT_PATH=/path/to/your/cert.pem
      ```
 
    - Make sure the paths correctly point to the SSL certificate and key files on your machine.
@@ -367,7 +366,7 @@ The CLI is designed for interaction with the backend API, so ensure that your AP
 1. Start the backend server:
 
    ```sh
-   cd back-end
+   cd back-end/RESTful-API
    node server.js
    ```
 
