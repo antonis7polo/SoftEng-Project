@@ -229,8 +229,9 @@ For a more interactive experience, the API documentation is also accessible via 
 
 [https://localhost:9876/api-docs/](https://localhost:9876/api-docs/)
 
-This URL hosts a user-friendly version of our API documentation, allowing you to easily explore and test the API endpoints.
+This URL hosts a user-friendly version of our API documentation, allowing you to easily explore and test the API endpoints. 
 
+**Important Note:** In order to access this web interface, ensure that the server hosting the API is currently running. The documentation and interactive features will be available only when the server is active. Details on how to start and manage the server are provided below.
 
 
 ## Front-End 
