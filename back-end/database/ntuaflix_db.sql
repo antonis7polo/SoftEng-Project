@@ -13,38 +13,38 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- begin attached script 'script'
 /*
-This script creates the IMDb database tables.
+This script creates the IMDB_new database tables.
 
-To use the IMDb scripts:
+To use the IMDB_new scripts:
 
 1) Open MySQL in terminal:
 $ mysql -u root -p --local-infile
 
-2) Create IMDb data base in MySQL:
+2) Create IMDB_new data base in MySQL:
 mysql> SOURCE path_to_ntuaflix_db.sql_file
 
-3) Add constraints to the IMDb database in MySQL
+3) Add constraints to the IMDB_new database in MySQL
 mysql> SOURCE path_to_ntuaflix_db_constraints.sql
 
-4) Add indexes to the IMDb database in MySQL
+4) Add indexes to the IMDB_new database in MySQL
 mysql> SOURCE path_to_ntuaflix_db_index.sql
 
 */
 
--- Delete IMDb database if necessary
-DROP DATABASE IF EXISTS IMDb;
+-- Delete IMDB_new database if necessary
+DROP DATABASE IF EXISTS IMDB_new;
 
--- Create IMDb database
+-- Create IMDB_new database
 
-CREATE DATABASE IMDb;
+CREATE DATABASE IMDB_new;
 
--- Use IMDb database
+-- Use IMDB_new database
 
-USE IMDb;
+USE IMDB_new;
 
 -- Character set
 -- want to be able to distinguish text with accents
-ALTER DATABASE IMDb CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+ALTER DATABASE IMDB_new CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
 -- Drop old tables if they exist
 
@@ -164,8 +164,6 @@ CREATE TABLE Users (
 );
 
 
-
--- maps users to their ratings. Το κάνουμε έτσι γιατι εδώ θα πανε τα queries για τον recommeneder 
 CREATE TABLE User_Title_Ratings (
   user_id         INT NOT NULL,
   title_id        VARCHAR(255) NOT NULL,
