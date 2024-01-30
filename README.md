@@ -280,7 +280,7 @@ The project includes a Command Line Interface (CLI) client, which allows interac
 1. Navigate to the CLI directory:
 
    ```sh
-   cd ../cli-client
+   cd ../../cli-client
    ```
 
 2. Install the CLI dependencies:
