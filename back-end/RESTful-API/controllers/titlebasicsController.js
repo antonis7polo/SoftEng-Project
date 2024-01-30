@@ -95,7 +95,7 @@ async function insertData(titles, titleGenres) {
             ]);
         }
 
-        const insertGenreQuery = `INSERT INTO Title_Genres (title_id, genre) VALUES (?, ?)`;
+        const insertGenreQuery = `INSERT INTO Title_genres (title_id, genre) VALUES (?, ?)`;
 
 
 

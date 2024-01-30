@@ -15,7 +15,7 @@ async function getNameByID(req, res) {
                 n.death_year as deathYr,
                 GROUP_CONCAT(nwa.profession ORDER BY nwa.profession SEPARATOR ',') as profession
             FROM 
-                names_ n
+                Names_ n
             LEFT JOIN 
                 Name_worked_as nwa ON n.name_id = nwa.name_id
             WHERE 

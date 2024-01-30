@@ -7,7 +7,7 @@ async function getTitleByID(req, res) {
 
     try {
         // Main title information query
-        const titleQuery = 'SELECT * FROM titles WHERE title_id = ?';
+        const titleQuery = 'SELECT * FROM Titles WHERE title_id = ?';
         const [titleResult] = await pool.query(titleQuery, [titleID]);
 
         if (titleResult.length === 0) {
@@ -15,18 +15,18 @@ async function getTitleByID(req, res) {
         }
 
         // Genres related to the title query
-        const genresQuery = 'SELECT genre FROM title_genres WHERE title_id = ?';
+        const genresQuery = 'SELECT genre FROM Title_genres WHERE title_id = ?';
         const [genresResult] = await pool.query(genresQuery, [titleID]);
 
         // Aliases of the title query
-        const aliasesQuery = 'SELECT title as akaTitle, region as regionAbbrev FROM aliases WHERE title_id = ?';
+        const aliasesQuery = 'SELECT title as akaTitle, region as regionAbbrev FROM Aliases WHERE title_id = ?';
         const [aliasesResult] = await pool.query(aliasesQuery, [titleID]);
 
         // Principals related to the title query
         const principalsQuery = `
             SELECT p.name_id as nameID, n.name_ as name, p.job_category as category
-            FROM principals AS p 
-            JOIN names_ AS n ON p.name_id = n.name_id 
+            FROM Principals AS p 
+            JOIN Names_ AS n ON p.name_id = n.name_id 
             WHERE p.title_id = ?
         `;
         const [principalsResult] = await pool.query(principalsQuery, [titleID]);
@@ -98,7 +98,7 @@ async function searchTitleByPart(req, res) {
 
         const titleObjects = await Promise.all(searchResults.map(async (title) => {
 
-            const [genresResult] = await pool.query('SELECT genre FROM title_genres WHERE title_id = ?', [title.title_id]);
+            const [genresResult] = await pool.query('SELECT genre FROM Title_genres WHERE title_id = ?', [title.title_id]);
 
             const [aliasesResult] = await pool.query('SELECT title as akaTitle, region as regionAbbrev FROM aliases WHERE title_id = ?', [title.title_id]);
 
@@ -189,7 +189,7 @@ async function getTitlesByGenre(req, res) {
             FROM 
                 titles t
             JOIN 
-                title_genres g ON t.title_id = g.title_id
+                Title_genres g ON t.title_id = g.title_id
             WHERE 
                 LOWER(g.genre) = LOWER(?)
             AND 
@@ -238,7 +238,7 @@ async function getTitlesByGenre(req, res) {
 
         const titleObjects = await Promise.all(titles.map(async (title) => {
             // Subquery for genres
-            const genresQuery = 'SELECT genre FROM title_genres WHERE title_id = ?';
+            const genresQuery = 'SELECT genre FROM Title_genres WHERE title_id = ?';
             const [genresResult] = await pool.query(genresQuery, [title.title_id]);
 
             // Subquery for aliases
@@ -311,7 +311,7 @@ exports.getTitleDetails = async (req, res) => {
         // Query to get the top two genres
         const genresQuery = `
             SELECT genre 
-            FROM title_genres 
+            FROM Title_genres 
             WHERE title_id = ?
             LIMIT 2`;
         const [genresResult] = await pool.query(genresQuery, [titleID]);
@@ -387,7 +387,7 @@ exports.getHomepageData = async (req, res) => {
 
         // Query for top rated movies
         const topRatedMoviesQuery = `
-            SELECT title_id as titleID FROM titles
+            SELECT title_id as titleID FROM Titles
             WHERE title_type = 'movie' or title_type = 'short'
             ORDER BY average_rating DESC
             LIMIT 20;
@@ -398,7 +398,7 @@ exports.getHomepageData = async (req, res) => {
 
         // Query for new releases
         const newReleasesQuery = `
-            SELECT title_id as titleID FROM titles
+            SELECT title_id as titleID FROM Titles
             ORDER BY start_year DESC, average_rating DESC
             LIMIT 20;
         `;
@@ -407,8 +407,8 @@ exports.getHomepageData = async (req, res) => {
 
         // Query for popular movies in a specific genre (e.g., Action)
         const popularInActionQuery = `
-            SELECT t.title_id as titleID FROM titles t
-            JOIN title_genres tg ON t.title_id = tg.title_id
+            SELECT t.title_id as titleID FROM Titles t
+            JOIN Title_genres tg ON t.title_id = tg.title_id
             WHERE tg.genre = 'Action'
             ORDER BY t.average_rating DESC
             LIMIT 10;
@@ -417,8 +417,8 @@ exports.getHomepageData = async (req, res) => {
         data.popularInAction = popularInAction;
 
         const popularInComedyQuery = `
-            SELECT t.title_id as titleID  FROM titles t
-            JOIN title_genres tg ON t.title_id = tg.title_id
+            SELECT t.title_id as titleID  FROM Titles t
+            JOIN Title_genres tg ON t.title_id = tg.title_id
             WHERE tg.genre = 'Comedy'
             ORDER BY t.average_rating DESC
             LIMIT 10;
@@ -428,8 +428,8 @@ exports.getHomepageData = async (req, res) => {
         data.popularInComedy = popularInComedy;
 
         const popularInDramaQuery = `
-            SELECT t.title_id as titleID  FROM titles t
-            JOIN title_genres tg ON t.title_id = tg.title_id
+            SELECT t.title_id as titleID  FROM Titles t
+            JOIN Title_genres tg ON t.title_id = tg.title_id
             WHERE tg.genre = 'Drama'
             ORDER BY t.average_rating DESC
             LIMIT 10;
@@ -439,8 +439,8 @@ exports.getHomepageData = async (req, res) => {
         data.popularInDrama = popularInDrama;
 
         const popularInRomanceQuery = `
-            SELECT t.title_id as titleID  FROM titles t
-            JOIN title_genres tg ON t.title_id = tg.title_id
+            SELECT t.title_id as titleID  FROM Titles t
+            JOIN Title_genres tg ON t.title_id = tg.title_id
             WHERE tg.genre = 'Romance'
             ORDER BY t.average_rating DESC
             LIMIT 10;
@@ -450,8 +450,8 @@ exports.getHomepageData = async (req, res) => {
         data.popularInRomance = popularInRomance;
 
         const popularInThrillerQuery = `
-            SELECT t.title_id as titleID  FROM titles t
-            JOIN title_genres tg ON t.title_id = tg.title_id
+            SELECT t.title_id as titleID  FROM Titles t
+            JOIN Title_genres tg ON t.title_id = tg.title_id
             WHERE tg.genre = 'Thriller'
             ORDER BY t.average_rating DESC
             LIMIT 10;
@@ -461,8 +461,8 @@ exports.getHomepageData = async (req, res) => {
         data.popularInThriller = popularInThriller;
 
         const popularInHorrorQuery = `
-            SELECT t.title_id as titleID  FROM titles t
-            JOIN title_genres tg ON t.title_id = tg.title_id
+            SELECT t.title_id as titleID  FROM Titles t
+            JOIN Title_genres tg ON t.title_id = tg.title_id
             WHERE tg.genre = 'Horror'
             ORDER BY t.average_rating DESC
             LIMIT 10;
@@ -471,8 +471,8 @@ exports.getHomepageData = async (req, res) => {
         data.popularInHorror = popularInHorror;
 
         const popularInDocumentaryQuery = `
-            SELECT t.title_id as titleID FROM titles t
-            JOIN title_genres tg ON t.title_id = tg.title_id
+            SELECT t.title_id as titleID FROM Titles t
+            JOIN Title_genres tg ON t.title_id = tg.title_id
             WHERE tg.genre = 'Documentary'
             ORDER BY t.average_rating DESC
             LIMIT 10;
@@ -482,8 +482,8 @@ exports.getHomepageData = async (req, res) => {
         data.popularInDocumentary = popularInDocumentary;
 
         const popularInAdventureQuery = `
-            SELECT t.title_id as titleID  FROM titles t
-            JOIN title_genres tg ON t.title_id = tg.title_id
+            SELECT t.title_id as titleID  FROM Titles t
+            JOIN Title_genres tg ON t.title_id = tg.title_id
             WHERE tg.genre = 'Adventure'
             ORDER BY t.average_rating DESC
             LIMIT 10;
