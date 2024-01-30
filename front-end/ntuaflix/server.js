@@ -12,7 +12,8 @@ const handle = app.getRequestHandler();
 
 const httpsOptions = {
     key: fs.readFileSync(process.env.KEY_PATH),
-    cert: fs.readFileSync(process.env.CERT_PATH)
+    cert: fs.readFileSync(process.env.CERT_PATH),
+    passphrase: process.env.KEY_PASSPHRASE
 };
 
 

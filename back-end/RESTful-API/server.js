@@ -10,7 +10,8 @@ const port = process.env.PORT || 9876;
 
 const options = {
   key: fs.readFileSync(process.env.KEY_PATH),
-  cert: fs.readFileSync(process.env.CERT_PATH)
+  cert: fs.readFileSync(process.env.CERT_PATH),
+  passphrase: process.env.KEY_PASSPHRASE
 };
 
 
