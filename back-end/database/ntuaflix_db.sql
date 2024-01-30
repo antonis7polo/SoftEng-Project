@@ -13,38 +13,41 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- begin attached script 'script'
 /*
-This script creates the IMDB_new database tables.
+This script creates the IMDb database tables.
 
-To use the IMDB_new scripts:
+To use the IMDb scripts:
 
 1) Open MySQL in terminal:
 $ mysql -u root -p --local-infile
 
-2) Create IMDB_new data base in MySQL:
+2) Create IMDb data base in MySQL:
 mysql> SOURCE path_to_ntuaflix_db.sql_file
 
-3) Add constraints to the IMDB_new database in MySQL
+3) Add constraints to the IMDb database in MySQL
 mysql> SOURCE path_to_ntuaflix_db_constraints.sql
 
-4) Add indexes to the IMDB_new database in MySQL
+4) Add indexes to the IMDb database in MySQL
 mysql> SOURCE path_to_ntuaflix_db_index.sql
+
+5) Add data to the IMDb database in MySQL
+mysql> SOURCE path_to_ntuaflix_db_data.sql
 
 */
 
--- Delete IMDB_new database if necessary
-DROP DATABASE IF EXISTS IMDB_new;
+-- Delete IMDb database if necessary
+DROP DATABASE IF EXISTS IMDb;
 
--- Create IMDB_new database
+-- Create IMDb database
 
-CREATE DATABASE IMDB_new;
+CREATE DATABASE IMDb;
 
--- Use IMDB_new database
+-- Use IMDb database
 
-USE IMDB_new;
+USE IMDb;
 
 -- Character set
 -- want to be able to distinguish text with accents
-ALTER DATABASE IMDB_new CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+ALTER DATABASE IMDb CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
 -- Drop old tables if they exist
 

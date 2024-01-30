@@ -1,15 +1,26 @@
 import os
 import csv
 
-def tsv_to_sql_insert(tsv_file_path, table_name, columns, output_file):
+def tsv_to_sql_insert(tsv_file_path, table_name, columns, output_file, batch_size=20000):
     with open(tsv_file_path, 'r', encoding='utf-8') as file:
         reader = csv.reader(file, delimiter='\t')
         next(reader)  # Skip the header row
+        batch = []
         for row in reader:
-            # Replace '\N' with 'NULL' and wrap other values with quotes
             values = [f"'{value.replace('\'', '\'\'')}'" if value != '\\N' else 'NULL' for value in row]
-            sql_line = f"INSERT INTO {table_name} ({', '.join(columns)}) VALUES ({', '.join(values)});\n"
+            batch.append(f"({', '.join(values)})")
+
+            if len(batch) >= batch_size:
+                sql_line = f"INSERT INTO {table_name} ({', '.join(columns)}) VALUES {', '.join(batch)};\n"
+                output_file.write(sql_line)
+                batch = []  # Reset batch
+
+        # Write any remaining rows in the batch
+        if batch:
+            sql_line = f"INSERT INTO {table_name} ({', '.join(columns)}) VALUES {', '.join(batch)};\n"
             output_file.write(sql_line)
+
+
 
 def main():
     # Mapping of TSV files to table names and their columns
@@ -28,7 +39,7 @@ def main():
         # Add mappings for any other TSV files as needed
     }
 
-    with open('load_data.sql', 'w', encoding='utf-8') as output_file:
+    with open('ntuaflix_db_data.sql', 'w', encoding='utf-8') as output_file:
         # Add commands to disable constraints
         output_file.write("SET FOREIGN_KEY_CHECKS=0;\n\n")  # Disable foreign key checks
         # Process each TSV file
