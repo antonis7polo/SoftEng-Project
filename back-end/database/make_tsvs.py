@@ -23,7 +23,7 @@ users_data = []
 for i in range(1, 101):  # Generating 100 users
     username = generate_username(first_names, last_names)
     email = generate_email(username)
-    users_data.append({ "username": username, "email": email, "password": generate_hashed_password()})
+    users_data.append({ "username": username, "email": email, "password": generate_hashed_password(), "isAdmin": False})
 # users_data now contains the user details
 
 # Function to read Titles.tsv and get title IDs

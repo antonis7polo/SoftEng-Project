@@ -1,4 +1,4 @@
-title_id	title_type	primary_title	original_title	is_adult	start_year	end_year	runtime_minutes	img_url_asset	average_rating	num_votes
+title_id	title_type	primary_title	original_title	is_adult	start_year	end_year	runtime_minutes	img_url_poster	average_rating	num_votes
 tt0000929	short	Klebolin klebt alles	Klebolin klebt alles	0	1990	\N	\N	\N	5.3	46.0
 tt0000977	short	Mutterliebe	Mutterliebe	0	1990	\N	\N	\N	\N	\N
 tt0034841	short	Hen Hop	Hen Hop	0	1994	\N	4	https://image.tmdb.org/t/p/{width_variable}/88EH2TVg6fGK7SnGXcfQ05MD2Rk.jpg	6.3	282.0

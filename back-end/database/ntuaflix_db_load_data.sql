@@ -2,17 +2,10 @@
 SET GLOBAL local_infile = 1;
 
 -- Load Aliases.tsv into Aliases table
-LOAD DATA LOCAL INFILE  './Aliases.tsv'
+LOAD DATA LOCAL INFILE  'Aliases.tsv'
 INTO TABLE Aliases
 COLUMNS TERMINATED BY '\t'
 IGNORE 1 LINES;
-
--- Load Alias_attributes.tsv into Alias_attributes table
-LOAD DATA LOCAL INFILE  './Alias_attributes.tsv'
-INTO TABLE Alias_attributes
-COLUMNS TERMINATED BY '\t'
-IGNORE 1 LINES;
-
 
 -- Load Directors.tsv into Directors table
 LOAD DATA LOCAL INFILE './Directors.tsv'
