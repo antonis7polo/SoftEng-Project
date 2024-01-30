@@ -101,11 +101,19 @@ To set up the Ntuaflix database locally using MySQL, follow these steps:
 
 4. Add indexes to the Ntuaflix database:
 
-    Lastly, run the following command, replacing `path_to_ntuaflix_db_index.sql` with the path to the index SQL file:
+    Still within the MySQL shell, run the following command, replacing `path_to_ntuaflix_db_index.sql` with the path to the index SQL file:
 
     ```sql
     SOURCE path_to_ntuaflix_db_index.sql;
     ```
+5. Add data to the Ntuaflix database:
+   
+   Lastly, run the following command, replacing `path_to_ntuaflix_db_data.sql` with the path to the data SQL file:
+
+    ```sql
+    SOURCE path_to_ntuaflix_db_data.sql;
+    ```
+
 
 After completing these steps, your local Ntuaflix database should be set up and ready for use with the rest of the application.
 
@@ -139,8 +147,9 @@ To run the API, you need to set environment variables. Create a `.env` file in t
 2. **SSL Certificate Paths:**
     - `KEY_PATH`: The file path to your SSL key (e.g., `/Users/username/key.pem`).
     - `CERT_PATH`: The file path to your SSL certificate (e.g., `/Users/username/cert.pem`).
-      
-      Details for SSL Certificates provided below.
+    - `KEY_PASSPHRASE`: The passphrase for your SSL key, if it is encrypted (e.g., `YourKeyPassphrase`).
+
+      Details for SSL Certificates are provided below.
 
 3. **JWT Secret:**
     - `JWT_SECRET`: A secret key for JSON Web Token (JWT) generation. It can be any string, preferably a complex and unique one (e.g., `V3ryS3cr3tK3y!2023`).
@@ -156,6 +165,7 @@ DB_PASS=root
 DB=IMDb
 KEY_PATH=/path/to/your/key.pem
 CERT_PATH=/path/to/your/cert.pem
+KEY_PASSPHRASE=YourKeyPassphrase
 JWT_SECRET=YourSecretKey
 ```
 
@@ -176,11 +186,13 @@ For the API to function securely, you need to set up SSL certificates. If you do
 
 2. **Configuring the API to Use the Certificates:**
     - Place the generated `key.pem` and `cert.pem` files in a secure directory on your machine.
-    - Update your `.env` file to include the paths to these files. For example:
+    - If your `key.pem` file is encrypted, also ensure you have the passphrase used for the encryption.
+    - Update your `.env` file to include the paths to these files, and the passphrase if your key is encrypted. For example:
 
       ```plaintext
       KEY_PATH=/path/to/your/key.pem
       CERT_PATH=/path/to/your/cert.pem
+      KEY_PASSPHRASE=YourKeyPassphrase
       ```
 
     - Make sure the paths are correct and point to where you've stored your key and certificate files.
@@ -244,14 +256,15 @@ If your backend API is configured to use SSL, you will need to set up the fronte
 
 2. **Configure `.env` File:**
    - In the root directory of the frontend project, create a `.env` file if it doesn't already exist.
-   - Add the paths to your SSL certificate and key in the `.env` file, similar to how you did for the backend. For example:
+   - Add the paths to your SSL certificate and key, and the passphrase for your key if it is encrypted, in the `.env` file. This is similar to what you did for the backend. For example:
 
      ```plaintext
      KEY_PATH=/path/to/your/key.pem
      CERT_PATH=/path/to/your/cert.pem
+     KEY_PASSPHRASE=YourKeyPassphrase
      ```
 
-   - Make sure the paths correctly point to the SSL certificate and key files on your machine.
+   - Make sure the paths and the passphrase (if your key is encrypted) correctly point to the SSL certificate, key files, and the passphrase on your machine.
 
 3. **Security Note:**
    - As with the backend, self-signed certificates are suitable for development and testing but not recommended for production. In a production environment, use certificates from a trusted CA.
