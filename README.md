@@ -85,7 +85,7 @@ To set up the Ntuaflix database locally using MySQL, follow these steps:
 
 2. Create the Ntuaflix database in MySQL:
 
-    Within the MySQL shell, run the following command, replacing `path_to_ntuaflix_db.sql_file` with the actual path to the SQL file provided with the project:
+    Within the MySQL shell, run the following command, replacing `path_to_ntuaflix_db.sql` with the actual path to the SQL file provided with the project:
 
     ```sql
     SOURCE path_to_ntuaflix_db.sql;
@@ -137,8 +137,10 @@ To run the API, you need to set environment variables. Create a `.env` file in t
     - `DB`: The name of the database you are using (e.g., `IMDb`).
 
 2. **SSL Certificate Paths:**
-    - `KEY_PATH`: The file path to your SSL key (e.g., `/Users/harrypapadakis/key.pem`).
-    - `CERT_PATH`: The file path to your SSL certificate (e.g., `/Users/harrypapadakis/cert.pem`).
+    - `KEY_PATH`: The file path to your SSL key (e.g., `/Users/username/key.pem`).
+    - `CERT_PATH`: The file path to your SSL certificate (e.g., `/Users/username/cert.pem`).
+      
+      Details for SSL Certificates provided below.
 
 3. **JWT Secret:**
     - `JWT_SECRET`: A secret key for JSON Web Token (JWT) generation. It can be any string, preferably a complex and unique one (e.g., `V3ryS3cr3tK3y!2023`).
@@ -157,16 +159,6 @@ CERT_PATH=/path/to/your/cert.pem
 JWT_SECRET=YourSecretKey
 ```
 
-### Initial User Creation
----
-To create the first user, use the provided `createUsers.js` script found in the RESTful-API folder. This script utilizes bcrypt for password hashing and MySQL for database interaction. Follow the example below to set up your first user.
-
-#### Example Usage
----
-```bash
-node createUsers.js username newemail@example.com el20xxx 
-```
-Replace username, newemail@example.com and el20xxx with a username, email and password of your choice respectively. 
 
 ### Setting Up Self-Signed SSL Certificates
 ---
@@ -233,7 +225,7 @@ This URL hosts a user-friendly version of our API documentation, allowing you to
 1. Navigate to the frontend directory from the root of the project:
 
    ```sh
-   cd ../front-end/ntuaflix
+   cd /path/to/front-end/ntuaflix
    ```
 
 2. Install the dependencies:
@@ -362,11 +354,35 @@ se2321 adduser -u newusername -p newpassword -e user@example.com -a 0
 ---
 The CLI is designed for interaction with the backend API, so ensure that your API server is running and accessible for the CLI to function correctly.
 
+
+## Initial User Creation Requirement
+
+**Important: To gain access to the system, it's mandatory to create an initial user.** This process is facilitated by the `createUsers.js` script located in the RESTful-API folder. The script uses bcrypt for secure password hashing and MySQL for database interaction. Follow the instructions below to set up your first user.
+
+### How to Create the First User
+---
+1. Open a terminal or command prompt.
+2. Navigate to the RESTful-API folder where the `createUsers.js` script is located.
+3. Run the following command:
+
+   ```bash
+   node createUsers.js [username] [email] [password]
+   ```
+
+   Replace `[username]`, `[email]`, and `[password]` with your desired username, email address, and password, respectively. 
+
+   Example:
+
+   ```bash
+   node createUsers.js myUsername newemail@example.com el20xxx
+   ```
+
+
 ## Running the Application
 1. Start the backend server:
 
    ```sh
-   cd back-end/RESTful-API
+   cd /path/to/back-end/RESTful-API
    node server.js
    ```
 
@@ -375,7 +391,7 @@ The CLI is designed for interaction with the backend API, so ensure that your AP
 2. In a new terminal, start the frontend application:
 
    ```sh
-   cd front-end
+   cd /path/to/front-end/ntuaflix
    node server.js
    ```
 

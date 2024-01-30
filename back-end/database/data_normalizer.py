@@ -56,12 +56,14 @@ def make_Aliases(title_akas):
     print("\tMaking 'Aliases' table")
 
     # Extract columns
-    Aliases = title_akas[['titleId','ordering','title','region','language',
+    Aliases = title_akas[['titleId','ordering','title','region','language','types','attributes',
     'isOriginalTitle']]
 
     # Rename columns
     Aliases = Aliases.rename(columns={
     'titleId':'title_id',
+    'types':'type',
+    'attributes':'attribute',
     'isOriginalTitle':'is_original_title'
     })
 
@@ -96,8 +98,7 @@ def make_Alias_types(title_akas):
     Alias_types = Alias_types.dropna()
 
     # Output to file
-    Alias_types.to_csv('Alias_types.tsv',index=False,na_rep=r'\N',sep='\t')
-
+   
 #-------------------------------------------------------------------------------
 
 # Create Alias_attributes table
@@ -126,7 +127,6 @@ def make_Alias_attributes(title_akas):
     Alias_attributes = Alias_attributes.dropna()
 
     # Output to file
-    Alias_attributes.to_csv('Alias_attributes.tsv',index=False,na_rep=r'\N',sep='\t')
 
 #-------------------------------------------------------------------------------
 
@@ -205,7 +205,7 @@ def make_Names_(name_basics):
     'primaryName':'name_',
     'birthYear':'birth_year',
     'deathYear':'death_year',
-    'img_url_asset':'img_url_asset'
+    'img_url_asset':'img_url'
     })
 
     # Output to file
@@ -277,13 +277,14 @@ def make_Principals(title_principals):
     print("\tMaking 'Principals' table")
 
     # Extract columnns
-    Principals = title_principals[['tconst','ordering','nconst','category','job']]
+    Principals = title_principals[['tconst','ordering','nconst','category','job','img_url_asset']]
 
     # Rename columns
     Principals = Principals.rename(columns={
     'tconst':'title_id',
     'nconst':'name_id',
     'category':'job_category',
+    'img_url_asset':'img_url'
     })
 
     # Output to file
@@ -373,7 +374,7 @@ def make_Titles(title_basics, title_ratings):
     'averageRating':'average_rating',
     'numVotes':'num_votes',
     'runtimeMinutes':'runtime_minutes',
-    'img_url_asset':'img_url_asset',
+    'img_url_asset':'img_url_poster',
     })
 
     # Output to file
@@ -424,7 +425,6 @@ def make_Title_ratings(title_ratings):
     })
 
     # Output to file
-    Title_ratings.to_csv('Title_ratings.tsv',index=False,na_rep=r'\N',sep='\t')
 
 #------------------------ END OF FUNCTION DEFINITIONS --------------------------
 
