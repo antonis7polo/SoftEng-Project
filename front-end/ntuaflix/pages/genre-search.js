@@ -20,6 +20,8 @@ const GenreSearchPage = () => {
   const [movies, setMovies] = useState([]);
   const [searchPerformed, setSearchPerformed] = useState(false); 
   const [formError, setFormError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
 
 
 
@@ -45,6 +47,8 @@ const GenreSearchPage = () => {
       // Only add start and end year to the request body if they are provided
       if (startYear) requestBody.yrFrom = startYear;
       if (endYear) requestBody.yrTo = endYear;
+      setIsLoading(true);
+
     
       try {
         const response = await axios.post('https://localhost:9876/ntuaflix_api/bygenre', requestBody, {
@@ -58,6 +62,8 @@ const GenreSearchPage = () => {
       } catch (error) {
         console.error('Error fetching movies:', error);
         setMovies([]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -125,7 +131,9 @@ const GenreSearchPage = () => {
         {formError}
       </Box>
       )}
-      {movies.length > 0 ? (
+      {isLoading ? (
+        <Box>Loading...</Box>
+      ) : movies.length > 0 ? (
         <MovieGrid movies={movies} />
       ) : (
         searchPerformed && <Box>No movies found. Try adjusting your search criteria.</Box>
