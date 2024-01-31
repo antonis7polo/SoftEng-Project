@@ -1,47 +1,50 @@
 // components/Header.js
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { AppBar,Toolbar,Button, Typography, IconButton, InputBase, FormControl, Select, MenuItem, Box, Snackbar} from "@mui/material";
-import {
-  Home as HomeIcon,
-  Search as SearchIcon,
-  AccountCircle,
-  Logout as LogoutIcon,
-} from "@mui/icons-material";
+import { AppBar, Toolbar, Button, IconButton, InputBase, FormControl, Select, MenuItem, Box, Snackbar } from "@mui/material";
+import { Search as SearchIcon, AccountCircle, Logout as LogoutIcon } from "@mui/icons-material";
 import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
 
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchType, setSearchType] = useState("title");
-  const { isLoggedIn, setIsLoggedIn, sessionExpiredMessage } =
-    useAuth();
+  const { isLoggedIn, setIsLoggedIn, sessionExpiredMessage } = useAuth();
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const router = useRouter();
 
+  useEffect(() => {
+    // Reset searchTerm when the pathname changes
+    const handleRouteChange = () => {
+        setSearchTerm("");
+        setSearchType("title");  // Reset to "Search Title"
+
+    };
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
   const handleTypeChange = (event) => {
-    const type = event.target.value;
-    setSearchType(type);
-
-    if (type === "genre") {
+    setSearchType(event.target.value);
+    setSearchTerm("");  // Clear searchTerm on type change
+    if (event.target.value === "genre") {
       router.push("/genre-search");
     }
   };
 
   const handleSearch = (event) => {
     event.preventDefault();
-    // Redirect to the search page with query parameters
-    if (!isLoggedIn) {
-      router.push("/");
-      return;
+    if (isLoggedIn) {
+      router.push(`/search?term=${encodeURIComponent(searchTerm)}&type=${searchType}`);
+      setSearchTerm("");  // Clear searchTerm after search
     }
-    router.push(
-      `/search?term=${encodeURIComponent(searchTerm)}&type=${searchType}`
-    );
   };
 
   useEffect(() => {
@@ -51,7 +54,6 @@ const Header = () => {
   }, [sessionExpiredMessage]);
 
   const handleLogout = async () => {
-    // Get token from the stored JSON object
     const tokenData = localStorage.getItem("tokenData");
     let token = null;
     if (tokenData) {
@@ -68,7 +70,6 @@ const Header = () => {
 
     if (response.ok) {
       localStorage.removeItem("tokenData");
-      // Remove tokenData instead of just 'token'
       setIsLoggedIn(false);
       router.push("/");
     } else {
@@ -83,7 +84,10 @@ const Header = () => {
     setOpenSnackbar(false);
   };
 
-  
+  const isGenreSearch = searchType === "genre";
+
+  const isGenreSearchPage = router.pathname === "/genre-search";
+
 
   return (
     <>
@@ -104,7 +108,7 @@ const Header = () => {
       >
         <Toolbar
           className="container"
-          sx={{ display: "flex", justifyContent: "flex-start", width: "60%" }}
+          sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}
         >
           <Box sx={{ flexGrow: 0 }}>
             <Link href={isLoggedIn ? "/home" : "/"} passHref>
@@ -119,57 +123,56 @@ const Header = () => {
               </Button>
             </Link>
           </Box>
-          <Box sx={{ml: 20, flexGrow: 1, display: "flex", justifyContent: "center" }}>
-            <FormControl variant="standard" sx={{ m: 1, minWidth: 80 }}>
-              <Select
-                value={searchType}
-                onChange={handleTypeChange}
-                displayEmpty
-                inputProps={{ "aria-label": "search by type" }}
-                sx={{
-                  color: `rgb(var(--primary-color))`,
-                  "& .MuiSvgIcon-root": { color: `rgb(var(--primary-color))` },
-                }}
-              >
-                <MenuItem value="title">Search Title</MenuItem>
-                <MenuItem value="name">Search Name</MenuItem>
-                <MenuItem value="genre">Search by Genre</MenuItem>
-              </Select>
-            </FormControl>
-            <InputBase
-              sx={{ ml: 1, flex: 1, color: `rgb(var(--text-color))` }}
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
-            <IconButton
-              type="submit"
-              sx={{ p: "10px", mr: 20, color: `rgb(var(--primary-color))` }} // Added right margin
-              aria-label="search"
-              onClick={handleSearch}
-            >
-              <SearchIcon />
-            </IconButton>
-          </Box>
+
+          {isLoggedIn && !isGenreSearchPage &&(
+            <Box sx={{ ml: 20, flexGrow: 0.1, display: "flex", justifyContent: "center" }}>
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 80 }}>
+                <Select
+                  value={searchType}
+                  onChange={handleTypeChange}
+                  displayEmpty
+                  inputProps={{ "aria-label": "search by type" }}
+                  sx={{
+                    color: `rgb(var(--primary-color))`,
+                    "& .MuiSvgIcon-root": { color: `rgb(var(--primary-color))` },
+                  }}
+                >
+                  <MenuItem value="title">Search Title</MenuItem>
+                  <MenuItem value="name">Search Name</MenuItem>
+                  <MenuItem value="genre">Search by Genre</MenuItem>
+                </Select>
+              </FormControl>
+              <InputBase
+                sx={{ ml: 1, flex: 1, color: `rgb(var(--text-color))` }}
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+                value={searchTerm}
+                onChange={handleSearchChange}
+                disabled={isGenreSearch} 
+              />
+               {!isGenreSearchPage && (
+                <IconButton
+                  type="submit"
+                  sx={{ p: "10px", mr: 20, color: `rgb(var(--primary-color))` }}
+                  aria-label="search"
+                  onClick={handleSearch}
+                >
+                  <SearchIcon />
+                </IconButton>
+              )}
+            </Box>
+          )}
 
           <Box
-            sx={{ flexGrow: 0, display: "flex", justifyContent: "flex-end" }}
+            sx={{ flexGrow: 0, display: "flex" }}
           >
             {isLoggedIn ? (
-              <>
-                <Link href="/" passHref>
-                  <IconButton sx={{ color: `rgb(var(--primary-color))` }}>
-                    <AccountCircle />
-                  </IconButton>
-                </Link>
-                <IconButton
-                  sx={{ color: `rgb(var(--primary-color))` }}
-                  onClick={handleLogout}
-                >
-                  <LogoutIcon />
-                </IconButton>
-              </>
+              <IconButton
+                sx={{ color: `rgb(var(--primary-color))` }}
+                onClick={handleLogout}
+              >
+                <LogoutIcon />
+              </IconButton>
             ) : (
               <Link href="/" passHref>
                 <IconButton sx={{ color: `rgb(var(--primary-color))` }}>
