@@ -4,7 +4,7 @@
   "description": "CLI client of REST API",
   "main": "cli.js",
   "scripts": {
-    "test": "jest __tests__/login.test.js && jest __tests__/tvShowsEpisodes.test.js"
+    "test": "jest __tests__/unit/"
   },
   "repository": {
     "type": "git",
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "nock": "^13.4.0",
+    "nock": "^13.5.1",
     "shelljs": "^0.8.5"
   }
 }

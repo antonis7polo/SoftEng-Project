@@ -1,5 +1,5 @@
 const shell = require('shelljs');
-const {clearToken} = require('../src/utils/tokenStorage');
+const {clearToken} = require('../../src/utils/tokenStorage');
 
 describe('/uploadrating command', () => {
     it('successfully uploads rating with valid input', (done) => {

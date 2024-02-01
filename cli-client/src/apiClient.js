@@ -33,7 +33,7 @@ const login = async (username, password) => {
       throw new Error('No response was received from the API');
     } else {
       // Something happened in setting up the request that triggered an Error
-      throw new Error('Error', error.message);
+      throw new Error(`Error: ${error.message}`);
     }
   }
 };
@@ -51,7 +51,14 @@ const logout = async () => {
       }
     });
   } catch (error) {
-    throw new Error('Logout request failed: ' + error.message);
+    if (error.response) {
+
+      throw new Error(error.response.data.message);
+    } else if (error.request) {
+      throw new Error('No response was received from the API');
+    } else {
+      throw new Error(`Error: ${error.message}`);
+    }
   } finally {
     clearToken(); 
   }
@@ -63,7 +70,7 @@ const addUser = async (username, password, email, isAdmin) => {
     throw new Error('No token found. You are not logged in.');
   }
   try {
-    await apiInstance.post(`/admin/usermod/${username}/${password}`, {
+    const response = await apiInstance.post(`/admin/usermod/${username}/${password}`, {
       email,
       isAdmin
     }, {
@@ -71,11 +78,12 @@ const addUser = async (username, password, email, isAdmin) => {
         'x-observatory-auth': token
       }
     });
+    return response.data;
   } catch (error) {
     if (error.response) {
       throw new Error(error.response.data.message);
     } else {
-      throw new Error('Error', error.message);
+      throw new Error(`Error: ${error.message}`);
     }
   }
 };
@@ -92,7 +100,7 @@ const getUser = async (username, format) => {
     if (error.response) {
       throw new Error(error.response.data.message);
     } else {
-      throw new Error('Error connecting to the API');
+      throw new Error(`Error: ${error.message}`);
     }
   }
 };
@@ -111,7 +119,11 @@ const healthCheck = async (format) => {
     return response.data;
   } catch (error) {
     if (error.response) {
-      throw new Error(error.response.data.message);
+      if (error.response.data && error.response.data.status) {
+        return error.response.data;
+      } else{
+        throw new Error(error.response.data.message);
+      }
     } else {
       throw new Error('Failed to perform health check');
     }

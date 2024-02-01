@@ -1,5 +1,5 @@
 const shell = require('shelljs');
-const {clearToken} = require('../src/utils/tokenStorage');
+const {clearToken} = require('../../src/utils/tokenStorage');
 
 describe('/titledetails command', () => {
     it('outputs valid JSON format',  (done) => {

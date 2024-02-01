@@ -127,7 +127,7 @@ paths:
           description: Response format. Can be 'csv' for CSV format or 'json' for JSON format, defaults to JSON if not specified.
       responses:
         '200':
-          description: System is healthy
+          description: System health check successful
           content:
             application/json:
               schema:
@@ -135,7 +135,7 @@ paths:
                 properties:
                   status:
                     type: string
-                    description: Health status of the system
+                    description: Health status of the system. Can be 'OK' or 'failed'.
                   dataconnection:
                     type: array
                     items:
@@ -156,24 +156,20 @@ paths:
                     type: string
                     description: Error message indicating lack of authorization
         '500':
-          description: Health check failed or server error
+          description: Internal server error during health check
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  status:
+                  message:
                     type: string
-                    description: Health status indicating failure
-                  dataconnection:
-                    type: array
-                    items:
-                      type: string
-                    description: Connection string information
-            text/csv:
-              schema:
-                type: string
-                example: "status, dataconnection\nfailed, Server=...; Database=...; Username=..."
+                    description: Error message
+                  error:
+                    type: string
+                    description: Detailed error message
+
+
   /admin/upload/titlebasics:
     post:
       tags:

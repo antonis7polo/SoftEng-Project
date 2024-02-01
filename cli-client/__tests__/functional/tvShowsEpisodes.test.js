@@ -1,5 +1,5 @@
 const shell = require('shelljs');
-const {clearToken} = require('../src/utils/tokenStorage');
+const {clearToken} = require('../../src/utils/tokenStorage');
 
 describe('/tvshowsepisodes command', () => {
     it('ouputs valid JSON format', (done) => {

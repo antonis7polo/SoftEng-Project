@@ -46,9 +46,9 @@ async function healthCheck(req, res) {
             });
             const csvData = json2csvParser.parse([healthData]);
             res.header('Content-Type', 'text/csv');
-            res.status(500).send(csvData);
+            res.status(200).send(csvData);
         } else {
-            res.status(500).json(healthData);
+            res.status(200).json(healthData);
         }
     }
 }
