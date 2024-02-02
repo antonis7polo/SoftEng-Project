@@ -43,6 +43,12 @@ describe('uploadTitleBasics', () => {
   
       await expect(uploadTitleBasics(filePath)).rejects.toThrow('No file uploaded or wrong file type uploaded');
     });
+
+    it('throws an error if no token is found', async () => {
+        getToken.mockReturnValue(null);
+
+        await expect(uploadTitleBasics(filePath)).rejects.toThrow('No token found');
+    });
   
     it('throws an error for unauthorized access', async () => {
       getToken.mockReturnValueOnce('invalidToken'); // Simulate invalid token
@@ -97,6 +103,12 @@ describe('uploadTitleBasics', () => {
             await expect(uploadTitleAkas(filePath)).rejects.toThrow('No file uploaded or wrong file type uploaded');
         });
 
+        it('throws an error if no token is found', async () => {
+            getToken.mockReturnValue(null);
+
+            await expect(uploadTitleAkas(filePath)).rejects.toThrow('No token found');
+        });
+
         it('throws an error for unauthorized access', async () => {
             getToken.mockReturnValueOnce('invalidToken'); // Simulate invalid token
 
@@ -147,6 +159,12 @@ describe('uploadTitleBasics', () => {
                 .reply(400, { message: 'No file uploaded or wrong file type uploaded' });
 
             await expect(uploadNameBasics(filePath)).rejects.toThrow('No file uploaded or wrong file type uploaded');
+        });
+
+        it('throws an error if no token is found', async () => {
+            getToken.mockReturnValue(null);
+
+            await expect(uploadNameBasics(filePath)).rejects.toThrow('No token found');
         });
 
         it('throws an error for unauthorized access', async () => {
@@ -201,6 +219,12 @@ describe('uploadTitleBasics', () => {
             await expect(uploadTitleCrew(filePath)).rejects.toThrow('No file uploaded or wrong file type uploaded');
         });
 
+        it('throws an error if no token is found', async () => {
+            getToken.mockReturnValue(null);
+
+            await expect(uploadTitleCrew(filePath)).rejects.toThrow('No token found');
+        });
+
         it('throws an error for unauthorized access', async () => {
             getToken.mockReturnValueOnce('invalidToken'); // Simulate invalid token
 
@@ -253,6 +277,12 @@ describe('uploadTitleBasics', () => {
             await expect(uploadTitleEpisode(filePath)).rejects.toThrow('No file uploaded or wrong file type uploaded');
         });
 
+        it('throws an error if no token is found', async () => {
+            getToken.mockReturnValue(null);
+
+            await expect(uploadTitleEpisode(filePath)).rejects.toThrow('No token found');
+        });
+
         it('throws an error for unauthorized access', async () => {
             getToken.mockReturnValueOnce('invalidToken'); // Simulate invalid token
 
@@ -303,6 +333,12 @@ describe('uploadTitleBasics', () => {
                 .reply(400, { message: 'No file uploaded or wrong file type uploaded' });
 
             await expect(uploadTitlePrincipals(filePath)).rejects.toThrow('No file uploaded or wrong file type uploaded');
+        });
+
+        it('throws an error if no token is found', async () => {
+            getToken.mockReturnValue(null);
+
+            await expect(uploadTitlePrincipals(filePath)).rejects.toThrow('No token found');
         });
 
         it('throws an error for unauthorized access', async () => {

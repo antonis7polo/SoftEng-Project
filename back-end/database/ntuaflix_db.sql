@@ -76,7 +76,7 @@ CREATE TABLE Titles (
   end_year 			  INTEGER, -- add better domain here (>0)
   runtime_minutes	INTEGER, -- add better domain here (>0)
   image_url_poster  VARCHAR(255) NULL,
-  average_rating  DECIMAL(3,2),
+  average_rating  DECIMAL(4,2),
   num_votes     INTEGER
 );
 
@@ -159,8 +159,8 @@ CREATE TABLE Principals (
 -- Add Users table
 CREATE TABLE Users (
   user_id       INT AUTO_INCREMENT PRIMARY KEY,
-  username      VARCHAR(255) NOT NULL,
-  email         VARCHAR(255) NOT NULL,
+  username      VARCHAR(255) NOT NULL UNIQUE,
+  email         VARCHAR(255) NOT NULL UNIQUE,
   password      VARCHAR(255) NOT NULL, -- Store hashed passwords, never plain text
   created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   isAdmin       BOOLEAN NOT NULL

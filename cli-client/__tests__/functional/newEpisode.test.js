@@ -44,7 +44,7 @@ describe('/neweepisode command', () => {
             expect(code).toBe(0);
             expect(stderr).toBe('');
             expect(stdout).toContain('Welcome to NTUAFLIX!');
-            expect(stdout).toContain('Your ID is: 22');
+            expect(stdout).toContain('Your ID is: 8');
             shell.exec('se2321 newepisode -f /Users/harrypapadakis/Documents/7th_semester/software_engineering/truncated_data/truncated_title.episode.tsv', {silent: true}, (code, stdout, stderr) => {
                 expect(code).toBe(1);
                 expect(stderr).toContain('Failed to upload');

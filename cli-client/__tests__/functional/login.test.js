@@ -1,17 +1,17 @@
 const shell = require('shelljs');
 const fs = require('fs');
 const path = require('path');
-const tokenFilePath =  path.join(__dirname, '../src/utils/.token');
+const tokenFilePath =  path.join(__dirname, '../../src/utils/.token');
 
   describe('/login command', () => {
 
     it('successfully logs in with valid credentials', (done) => {
 
-        shell.exec('se2321 login -u newUsername -p newPassword', {silent: true}, (code, stdout, stderr) => {
+        shell.exec('se2321 login -u harrypap -p el20022', {silent: true}, (code, stdout, stderr) => {
         expect(code).toBe(0);
         expect(stderr).toBe('');
         expect(stdout).toContain('Welcome to NTUAFLIX!');
-        expect(stdout).toContain('Your ID is: 5');
+        expect(stdout).toContain('Your ID is: 1');
 
         if (fs.existsSync(tokenFilePath)) {
             const storedToken = fs.readFileSync(tokenFilePath, 'utf8');
@@ -23,7 +23,6 @@ const tokenFilePath =  path.join(__dirname, '../src/utils/.token');
         done();
         });
     });
-    });
 
     it('fails to log in with invalid credentials', (done) => {
 
@@ -33,6 +32,8 @@ const tokenFilePath =  path.join(__dirname, '../src/utils/.token');
         expect(stdout).toBe('');
         done();
         });
+  });
+
   });
 
 

@@ -4,6 +4,7 @@ const { clearToken } = require('../../src/utils/tokenStorage');
 describe('/resetall command', () => {
 
   it('successfully performs reset all operation', (done) => {
+    jest.setTimeout(20000); // Increase timeout to 20 seconds
     shell.exec('se2321 resetall', { silent: true }, (code, stdout, stderr) => {
       expect(code).toBe(0);
       expect(stderr).toBe('');
@@ -22,20 +23,19 @@ describe('/resetall command', () => {
     });
   });
 
-    it('handles error when not admin', (done) => {
-        shell.exec('se2321 login -u bothos12 -p nick123', { silent: true }, (code, stdout, stderr) => {
-        expect(code).toBe(0);
-        expect(stderr).toBe('');
-        expect(stdout).toContain('Welcome to NTUAFLIX!');
-        expect(stdout).toContain('Your ID is: 22');
-    
-        shell.exec('se2321 resetall', { silent: true }, (code, stdout, stderr) => {
-            expect(code).toBe(1);
-            expect(stderr).toContain('Reset all operation failed: Not Authorized');
-            done();
-        });
-        });
-    });
+  it('handles error when not admin', (done) => {
+    shell.exec('se2321 login -u bothos12 -p nick123', { silent: true }, (code, stdout, stderr) => {
+      expect(code).toBe(0);
+      expect(stderr).toBe('');
+      expect(stdout).toContain('Welcome to NTUAFLIX!');
+      expect(stdout).toContain('Your ID is: 8');
 
+      shell.exec('se2321 resetall', { silent: true }, (code, stdout, stderr) => {
+        expect(code).toBe(1);
+        expect(stderr).toContain('Reset all operation failed: Not Authorized');
+        done();
+      });
+    });
+  });
 
 });

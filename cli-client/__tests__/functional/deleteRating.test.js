@@ -4,7 +4,7 @@ const {clearToken} = require('../../src/utils/tokenStorage');
 describe('/deleterating command', () => {
     it('successfully deletes rating with valid input', (done) => {
     
-        shell.exec('se2321 deleterating -u 5 -t tt0015414', {silent: true}, (code, stdout, stderr) => {
+        shell.exec('se2321 deleterating -u 1 -t tt0097949', {silent: true}, (code, stdout, stderr) => {
           expect(code).toBe(0);
           expect(stderr).toBe('');
           expect(stdout).toContain('Rating deleted successfully');
@@ -12,13 +12,24 @@ describe('/deleterating command', () => {
         });
       });
 
-      it('displays error for invalid title input', (done) => {
-        shell.exec('se2321 deleterating -u 5 -t foo', {silent: true}, (code, stdout, stderr) => {
+      it('displays error for invalid title input (title already deleted)', (done) => {
+        shell.exec('se2321 deleterating -u 1 -t tt0097949', {silent: true}, (code, stdout, stderr) => {
           expect(code).not.toBe(0);
           expect(stderr).toContain('Failed to delete rating');
           done();
         });
       });
+
+      it('displays error for invalid title input', (done) => {
+        shell.exec('se2321 deleterating -u 1 -t foo', {silent: true}, (code, stdout, stderr) => {
+          expect(code).not.toBe(0);
+          expect(stderr).toContain('Failed to delete rating');
+          done();
+        });
+      });
+
+
+
 
       it('displays error for invalid user input', (done) => {
         shell.exec('se2321 deleterating -u foo -t tt0034841', {silent: true}, (code, stdout, stderr) => {

@@ -26,6 +26,12 @@ describe('resetAll', () => {
       const response = await resetAll();
       expect(response).toEqual(mockResponse);
     });
+
+    it('throws an error if no token is found', async () => {
+        getToken.mockReturnValue(null);
+  
+        await expect(resetAll()).rejects.toThrow('No token found');
+    });
   
     it('throws an error for unauthorized access', async () => {
       getToken.mockReturnValueOnce('invalidToken'); // Simulate invalid token

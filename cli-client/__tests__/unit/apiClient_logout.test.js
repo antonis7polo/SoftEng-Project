@@ -40,6 +40,12 @@ describe('logout', () => {
     expect(clearToken).not.toHaveBeenCalled(); // Token clearing should not be attempted
   });
 
+  it('throws an error if no token is found', async () => {
+    getToken.mockReturnValue(null);
+
+    await expect(logout()).rejects.toThrow('No token found');
+  });
+
   it('throws an error for unauthorized logout attempt', async () => {
     nock(baseURL)
       .post(path, {}, {

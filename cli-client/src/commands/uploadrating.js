@@ -14,7 +14,7 @@ const uploadRatingCommand = (program) => {
           console.error('Invalid rating. Please enter a number between 1 and 10.');
           process.exit(1);
         }
-        const result = await uploadUserRating(userid, titleid, rating);
+        const result = await uploadUserRating(userid, titleid, String(rating));
         console.log(result.message);
       } catch (error) {
         console.error('Failed to upload rating:', error.message);

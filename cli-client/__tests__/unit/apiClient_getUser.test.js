@@ -48,6 +48,12 @@ describe('getUser', () => {
       const response = await getUser(username, 'csv');
       expect(response).toBe(csvResponse);
     });
+
+    it('throws an error if no token is found', async () => {
+      getToken.mockReturnValue(null);
+
+      await expect(getUser(username)).rejects.toThrow('No token found');
+    });
   
     it('throws an error for unauthorized access', async () => {
       getToken.mockReturnValueOnce('invalidToken'); // Simulate invalid token

@@ -5,7 +5,7 @@ describe('/user command', () => {
 
 
   it('successfully retrieves user data in JSON format', (done) => {
-    shell.exec('se2321 user -u bothos12', { silent: true }, (code, stdout, stderr) => {
+    shell.exec('se2321 user -u nickolasbv', { silent: true }, (code, stdout, stderr) => {
       expect(code).toBe(0);
       expect(stderr).toBe('');
       expect(() => JSON.parse(stdout)).not.toThrow();
@@ -14,7 +14,7 @@ describe('/user command', () => {
   });
 
   it('successfully retrieves user data in CSV format', (done) => {
-    shell.exec('se2321 user -u bothos12 -f csv', { silent: true }, (code, stdout, stderr) => {
+    shell.exec('se2321 user -u nickolasbv -f csv', { silent: true }, (code, stdout, stderr) => {
       expect(code).toBe(0);
       expect(stderr).toBe('');
       done();
@@ -33,7 +33,7 @@ describe('/user command', () => {
 
   it('handles errors when no token provided', (done) => {
     clearToken();
-    shell.exec('se2321 user -u bothos12', { silent: true }, (code, stdout, stderr) => {
+    shell.exec('se2321 user -u nickolasbv', { silent: true }, (code, stdout, stderr) => {
       expect(code).toBe(1);
       expect(stderr).toContain('Error');
       done();

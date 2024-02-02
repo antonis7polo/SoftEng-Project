@@ -90,10 +90,15 @@ const addUser = async (username, password, email, isAdmin) => {
 
 
 const getUser = async (username, format) => {
+  const token = getToken();
+  if (!token) {
+    throw new Error('No token found. You are not logged in.');
+  }
+
   try {
     const response = await apiInstance.get(`/admin/users/${username}`, {
       params: { format },
-      headers: { 'x-observatory-auth': getToken() }
+      headers: { 'x-observatory-auth': token }
     });
     return response.data;
   } catch (error) {
@@ -356,11 +361,10 @@ const getTitleByID = async (titleID, format = 'json') => {
     if (error.response) {
       throw new Error(error.response.data.message);
     } else {
-      throw new Error('Error retrieving title information');
+      throw new Error(`Error: ${error.message}`);
     }
   }
 };
-
 
 
 const searchTitleByPart = async (titlePart, format = 'json') => {

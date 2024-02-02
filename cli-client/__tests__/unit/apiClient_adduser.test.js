@@ -55,6 +55,12 @@ describe('addUser', () => {
         await expect(addUser(userCredentials.username, userCredentials.password, userCredentials.email, 'foo'))
           .rejects.toThrow('Missing or invalid required fields');
       });
+
+    it('throws an error if no token is found', async () => {
+      getToken.mockReturnValue(null);
+
+      await expect(addUser(userCredentials.username, userCredentials.password, userCredentials.email, userCredentials.isAdmin)).rejects.toThrow('No token found');
+    });
   
     it('throws an error for unauthorized access', async () => {
       getToken.mockReturnValueOnce('invalidToken'); // Simulate invalid token

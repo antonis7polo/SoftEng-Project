@@ -1,7 +1,7 @@
 const shell = require('shelljs');
 const fs = require('fs');
 const path = require('path');
-const tokenFilePath =  path.join(__dirname, '../src/utils/.token');
+const tokenFilePath =  path.join(__dirname, '../../src/utils/.token');
 
 
 describe('/logout command', () => {
@@ -19,6 +19,8 @@ describe('/logout command', () => {
         done();
       });
     });
+
+
   
     it('handles error when not logged in', (done) => {
       shell.exec('se2321 logout', {silent: true}, (code, stdout, stderr) => {
