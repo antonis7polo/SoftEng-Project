@@ -4,7 +4,9 @@
   "description": "CLI client of REST API",
   "main": "cli.js",
   "scripts": {
-    "test": "jest __tests__/functional/login.test.js  &&  jest __tests__/functional/name.test.js"
+    "test:functional": "jest __tests__/functional/login.test.js && jest __tests__/functional/logout.test.js && jest __tests__/functional/name.test.js && jest __tests__/functional/title.test.js && jest __tests__/functional/byGenre.test.js && jest __tests__/functional/healthcheck.test.js && jest __tests__/functional/home.test.js  && jest __tests__/functional/recommendations.test.js && jest __tests__/functional/searchName.test.js && jest __tests__/functional/searchTitle.test.js && jest __tests__/functional/titleDetails.test.js && jest __tests__/functional/tvShowsEpisodes.test.js && jest __tests__/functional/user.test.js" ,
+    "test:unit": "jest __tests__/unit/",
+    "test": "npm run test:functional && npm run test:unit"
   },
   "repository": {
     "type": "git",

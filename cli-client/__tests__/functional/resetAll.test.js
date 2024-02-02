@@ -2,6 +2,16 @@ const shell = require('shelljs');
 const { clearToken } = require('../../src/utils/tokenStorage');
 
 describe('/resetall command', () => {
+  beforeAll((done) => {
+    // Execute login command
+    shell.exec('se2321 login --username harrypap --passw el20022', { silent: true }, (code, stdout, stderr) => {
+      if (code === 0) {
+        done(); // Proceed to tests after successful login
+      } else {
+        done(new Error('Login failed, cannot proceed with tests'));
+      }
+    });
+  });
 
   it('successfully performs reset all operation', (done) => {
     jest.setTimeout(20000); // Increase timeout to 20 seconds

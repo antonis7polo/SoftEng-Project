@@ -1,9 +1,21 @@
 const shell = require('shelljs');
-const {clearToken} = require('../../src/utils/tokenStorage');
+const { clearToken } = require('../../src/utils/tokenStorage');
 
 describe('/bygenre command', () => {
+
+    beforeAll((done) => {
+        // Execute login command
+        shell.exec('se2321 login --username harrypap --passw el20022', { silent: true }, (code, stdout, stderr) => {
+            if (code === 0) {
+                done(); // Proceed to tests after successful login
+            } else {
+                done(new Error('Login failed, cannot proceed with tests'));
+            }
+        });
+    });
+
     it('outputs valid JSON with correct structure and content', (done) => {
-        shell.exec('se2321 bygenre --genre Comedy --min 8.2', {silent: true}, (code, stdout, stderr) => {
+        shell.exec('se2321 bygenre --genre Comedy --min 8.2', { silent: true }, (code, stdout, stderr) => {
             const output = JSON.parse(stdout);
             expect(output).toHaveProperty('titleObjects');
             expect(Array.isArray(output.titleObjects)).toBeTruthy();
@@ -15,7 +27,7 @@ describe('/bygenre command', () => {
     });
 
     it('outputs valid CSV with correct structure and content', (done) => {
-        shell.exec('se2321 bygenre -g Comedy -m 8.2 -f csv', {silent: true}, (code, stdout, stderr) => {
+        shell.exec('se2321 bygenre -g Comedy -m 8.2 -f csv', { silent: true }, (code, stdout, stderr) => {
             const rows = stdout.trim().split('\n');
             expect(rows.length).toBe(3); // 2 data rows + 1 header row
             const expectedHeader = "\"titleID\",\"type\",\"originalTitle\",\"titlePoster\",\"startYear\",\"endYear\",\"genres\",\"titleAkas\",\"principals\",\"avRating\",\"nVotes\"";
@@ -28,7 +40,7 @@ describe('/bygenre command', () => {
 
 
     it('outputs valid JSON with correct structure and content for start year from 1992', (done) => {
-        shell.exec('se2321 bygenre -g Comedy -m 7 --from 1992', {silent: true}, (code, stdout, stderr) => {
+        shell.exec('se2321 bygenre -g Comedy -m 7 --from 1992', { silent: true }, (code, stdout, stderr) => {
             const output = JSON.parse(stdout);
             expect(output).toHaveProperty('titleObjects');
             expect(Array.isArray(output.titleObjects)).toBeTruthy();
@@ -40,7 +52,7 @@ describe('/bygenre command', () => {
     });
 
     it('outputs valid CSV with correct structure and content for start year from 1992', (done) => {
-        shell.exec('se2321 bygenre -g Comedy -m 7 --from 1992 -f csv', {silent: true}, (code, stdout, stderr) => {
+        shell.exec('se2321 bygenre -g Comedy -m 7 --from 1992 -f csv', { silent: true }, (code, stdout, stderr) => {
             const rows = stdout.trim().split('\n');
             expect(rows.length).toBe(3); // 2 data rows + 1 header row
             const expectedHeader = "\"titleID\",\"type\",\"originalTitle\",\"titlePoster\",\"startYear\",\"endYear\",\"genres\",\"titleAkas\",\"principals\",\"avRating\",\"nVotes\"";
@@ -52,7 +64,7 @@ describe('/bygenre command', () => {
     });
 
     it('outputs valid JSON with correct structure and content for start year from 1991 to 1992', (done) => {
-        shell.exec('se2321 bygenre -g Comedy -m 7.5 --from 1991 --to 1992', {silent: true}, (code, stdout, stderr) => {
+        shell.exec('se2321 bygenre -g Comedy -m 7.5 --from 1991 --to 1992', { silent: true }, (code, stdout, stderr) => {
             const output = JSON.parse(stdout);
             expect(output).toHaveProperty('titleObjects');
             expect(Array.isArray(output.titleObjects)).toBeTruthy();
@@ -62,7 +74,7 @@ describe('/bygenre command', () => {
     });
 
     it('outputs valid CSV with correct structure and content for start year from 1991 to 1992', (done) => {
-        shell.exec('se2321 bygenre -g Comedy -m 7.5 --from 1991 --to 1992 -f csv', {silent: true}, (code, stdout, stderr) => {
+        shell.exec('se2321 bygenre -g Comedy -m 7.5 --from 1991 --to 1992 -f csv', { silent: true }, (code, stdout, stderr) => {
             const rows = stdout.trim().split('\n');
             expect(rows.length).toBe(8); // 7 data rows + 1 header row
             const expectedHeader = "\"titleID\",\"type\",\"originalTitle\",\"titlePoster\",\"startYear\",\"endYear\",\"genres\",\"titleAkas\",\"principals\",\"avRating\",\"nVotes\"";
@@ -73,30 +85,30 @@ describe('/bygenre command', () => {
 
     it('handles invalid genres properly', (done) => {
         shell.exec('se2321 bygenre -g InvalidGenre -m 7', { silent: true }, (code, stdout, stderr) => {
-          expect(code).not.toBe(0); // Non-zero exit code for error
-          expect(stderr).not.toBe(''); // Error message should be present
-          expect(stderr).toContain('Error');
+            expect(code).not.toBe(0); // Non-zero exit code for error
+            expect(stderr).not.toBe(''); // Error message should be present
+            expect(stderr).toContain('Error');
 
-          done();
+            done();
         });
-      });
+    });
 
     it('handles no results found properly', (done) => {
         shell.exec('se2321 bygenre -g Comedy -m 10', { silent: true }, (code, stdout, stderr) => {
-          expect(code).not.toBe(0); // Non-zero exit code for error
-          expect(stderr).not.toBe(''); // Error message should be present
-          expect(stderr).toContain('Error');
-          done();
+            expect(code).not.toBe(0); // Non-zero exit code for error
+            expect(stderr).not.toBe(''); // Error message should be present
+            expect(stderr).toContain('Error');
+            done();
         });
-      });
+    });
 
-    
+
     it('handles no token found scenario', (done) => {
         clearToken();
         shell.exec('se2321 bygenre -g Comedy -m 7', { silent: true }, (code, stdout, stderr) => {
-          expect(code).not.toBe(0);
-          expect(stderr).toContain('No token found');
-          done();
+            expect(code).not.toBe(0);
+            expect(stderr).toContain('No token found');
+            done();
         });
     });
 
