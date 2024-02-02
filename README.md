@@ -446,44 +446,56 @@ To use the Postman collection for testing:
 ---
 These tests are integral to our development workflow, helping us to maintain high standards of quality and reliability for the Ntuaflix API. We encourage developers and testers to utilize this collection for a thorough understanding and verification of the API's capabilities.
 
-## CLI Client Functional Testing
+## CLI Client Testing 
 
 ### Overview
 ---
-Our project includes a comprehensive suite of functional tests for the CLI client, located in the `__tests__` folder within the `cli-client` directory. These tests are designed to ensure the reliability and correctness of the CLI client's functionalities.
+Our project adopts a comprehensive testing strategy that includes both functional and unit testing to ensure the CLI client operates reliably and correctly. Functional tests are situated in the `__tests__/functional` directory, and unit tests are located in the `__tests__/unit` directory within the `cli-client` folder. This approach guarantees thorough validation of each component and command the CLI client offers.
 
 ### Testing Framework and Libraries
 ---
-We use Jest as our testing framework, combined with ShellJS for executing CLI commands. This setup allows us to simulate real-world usage scenarios of our CLI client and validate its behavior.
-Each test case simulates a CLI command and checks for expected outcomes, such as exit codes, error messages, and success confirmations.
+We leverage Jest as our primary testing framework for both functional and unit tests. For functional testing, ShellJS is utilized to execute CLI commands, simulating real-world usage scenarios and validating expected outcomes like exit codes, error messages, and success messages. For unit testing, we employ Jest's mocking capabilities to isolate and test individual units of code effectively.
 
 ### Executing the Tests
 ---
-To run the tests for the CLI client, you need to navigate to the `cli-client` directory and execute the test command defined in the `package.json` file. Here is an example of how the test script is set up in the `package.json`:
+To execute the CLI client tests, navigate to the `cli-client` directory. The `package.json` file defines scripts to run functional tests, unit tests, or both. The testing scripts are designed to accommodate the authentication dependency present in functional tests, allowing for sequential execution with necessary login steps between tests.
+
+Here's an overview of the test scripts in `package.json`:
 
 ```json
 "scripts": {
-  "test": "jest __tests__/login.test.js && jest __tests__/tvShowsEpisodes.test.js"
+  "test:functional": "jest __tests__/functional/login.test.js && jest __tests__/functional/logout.test.js && ...",
+  "test:unit": "jest __tests__/unit/",
+  "test": "npm run test:functional && npm run test:unit"
 }
 ```
 
-This script tells Jest to run tests from the specified test files. To execute these tests, use the following command in your terminal:
+To run all tests, use the following command:
 
 ```sh
 npm test
 ```
 
-This command will sequentially run the `login.test.js` and `tvShowsEpisodes.test.js` test suites. You can modify the script in `package.json` to include additional test files as required for your application.
+To execute only functional or unit tests, use:
 
+```sh
+npm run test:functional
+npm run test:unit
+```
 
-
-### Test Configuration
----
-The Jest configuration for our tests is specified in the `jest.config.js` file. This configuration sets the test environment to Node.js, ensuring that our tests run in an environment similar to where the CLI client operates.
+These commands will execute the test suites as specified, allowing for targeted testing of functional or unit aspects as needed.
 
 ### Contributing to Tests
 ---
-We encourage contributions to our test suite. If you're adding new features or fixing bugs in the CLI client, please include corresponding test cases. This practice ensures the continued reliability and robustness of the CLI client.
+Contributions to the test suite are highly encouraged, especially when adding new features or fixing bugs. Please ensure to include corresponding functional or unit tests as applicable. This practice helps maintain and enhance the CLI client's reliability and quality.
+
+### Test Configuration
+---
+Our test configuration is outlined in the `jest.config.js` file, setting the test environment to Node.js to mirror the CLI client's operational environment closely.
+
+### Adding More Tests
+---
+The testing suite is designed to be extensible. Users wishing to add more functional tests can do so by appending additional test files to the `test:functional` script in `package.json`. This flexibility ensures comprehensive coverage as the CLI client evolves.
 
 ## Diagrams
 
