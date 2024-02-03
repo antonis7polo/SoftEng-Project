@@ -43,7 +43,7 @@ async function getTitleByID(req, res) {
             principals: principalsResult, 
             rating: {
                 avRating: titleResult[0].average_rating, 
-                nVotes: titleResult[0].num_votes ? titleResult[0].num_votes.toString() : null 
+                nVotes: titleResult[0].num_votes ? titleResult[0].num_votes.toString() : "0"
             }
         };
 
@@ -122,7 +122,7 @@ async function searchTitleByPart(req, res) {
                 principals: principalsResult, 
                 rating: {
                     avRating: title.average_rating, 
-                    nVotes: title.num_votes ? title.num_votes.toString() : null
+                    nVotes: title.num_votes ? title.num_votes.toString() : "0"
                 }
             };
         }));
@@ -266,7 +266,7 @@ async function getTitlesByGenre(req, res) {
                 principals: principalsResult,
                 rating: {
                     avRating: title.average_rating,
-                    nVotes: title.num_votes ? title.num_votes.toString() : null
+                    nVotes: title.num_votes ? title.num_votes.toString() : "0"
                 }
             };
         }));
