@@ -19,7 +19,7 @@ const NameDetail = ({ nameDetails }) => {
                     token = JSON.parse(tokenData).token;
                 }
                 const config = { headers: { 'X-OBSERVATORY-AUTH': token } };
-                const promises = nameDetails.nameTitles.map(title => 
+                const promises = nameDetails.nameTitles.map(title =>
                     axios.get(`https://localhost:9876/ntuaflix_api/title/${title.titleID}`, config)
                         .then(response => ({ [title.titleID]: response.data.titleObject.originalTitle }))
                         .catch(error => console.error('Error fetching movie title:', error))
@@ -55,9 +55,9 @@ const NameDetail = ({ nameDetails }) => {
                         {nameDetails.name}
                     </Typography>
                     {nameDetails.birthYr && (
-                    <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
-                        Birth Year: {nameDetails.birthYr}
-                    </Typography>
+                        <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
+                            Birth Year: {nameDetails.birthYr}
+                        </Typography>
                     )}
                     {nameDetails.deathYr && (
                         <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
@@ -65,20 +65,22 @@ const NameDetail = ({ nameDetails }) => {
                         </Typography>
                     )}
                     <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
-                        Professions: {nameDetails.profession.split(',').map(profession => profession.replace(/_/g, ' ')).join(', ')}
+                        Professions: {nameDetails.profession.split(',').map(profession =>
+                            profession.trim().replace(/_/g, ' ').replace(/^\w/, (c) => c.toUpperCase())
+                        ).join(', ')}
                     </Typography>
                     {nameDetails.nameTitles && (
-                       <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
-                       Titles:
-                       {nameDetails.nameTitles.map((title, index) => (
-                           <React.Fragment key={title.titleID}>
-                               {index > 0 && ', '}
-                               <Link href={`/title/${title.titleID}`} color="inherit">
-                                   {movieTitles[title.titleID] || title.titleID}
-                               </Link>
-                           </React.Fragment>
-                       ))}
-                     </Typography>
+                        <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
+                            Titles:
+                            {nameDetails.nameTitles.map((title, index) => (
+                                <React.Fragment key={title.titleID}>
+                                    {index > 0 && ', '}
+                                    <Link href={`/title/${title.titleID}`} color="inherit">
+                                        {movieTitles[title.titleID] || title.titleID}
+                                    </Link>
+                                </React.Fragment>
+                            ))}
+                        </Typography>
                     )}
                 </CardContent>
             </Card>

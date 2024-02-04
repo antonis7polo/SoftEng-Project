@@ -182,7 +182,7 @@ const MovieDetail = ({ movie }) => {
                         Year: {titleObject.startYear}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
-                        Genres: {genres}
+                        Genres: {genres} 
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
                         Alternate Titles: {akas}
@@ -194,7 +194,7 @@ const MovieDetail = ({ movie }) => {
                         </Typography>
                     ))}
                     <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
-                        Average Rating: {averageRating} ({numberOfVotes} votes)
+                        { averageRating > 0 ? `Average Rating: ${averageRating} (${numberOfVotes} votes)` : 'Average Rating: N/A (0 votes)' }
                     </Typography>
                     <Rating
                     name="user-rating"
