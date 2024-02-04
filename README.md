@@ -9,9 +9,9 @@ Ntuaflix is a comprehensive platform designed to aggregate and present detailed 
 This project is the result of collaborative efforts by a team of aspiring software engineers:
 
 - **Antonios Alexiadis el20167@mail.ntua.gr** - Dedicated to frontend development and user interface design, with additional involvement in documentation.
+- **Nikolaos Bothos Vouterakos el20158@mail.ntua.gr** - Oversaw project management and led testing initiatives, while also contributing to frontend development.
 - **Chrisostomos Kopitas el20136@mail.ntua.gr** - Specialized in the development of the database and management of data.
 - **Charidimos Papadakis el20022@mail.ntua.gr** - Concentrated on API development and also contributed to the CLI client.
-- **Nikolaos Bothos Vouterakos el20158@mail.ntua.gr** - Oversaw project management and led testing initiatives, while also contributing to frontend development.
 
 ## Description
 Ntuaflix is an innovative platform meticulously crafted for cinephiles and industry professionals, functioning as a comprehensive repository of metadata for films and television series. This dynamic platform primarily focuses on providing in-depth information, such as detailed synopses, extensive cast and crew lists, genre classifications and ratings. It stands out by offering personalized recommendations, tailored to enhance the users' exploration and discovery of cinematic content.
