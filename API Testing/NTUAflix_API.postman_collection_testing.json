@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "344c9e2e-464a-4c76-b149-2fcd9fe981c6",
+		"_postman_id": "4f46dbda-8b74-4cdb-ae72-154c2217926a",
 		"name": "NTUAflix API",
 		"description": "The NTUAflix API provides programmatic access to a comprehensive database of films, television shows, actors, and film industry professionals. It is designed to offer extensive information about titles, including cast, crew, production details and user ratings. The API enables developers to integrate this rich dataset into their applications, providing users with detailed insights and information about the film and television industry.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -21,6 +21,10 @@
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
+									"",
+									"let respData = pm.response.json();",
+									"pm.collectionVariables.set(\"token\", respData.token);",
+									"",
 									"",
 									"// Test for the presence of token and userID in response",
 									"pm.test(\"Response contains token and userID\", function () {",
@@ -3414,7 +3418,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\n  \"email\": \"<string>\",\n  \"isAdmin\": \"1\"\n}",
+													"raw": "{\n  \"email\": \"{{email}}\",\n  \"isAdmin\": \"1\"\n}",
 													"options": {
 														"raw": {
 															"headerFamily": "json",
@@ -3436,12 +3440,12 @@
 													"variable": [
 														{
 															"key": "username",
-															"value": "{{username}}",
+															"value": "{{newUsername}}",
 															"description": "User's username"
 														},
 														{
 															"key": "password",
-															"value": "{{password}}",
+															"value": "{{newPassword}}",
 															"description": "User's password"
 														}
 													]
@@ -3737,7 +3741,7 @@
 													"pm.test(\"User information is received in json\", function () {",
 													"    var jsonData = pm.response.json();",
 													"    pm.expect(jsonData).to.have.property(\"user\");",
-													"    pm.expect(jsonData.user).to.have.property(\"username\");",
+													"    pm.expect(jsonData.user).to.have.property(\"newUsername\");",
 													"    pm.expect(jsonData.user).to.have.property(\"email\");",
 													"    pm.expect(jsonData.user).to.have.property(\"isAdmin\");",
 													"    pm.expect(jsonData.user).to.have.property(\"created_at\");",
@@ -4085,6 +4089,78 @@
 											"    pm.response.to.have.status(200);",
 											"});",
 											"",
+											"pm.test(\"Average rating is updated correctly after update\", function(){",
+											"    const responseData = pm.response.json();",
+											"    const titleObject = responseData.titleObject;",
+											"    ",
+											"    let prevAvRating = parseFloat(pm.collectionVariables.get(\"prevAvRating\"));",
+											"    let prevNVotes = parseInt(pm.collectionVariables.get(\"prevNVotes\"), 10);",
+											"    let oldUserRating = parseFloat(pm.collectionVariables.get(\"oldUserRating\")); // The rating before update",
+											"    let newUserRating = parseFloat(pm.collectionVariables.get(\"uploadedRating\")); // The new rating",
+											"    ",
+											"    let totalRatingSumBeforeUpdate = prevAvRating * prevNVotes;",
+											"    let totalRatingSumAfterUpdate = totalRatingSumBeforeUpdate - oldUserRating + newUserRating;",
+											"    let newAvRatingExpected = totalRatingSumAfterUpdate / prevNVotes;",
+											"    ",
+											"    let newAvRatingActual = parseFloat(titleObject.rating.avRating);",
+											"    ",
+											"    pm.expect(newAvRatingActual).to.approximately(newAvRatingExpected, 0.01, \"Average rating did not update correctly\");",
+											"",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Average rating is updated correctly after deletion\", function () {",
+											"    const responseData = pm.response.json();",
+											"    const { rating } = responseData.titleObject;",
+											"    const newAvRating = parseFloat(rating.avRating);",
+											"    const newNVotes = parseInt(rating.nVotes, 10);",
+											"    ",
+											"    const prevAvRating = parseFloat(pm.collectionVariables.get(\"prevAvRating\"));",
+											"    const prevNVotes = parseInt(pm.collectionVariables.get(\"prevNVotes\"), 10);",
+											"    ",
+											"    // Assuming a rating was successfully deleted, calculate the expected new average",
+											"    let expectedNewAvRating;",
+											"    if (prevNVotes > 1) {",
+											"        expectedNewAvRating = ((prevAvRating * prevNVotes) - pm.collectionVariables.get(\"uploadedRating\")) / (prevNVotes - 1);",
+											"    } else {",
+											"        // Handle case where the last rating was deleted",
+											"        expectedNewAvRating = 0; // Adjust based on how your system handles this case",
+											"    }",
+											"    ",
+											"    // Verify the new average rating",
+											"    pm.expect(newAvRating).to.approximately(expectedNewAvRating, 0.01, \"Average rating did not update correctly\");",
+											"    pm.expect(newNVotes).to.eql(prevNVotes - 1, \"Number of votes did not update correctly\");",
+											"});",
+											"",
+											"",
+											"",
+											"pm.test(\"Average rating is updated correctly after insertion\", function () {",
+											"    const responseJson = pm.response.json();",
+											"    const titleObject = responseJson.titleObject;",
+											"    ",
+											"    let prevAvRating = parseFloat(pm.variables.get(\"prevAvRating\"));",
+											"    let prevNVotes = parseInt(pm.variables.get(\"prevNVotes\"), 10);",
+											"    let newRating = parseFloat(pm.variables.get(\"uploadedRating\"));",
+											"    ",
+											"    // Calculate the new expected average rating.",
+											"    let newAvRatingExpected = ((prevAvRating * prevNVotes) + newRating) / (prevNVotes + 1);",
+											"",
+											"    // Get the new average rating and number of votes from the response.",
+											"    let newAvRatingActual = parseFloat(titleObject.rating.avRating);",
+											"    let newNVotesActual = parseInt(titleObject.rating.nVotes, 10);",
+											"",
+											"    // Assert the new average rating and number of votes are as expected.",
+											"    pm.expect(newAvRatingActual).to.approximately(newAvRatingExpected, 0.01, \"Average rating did not update correctly\");",
+											"    pm.expect(newNVotesActual).to.eql(prevNVotes + 1, \"Number of votes did not update correctly\");",
+											"});",
+											"",
+											"",
+											"let responseData = pm.response.json();",
+											"let titleObject = responseData.titleObject;",
+											"pm.collectionVariables.set(\"prevAvRating\", titleObject.rating.avRating);",
+											"pm.collectionVariables.set(\"prevNVotes\", titleObject.rating.nVotes);",
+											"",
 											"pm.test(\"Response structure is correct\", function () {",
 											"    let jsonData = pm.response.json();",
 											"    ",
@@ -4282,7 +4358,7 @@
 									"variable": [
 										{
 											"key": "titleID",
-											"value": "{{titleID}}",
+											"value": "{{uploadedTitleID}}",
 											"description": "(Required) The unique identifier of the title."
 										}
 									]
@@ -6366,6 +6442,14 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
+									"pm.test(\"Rating uploaded successfully\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    let respData = pm.response.json();",
+									"    pm.expect(respData.message).to.eql(\"Rating uploaded successfully\");",
+									"    // Optionally set variables for verification",
+									"    pm.collectionVariables.set(\"uploadedTitleID\", \"tt0081008\");",
+									"});",
+									"",
 									"",
 									"pm.test(\"Message is a string\", function () {",
 									"    const responseData = pm.response.json();",
@@ -6453,7 +6537,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"userID\": \"<string>\",\n  \"titleID\": \"<string>\",\n  \"userRating\": \"<string>\"\n}",
+							"raw": "{\n  \"userID\": \"{{userID}}\",\n  \"titleID\": \"{{uploadedTitleID}}\",\n  \"userRating\": \"{{uploadedRating}}\"\n}",
 							"options": {
 								"raw": {
 									"headerFamily": "json",
@@ -6716,6 +6800,7 @@
 													"pm.test(\"Response contains success message\", function () {",
 													"    var jsonData = pm.response.json();",
 													"    pm.expect(jsonData.message).to.eql(\"Rating deleted successfully\");",
+													"    pm.collectionVariables.set(\"deletedTitleID\", pm.collectionVariables.get(\"uploadedTitleID\")); ",
 													"});",
 													"",
 													"pm.test(\"Status code is 401 for unauthorized access\", function () {",
@@ -6798,7 +6883,7 @@
 												},
 												{
 													"key": "titleID",
-													"value": "{{titleID}}",
+													"value": "{{uploadedTitleID}}",
 													"description": "(Required) Title ID of the title rating to be deleted"
 												}
 											]
@@ -7021,6 +7106,24 @@
 											"pm.test(\"Response status code is 200\", function () {",
 											"    pm.response.to.have.status(200);",
 											"});",
+											"",
+											"pm.test(\"Verify uploaded rating\", function () {",
+											"    let responseData = pm.response.json();",
+											"    pm.expect(responseData).to.have.property(\"ratings\");",
+											"    const rating = responseData.ratings.find(r => r.title_id === pm.collectionVariables.get(\"uploadedTitleID\"));",
+											"    pm.expect(rating).to.be.an(\"object\");",
+											"    pm.expect(rating.user_rating).to.eql(pm.collectionVariables.get(\"uploadedRating\"));",
+											"});",
+											"",
+											"pm.test(\"Deleted rating is not present\", function () {",
+											"    let responseData = pm.response.json();",
+											"    let deletedTitleID = pm.collectionVariables.get(\"deletedTitleID\"); ",
+											"    const rating = responseData.ratings.find(r => r.title_id === deletedTitleID);",
+											"",
+											"    pm.expect(rating).to.be.undefined; // If 'rating' is undefined, the rating was successfully deleted",
+											"});",
+											"",
+											"",
 											"",
 											"",
 											"pm.test(\"Response has the required fields - userID and ratings\", function () {",
@@ -7468,9 +7571,9 @@
 							],
 							"query": [
 								{
-									"description": "Response format. Can be 'csv' for CSV format, defaults to JSON if not specified.",
 									"key": "format",
-									"value": "{{format}}"
+									"value": "{{format}}",
+									"description": "Response format. Can be 'csv' for CSV format, defaults to JSON if not specified."
 								}
 							]
 						},
@@ -8807,6 +8910,50 @@
 		{
 			"key": "userID",
 			"value": "userID"
+		},
+		{
+			"key": "uploadedRating",
+			"value": "uploadedRating",
+			"type": "string"
+		},
+		{
+			"key": "uploadedTitleID",
+			"value": "uploadedTitleID",
+			"type": "string"
+		},
+		{
+			"key": "prevAvRating",
+			"value": "prevAvRating",
+			"type": "string"
+		},
+		{
+			"key": "prevNVotes",
+			"value": "prevNVotes",
+			"type": "string"
+		},
+		{
+			"key": "oldUserRating",
+			"value": "oldUserRating",
+			"type": "string"
+		},
+		{
+			"key": "deletedTitleID",
+			"value": "deletedTitileID"
+		},
+		{
+			"key": "email",
+			"value": "email",
+			"type": "string"
+		},
+		{
+			"key": "newUsername",
+			"value": "newUsername",
+			"type": "string"
+		},
+		{
+			"key": "newPassword",
+			"value": "newPassword",
+			"type": "string"
 		}
 	]
 }
