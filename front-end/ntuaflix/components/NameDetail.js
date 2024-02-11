@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Card, CardContent, Typography, Link, useTheme, useMediaQuery } from '@mui/material';
+import Link from 'next/link';
+import { Box, Card, CardContent, Typography, useTheme, useMediaQuery } from '@mui/material';
 import axios from 'axios';
 
 const NameDetail = ({ nameDetails }) => {
@@ -49,39 +50,41 @@ const NameDetail = ({ nameDetails }) => {
                 <Box component="img" src={posterUrl} alt={`Portrait of ${nameDetails.name}`} sx={{ width: '100%', display: 'block', height: '500px' }} />
                 <CardContent sx={{ padding: theme.spacing(3) }}>
                     <Typography gutterBottom variant={isSmallScreen ? 'h6' : 'h5'} component="div" sx={{
-                        color: 'rgb(var(--secondary-color-2))',
+                        color: 'var(--background-color)',
                         fontFamily: 'var(--font-sans)'
                     }}>
                         {nameDetails.name}
                     </Typography>
                     {nameDetails.birthYr && (
-                        <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
+                        <Typography variant="body2" sx={{ color: 'var(--background-color)', fontFamily: 'var(--font-sans)' }}>
                             Birth Year: {nameDetails.birthYr}
                         </Typography>
                     )}
                     {nameDetails.deathYr && (
-                        <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
+                        <Typography variant="body2" sx={{ color: 'var(--background-color)', fontFamily: 'var(--font-sans)' }}>
                             Death Year: {nameDetails.deathYr}
                         </Typography>
                     )}
-                    <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
+                    <Typography variant="body2" sx={{ color: 'var(--background-color)', fontFamily: 'var(--font-sans)' }}>
                         Professions: {nameDetails.profession.split(',').map(profession =>
                             profession.trim().replace(/_/g, ' ').replace(/^\w/, (c) => c.toUpperCase())
                         ).join(', ')}
                     </Typography>
                     {nameDetails.nameTitles && (
-                        <Typography variant="body2" sx={{ color: 'rgb(var(--neutral-color))', fontFamily: 'var(--font-sans)' }}>
-                            Titles:
-                            {nameDetails.nameTitles.map((title, index) => (
+                        <Typography variant="body2" sx={{ color: 'var(--background-color)', fontFamily: 'var(--font-sans)' }}>
+                            Titles: {nameDetails.nameTitles.map((title, index) => (
                                 <React.Fragment key={title.titleID}>
                                     {index > 0 && ', '}
-                                    <Link href={`/title/${title.titleID}`} color="inherit">
-                                        {movieTitles[title.titleID] || title.titleID}
+                                    <Link href={`/title/${title.titleID}`}>
+                                        <span style={{ color: 'inherit', textDecoration: 'underline' }}>
+                                            {movieTitles[title.titleID] || title.titleID}
+                                        </span>
                                     </Link>
                                 </React.Fragment>
                             ))}
                         </Typography>
                     )}
+
                 </CardContent>
             </Card>
         </Box>

@@ -12,7 +12,6 @@ const NameCard = ({ name }) => {
     <Link href={`/name/${name.nameID}`} passHref>
       <Card className="card" style={{ cursor: 'pointer' }}> 
         <CardMedia
-          component="img"
           className="movie-card-media"
           image={posterUrl}
           alt={`Image of ${name.name}`} 

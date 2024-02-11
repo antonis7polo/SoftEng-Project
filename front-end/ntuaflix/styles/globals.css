@@ -2,19 +2,18 @@
 
 :root {
     /* Updated Color Scheme for a Cinematic Feel */
-    --button-text-color: 255, 255, 255; /* White text for buttons for legibility */
-    --button-background-color: 34, 34, 34; /* Dark gray for a professional look */
-    --button-hover-background-color: 68, 68, 68; /* Slightly lighter gray for hover state */
-
+    --button-text-color: rgb(255, 255, 255); /* White text for buttons for legibility */
+    --button-background-color: rgb(95, 100, 105); /* Subdued steel gray for less dominant elements */
+    --button-hover-background-color: rgb(112, 123, 129); /* Slightly lighter gray for hover effect */
     /* Existing Color Variables */
-    --primary-color: 20, 20, 20; /* Near black for a deep cinematic look */
-    --secondary-color-1: 95, 100, 105; /* Subdued steel gray for less dominant elements */
-    --secondary-color-2: 255, 220, 0; /* Bright gold for highlighting important elements (like star ratings) */
-    --accent-color-1: 204, 0, 0; /* Red accent for critical actions or notifications */
-    --accent-color-2: 0, 173, 239; /* Bright blue for links and interactive elements */
-    --background-color: 248, 248, 255; /* Very light gray (almost white) for a neutral backdrop */
-    --neutral-color: 112, 123, 129; /* Medium gray for neutral text */
-    --form-background-color: #fff; /* White for forms to stand out against the other elements */
+    --primary-color: rgb(20, 20, 20); /* Near black for a deep cinematic look */
+    --secondary-color-1: rgb(95, 100, 105); /* Subdued steel gray for less dominant elements */
+    --secondary-color-2: rgb(255, 220, 0); /* Bright gold for highlighting important elements (like star ratings) */
+    --accent-color-1: #d32f2f; /* Red accent for critical actions or notifications */
+    --accent-color-2: rgb(0, 173, 239); /* Bright blue for links and interactive elements */
+    --background-color: rgb(248, 248, 255); /* Very light gray (almost white) for a neutral backdrop */
+    --neutral-color: rgb(112, 123, 129); /* Medium gray for neutral text */
+    --form-background-color: rgb(255, 255, 255); /* White background for forms */
     
     /* Additional Variables */
     --max-width: 1200px;
@@ -42,13 +41,13 @@
 
 /* Button Styles for Better Contrast */
 button, .MuiButton-root {
-    color: rgb(var(--button-text-color)); /* Text color */
-    background-color: rgb(var(--button-background-color)); /* Background color */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    color: var(--background-color); /* Text color */
+    background-color: var(--button-background-color); /* Background color */
+    transition: var(--background-color) 0.3s; /* Smooth transition for hover effect */
 }
 
 button:hover, .MuiButton-root:hover {
-    background-color: rgb(var(--button-hover-background-color)); /* Background color on hover */
+    background-color: var(--button-hover-background-color); /* Background color on hover */
 }
 
 
@@ -63,8 +62,7 @@ html, body {
     height: 100%;
     margin: 0; /* Reset default margin */
     font-family: var(--font-sans);
-    color: rgb(var(--text-on-light)); /* Text color for light background */
-    background-color: rgb(var(--background-color));
+    background-color: var(--background-color);
     line-height: 1.6;
 }
 
@@ -88,12 +86,12 @@ a {
 
 /* Card styles using secondary color */
 .card {
-    background-color: rgb(var(--primary-color)); /* Use secondary color for card background */
+    background-color: var(--secondary-color-1); /* Use secondary color for card background */
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     padding: 20px;
     margin: 5px; /* Smaller margin to create tighter columns */
-    color: rgb(var(--button-text-color)); /* White text for better contrast */
+    color: var(--button-text-color); /* White text for better contrast */
     height: auto; /* Allow height to adjust to content */
     display: flex;
     flex-direction: column;
@@ -108,12 +106,12 @@ a {
 
 
 .movie-card {
-    background-color: rgb(var(--primary-color)); /* Use secondary color for card background */
+    background-color: var(--secondary-color-1); /* Use secondary color for card background */
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     padding: 20px;
     margin: 5px; /* Smaller margin to create tighter columns */
-    color: rgb(var(--button-text-color)); /* White text for better contrast */
+    color: var(--button-text-color); /* White text for better contrast */
     height: auto; /* Allow height to adjust to content */
     display: flex;
     flex-direction: column;
@@ -192,51 +190,49 @@ a {
 
 /* Login Form */
 .login-form {
-    max-width: 600px;
     height: auto;
     width: auto;
-    max-height: 600px;
     margin: 20px auto;
     padding: 20px;
-    border: 1px solid rgba(var(--neutral-color), 0.25); /* Lighter border */
+    border: 1px solid var(--neutral-color); /* Lighter border */
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-    background-color: rgb(var(--form-background-color));
+    background-color: var(--primary-color);
 }
 
 /* Footer */
 .footer {
     flex-shrink: 0; /* Prevents the footer from shrinking */
     text-align: center;
-    padding: 20px;
-    background-color: rgb(var(--primary-color));
-    color: rgb(var(--text-color)); /* White text for footer */
+    height: auto; /* Set a fixed height */
+    background-color: var(--primary-color);
+    color: var(--button-text-color); /* White text for footer */
     width: 100%;
 }
 
 .slick-next {
-    color: rgb(var(--button-text-color)) !important;
-    background-color: rgb(var(--button-background-color)) !important;;
+    color: var(--secondary-color-1) !important;
+    background-color: var(--primary-color) !important;
     right: 15px !important;
     z-index: 1;
-    transition: background-color 0.3s ease !important;
+    transition: var(--background-color) 0.3s ease !important;
 }
 
 .slick-next:hover {
-    background-color: rgb(var(--button-hover-background-color)) !important;
+    color: var(--button-hover-background-color) !important;
+
 }
 
 .slick-prev {
-    color: rgb(var(--button-text-color)) !important;
-    background-color: rgb(var(--button-background-color)) !important;;
+    color: var(--secondary-color-1) !important;
+    background-color: var(--primary-color) !important;
     left: 3px !important;
-    cursor: pointer;
     z-index: 1;
-    transition: background-color 0.3s ease !important;
+    transition: var(--background-color) 0.3s ease !important;
 }
 
 .slick-prev:hover {
-    background-color: rgb(var(--button-hover-background-color)) !important;
+    color: var(--button-hover-background-color) !important;
 }
 
 .slick-list {
@@ -247,27 +243,16 @@ a {
 
 
 .category-heading {
-    color: rgb(var(--primary-color)); /* Subdued steel gray */
+    color: var(--primary-color); /* Subdued steel gray */
     margin-bottom: 20px; /* Space below the heading */
     font-family: var(--font-sans); /* Use the defined sans-serif font */
     font-size: 1.75rem; /* A moderate size for elegance */
     font-weight: 600; /* Bold, but not too bold */
     text-align: left; /* Align to the left for a clean look */
     padding-bottom: 10px; /* Space at the bottom */
-    border-bottom: 2px solid rgb(var(--secondary-color-1)); /* A subtle line for a touch of sophistication */
+    border-bottom: 2px solid var(--primary-color); /* A subtle line for a touch of sophistication */
 }
 
-
-
-.category-first-heading {
-    color: rgb(var(--primary-color)); /* Subdued steel gray */
-    margin-bottom: 30px; /* Space below the heading */
-    font-family: var(--font-sans); /* Use the defined sans-serif font */
-    font-size: 2rem; /* A moderate size for elegance */
-    font-weight: 800; /* Bold, but not too bold */
-    text-align: left; /* Align to the left for a clean look */
-    padding-bottom: 10px; /* Space at the bottom */
-}
 
 
 

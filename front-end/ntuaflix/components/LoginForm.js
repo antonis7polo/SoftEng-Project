@@ -38,6 +38,19 @@ const LoginForm = ({ onLogin, onError }) => {
                 autoFocus
                 value={credentials.username}
                 onChange={e => handleChange(e)}
+                sx={{
+                    '& label': { color: 'var(--button-text-color)' }, // Label color
+                    '& label.Mui-focused': {
+                        color: 'var(--button-text-color)', // Color when the input is focused
+                    },
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': { borderColor: 'var(--button-background-color)' }, // Default border color
+                      '&:hover fieldset': { borderColor: 'var(--button-background-color)' }, // Border color on hover
+                      '&.Mui-focused fieldset': { borderColor: 'var(--button-background-color)' }, // Border color when focused
+                    },
+                    '& .MuiInputBase-input': { color: 'var(--button-text-color)' }
+                  }}
+
             />
             <TextField
                 margin="normal"
@@ -50,12 +63,24 @@ const LoginForm = ({ onLogin, onError }) => {
                 autoComplete="current-password"
                 value={credentials.password}
                 onChange={e => handleChange(e)}
+                sx={{
+                    '& label': { color: 'var(--button-text-color)' }, // Label color
+                    '& label.Mui-focused': {
+                        color: 'var(--button-text-color)', // Color when the input is focused
+                    },
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': { borderColor: 'var(--button-background-color)' }, // Default border color
+                      '&:hover fieldset': { borderColor: 'var(--button-background-color)' }, // Border color on hover
+                      '&.Mui-focused fieldset': { borderColor: 'var(--button-background-color)' }, // Border color when focused
+                    },
+                    '& .MuiInputBase-input': { color: 'var(--button-text-color)' }
+                  }}
             />
             <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, bgcolor: 'var(--button-background-color)', '&:hover': { bgcolor: 'var(--button-hover-background-color)' } }}
+                sx={{ mt: 3, mb: 2, color: 'var(--button-text-color)' , bgcolor: 'var(--button-background-color)', '&:hover': { bgcolor: 'var(--button-hover-background-color)' } }}
             >
                 Log In
             </Button>

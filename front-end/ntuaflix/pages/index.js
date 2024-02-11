@@ -37,9 +37,9 @@ const LoginPage = () => {
 
     return (
         <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh" sx={{ backgroundColor: 'var(--background-color)' }}>
-            <Card variant="outlined" sx={{ minWidth: 300 }}>
+            <Card variant="outlined" sx={{ minWidth: 300, backgroundColor: 'var(--primary-color)' }}>
                 <CardContent>
-                    <Typography variant="h5" component="h2" gutterBottom>
+                    <Typography variant="h5" component="h2" gutterBottom sx={{ color: 'var(--background-color)' }}>
                         Login
                     </Typography>
                     {error && <Typography color="error">{error}</Typography>}

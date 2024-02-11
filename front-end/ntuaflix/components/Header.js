@@ -16,8 +16,8 @@ const Header = () => {
   useEffect(() => {
     // Reset searchTerm when the pathname changes
     const handleRouteChange = () => {
-        setSearchTerm("");
-        setSearchType("title");  // Reset to "Search Title"
+      setSearchTerm("");
+      setSearchType("title");  // Reset to "Search Title"
 
     };
 
@@ -102,8 +102,8 @@ const Header = () => {
       <AppBar
         position="static"
         style={{
-          backgroundColor: `rgb(var(--card-background-color))`,
-          boxShadow: "var(--shadow)",
+          backgroundColor: `var(--primary-color)`,
+          boxShadow: "var(--shadow)"
         }}
       >
         <Toolbar
@@ -114,7 +114,9 @@ const Header = () => {
             <Link href={isLoggedIn ? "/home" : "/"} passHref>
               <Button
                 sx={{
-                  color: `rgb(var(--primary-color))`,
+                  color: 'var(--background-color)',
+                  bgcolor: 'var(--button-background-color)',
+                  '&:hover': { bgcolor: 'var(--button-hover-background-color)' },
                   textTransform: "none",
                   fontSize: "1.25rem",
                 }}
@@ -124,7 +126,7 @@ const Header = () => {
             </Link>
           </Box>
 
-          {isLoggedIn && !isGenreSearchPage &&(
+          {isLoggedIn && !isGenreSearchPage && (
             <Box sx={{ ml: 20, flexGrow: 0.1, display: "flex", justifyContent: "center" }}>
               <FormControl variant="standard" sx={{ m: 1, minWidth: 80 }}>
                 <Select
@@ -132,28 +134,76 @@ const Header = () => {
                   onChange={handleTypeChange}
                   displayEmpty
                   inputProps={{ "aria-label": "search by type" }}
+                  MenuProps={{
+                    sx: {
+                      '.MuiMenu-list': { // Targeting the list within the menu
+                        paddingTop: '0px', // Remove padding at the start of the list
+                        paddingBottom: '0px', // Remove padding at the end of the list
+                      }
+                    }
+                  }}
                   sx={{
-                    color: `rgb(var(--primary-color))`,
-                    "& .MuiSvgIcon-root": { color: `rgb(var(--primary-color))` },
+                    color: 'var(--background-color)', // Default text color
+                    "& .MuiSvgIcon-root": { color: 'var(--secondary-color-1)' },
+                    "&:before, &:hover:before": { // Underline color before interaction and on hover
+                      borderBottomColor: 'var(--secondary-color-1)', // Ensures consistency
+                    },
+                    "&:after": { // Underline color after interaction (on focus)
+                      borderBottomColor: 'var(--secondary-color-1)', // Ensures consistency
+                    },
+                    // Ensures hover state does not revert to default (often black)
+                    "&:hover": {
+                      "&:before": {
+                        borderBottomColor: 'var(--secondary-color-1) !important', // Overrides any other styles
+                      },
+                      "&:after": {
+                        borderBottomColor: 'var(--secondary-color-1) !important', // Keep consistent on hover after focus
+                      },
+                    },
                   }}
                 >
-                  <MenuItem value="title">Search Title</MenuItem>
-                  <MenuItem value="name">Search Name</MenuItem>
-                  <MenuItem value="genre">Search by Genre</MenuItem>
+                  <MenuItem
+                    value="title"
+                    sx={{
+                      color: 'var(--primary-color)', // Change color if selected
+                      backgroundColor: 'var(--button-background-color)',
+                      '&:hover': { backgroundColor: 'var(--button-hover-background-color)' },
+                    }}>
+                    Search Title
+                  </MenuItem>
+                  <MenuItem
+                    value="name"
+                    sx={{
+                      color: 'var(--primary-color)', // Change color if selected
+                      backgroundColor: 'var(--button-background-color)',
+                      '&:hover': { backgroundColor: 'var(--button-hover-background-color)' },
+                    }}>
+                    Search Name
+                  </MenuItem>
+                  <MenuItem
+                    value="genre"
+                    sx={{
+                      color: 'var(--primary-color)', // Change color if selected
+                      backgroundColor: 'var(--button-background-color)',
+                      '&:hover': { backgroundColor: 'var(--button-hover-background-color)' },
+                    }}>
+                    Search by Genre
+                  </MenuItem>
+
                 </Select>
               </FormControl>
               <InputBase
-                sx={{ ml: 1, flex: 1, color: `rgb(var(--text-color))` }}
+                sx={{ ml: 1, flex: 1, color: `var(--background-color)` }}
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
                 value={searchTerm}
                 onChange={handleSearchChange}
-                disabled={isGenreSearch} 
+                disabled={isGenreSearch}
               />
-               {!isGenreSearchPage && (
+              {!isGenreSearchPage && (
                 <IconButton
                   type="submit"
-                  sx={{ p: "10px", mr: 20, color: `rgb(var(--primary-color))` }}
+                  sx={{ p: "10px", mr: 20, color: `var(--background-color)` }}
                   aria-label="search"
                   onClick={handleSearch}
                 >
@@ -168,15 +218,27 @@ const Header = () => {
           >
             {isLoggedIn ? (
               <IconButton
-                sx={{ color: `rgb(var(--primary-color))` }}
+                sx={{ color: `var(--background-color)` }}
                 onClick={handleLogout}
               >
                 <LogoutIcon />
               </IconButton>
             ) : (
               <Link href="/" passHref>
-                <IconButton sx={{ color: `rgb(var(--primary-color))` }}>
-                  <AccountCircle />
+                <IconButton>
+                  <Box
+                    sx={{
+                      borderRadius: '50%', // Makes the container round
+                      color: 'var(--button-text-color)',
+                      backgroundColor: 'var(--button-background-color)',
+                      display: 'inline-flex', // Makes the Box behave like an inline element
+                      alignItems: 'center', // Centers the icon vertically
+                      justifyContent: 'center', // Centers the icon horizontally
+                      p: 1, // Padding inside the box, you can adjust it as needed
+                    }}
+                  >
+                    <AccountCircle />
+                  </Box>
                 </IconButton>
               </Link>
             )}
